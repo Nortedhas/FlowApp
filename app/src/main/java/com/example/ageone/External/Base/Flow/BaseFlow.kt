@@ -1,9 +1,8 @@
 package com.example.ageone.External.Base.Flow
 
-import android.widget.ViewFlipper
 import androidx.core.view.contains
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import timber.log.Timber
 
 open class BaseFlow {
@@ -13,8 +12,8 @@ open class BaseFlow {
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null
 
-    val viewFlipperModule: ViewFlipper by lazy {
-        val viewFlipperModule = ViewFlipper(currentActivity)
+    val viewFlipperModule by lazy {
+        val viewFlipperModule = BaseViewFlipper()
         viewFlipperModule
     }
 

@@ -1,6 +1,7 @@
 package com.example.ageone.Models
 
-import java.util.*
+import io.realm.RealmObject
 
-//TODO model realm
-class Favourite
+class Favourite/*: RealmObject()*/ {
+
+}

@@ -17,16 +17,16 @@ class AppActivity: BaseActivity()  {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
+
         coordinator.setLaunchScreen()
 
 
         setContentView(router.layout)
-//        setContentView(linearLayout)
 
     }
 
+}
 
-
-
-
+fun AppActivity.setStatusBarColor(color: Int) {
+    window.statusBarColor = color
 }

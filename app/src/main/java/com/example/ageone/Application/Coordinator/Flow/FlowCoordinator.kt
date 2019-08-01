@@ -2,16 +2,28 @@ package com.example.ageone.Application.Coordinator.Flow
 
 import android.graphics.Color
 import android.view.View
-import android.widget.ViewFlipper
+import android.view.WindowInsets
+import android.widget.Button
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.example.ageone.Application.*
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.stack.items
-import com.example.ageone.Application.currentActivity
-import com.example.ageone.Application.router
-import com.example.ageone.Application.utils
+import com.example.ageone.Application.R
+import com.example.ageone.Application.R.color
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.Network.HTTP.Methods.handshake
+import com.swarmnyc.promisekt.Promise
+import io.socket.client.IO
+import io.socket.client.Manager
+import io.socket.client.Socket.EVENT_CONNECT
+import io.socket.client.Socket.EVENT_DISCONNECT
+import io.socket.emitter.Emitter
+import io.socket.engineio.client.Transport
+import timber.log.Timber
 import yummypets.com.stevia.*
+
 
 class FlowCoordinator {
 
@@ -32,17 +44,25 @@ class FlowCoordinator {
             launch
         )
 
-        router.layout.setOnApplyWindowInsetsListener { _, insets ->
-            utils.variable.statusBarHeight = insets.systemWindowInsetTop
-//            router.layout.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        launch.toolBar
+            .height(0)
 
+
+
+        Promise<Unit>{resolve,_ ->
+                router.layout.setOnApplyWindowInsetsListener { _, insets ->
+                    utils.variable.statusBarHeight = insets.systemWindowInsetTop
+                    resolve(Unit)
+
+                    insets
+                }
+        }.then {
+            handshake()
+        }.then {
             start()
-            insets
         }
 
     }
-
-
 
     private var instructor = LaunchInstructor.configure()
 
@@ -91,12 +111,12 @@ class FlowCoordinator {
 
     }
 
-    val viewFlipperFlow: ViewFlipper by lazy {
-        val flipper = ViewFlipper(currentActivity)
+    val viewFlipperFlow by lazy {
+        val flipper = BaseViewFlipper()
         flipper
     }
 
-    val bottomNavigation: AHBottomNavigation by lazy {
+    val bottomNavigation by lazy {
         val bottomNavigation = AHBottomNavigation(currentActivity)
         bottomNavigation.setTitleTextSize(30f,30f)
         bottomNavigation.defaultBackgroundColor = Color.parseColor("#FEFEFE")
@@ -115,6 +135,10 @@ fun FlowCoordinator.isBottomNavigationVisible(visible: Boolean) = if (visible) {
     bottomNavigation.visibility = View.VISIBLE
 } else {
     bottomNavigation.visibility = View.GONE
+}
+
+fun FlowCoordinator.setStatusBarColor(color: Int) {
+    (currentActivity as AppActivity).setStatusBarColor(color)
 }
 
 private enum class LaunchInstructor {

@@ -10,6 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
+import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
+import com.example.ageone.External.Base.ImageView.BaseImageView
+import com.example.ageone.External.Base.Toolbar.BaseToolbar
 import com.example.ageone.Internal.Utilities.Utils
 import timber.log.Timber
 import yummypets.com.stevia.*
@@ -17,21 +20,19 @@ import yummypets.com.stevia.*
 open class BaseModule(context: Context?): ConstraintLayout(context) {
 
     val backgroundImage by lazy {
-        val image = ImageView(context)
+        val image = BaseImageView()
         image
     }
 
     val innerContent by lazy {
-        val innerContent = ConstraintLayout(context)
+        val innerContent = BaseConstraintLayout()
         innerContent.fitsSystemWindows = true
         innerContent.setPadding(0, utils.variable.statusBarHeight, 0, 0)
         innerContent
     }
 
-
-    //TODO: basetoolbar
-    val toolBar: Toolbar by lazy {
-        val toolBar = Toolbar(currentActivity)
+    val toolBar by lazy {
+        val toolBar = BaseToolbar()
         toolBar
             .setBackgroundColor(Color.MAGENTA)
         toolBar
@@ -42,21 +43,15 @@ open class BaseModule(context: Context?): ConstraintLayout(context) {
 
     init {
         id = View.generateViewId()
-//        setPadding(0, utils.variable.statusBarHeight, 0, 0)
         renderUI()
         Timber.i("${this.className()} Init ")
     }
-
-
 
     fun getClassName(name: String): String {
         return name.split("{")[0]
     }
 
-    fun setBackgroundImage(imageId: Int) {
-        backgroundImage.setImageResource(imageId)
-        backgroundImage.scaleType = ImageView.ScaleType.CENTER_CROP
-    }
+    fun saveArea() = utils.variable.statusBarHeight + toolBar.height
 
     fun renderUI() {
 
@@ -66,6 +61,7 @@ open class BaseModule(context: Context?): ConstraintLayout(context) {
                 toolBar
             )
         )
+
         innerContent
             .fillHorizontally()
             .fillVertically()
@@ -80,8 +76,6 @@ open class BaseModule(context: Context?): ConstraintLayout(context) {
             .fillVertically()
 
     }
-    //TODO saveArea
-//    fun saveArea()
 
     fun className(): String {
         return utils.tools.getClassName(this.toString())

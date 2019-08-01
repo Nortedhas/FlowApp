@@ -44,14 +44,20 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'             // ???
     implementation 'com.jakewharton.timber:timber:4.7.1'                    // logger
     implementation 'net.alexandroid.utils:shpref:1.6'                       // shared preference
+
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'                  //retrofit
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'            //JSON
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'         //HTTP
 
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+
+    implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'
+    implementation 'com.github.swarmnyc.promisekt:promisekt-android:1.0.5'
 
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'
-
-
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
 }

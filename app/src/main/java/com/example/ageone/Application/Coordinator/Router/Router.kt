@@ -1,9 +1,6 @@
 package com.example.ageone.Application.Coordinator.Router
 
-import android.content.Context
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.transition.*
-import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import timber.log.Timber
