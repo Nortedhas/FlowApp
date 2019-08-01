@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+
+    </style>
+
+    <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона drawable -->
+    <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <!-- для Android 5+ - чтобы соответствовать цвету windowBackground -->
+        <item name="colorPrimaryDark">@android:color/black</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+
+    </style>
+
+
+
+</resources>
