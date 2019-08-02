@@ -7,9 +7,8 @@ import com.example.ageone.Modules.Auth.AuthView
 import com.example.ageone.Modules.Auth.AuthViewModel
 import com.example.ageone.Modules.Password.PasswordView
 import com.example.ageone.Modules.Password.PasswordViewModel
-import timber.log.Timber
 
-fun FlowCoordinator.runFlowAuth(/*context: Context*/) {
+fun FlowCoordinator.runFlowAuth() {
 
     var flow: FlowAuth? = FlowAuth()
 

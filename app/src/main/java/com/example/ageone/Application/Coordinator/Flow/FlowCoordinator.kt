@@ -47,8 +47,6 @@ class FlowCoordinator {
         launch.toolBar
             .height(0)
 
-
-
         Promise<Unit>{resolve,_ ->
                 router.layout.setOnApplyWindowInsetsListener { _, insets ->
                     utils.variable.statusBarHeight = insets.systemWindowInsetTop
@@ -69,7 +67,7 @@ class FlowCoordinator {
     private fun start() {
 
         when (instructor) {
-            LaunchInstructor.Main -> print("")
+            LaunchInstructor.Main -> runFlowMain()
             LaunchInstructor.Auth -> runFlowAuth()
         }
 
@@ -147,7 +145,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = false): LaunchInstructor {
+        fun configure(isAutorized: Boolean = true): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main
