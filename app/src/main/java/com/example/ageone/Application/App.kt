@@ -47,8 +47,9 @@ class App: Application()  {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { isConnectedToInternet ->
                 // do something with isConnectedToInternet value
-                if (isConnectedToInternet) {
-                    Timber.i("Internet are allowed")
+                if (isConnectedToInternet != utils.isNetworkReachable) {
+//                    Timber.i("Internet are allowed")
+                    utils.isNetworkReachable = isConnectedToInternet
                 }
             }
 

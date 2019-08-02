@@ -1,15 +1,14 @@
 package com.example.ageone.External.Base.RecyclerView
 
 import android.app.Activity
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.currentActivity
 
-class BaseRecyclerView/*: RecyclerView(currentActivity)*/ {
-    /*val bodyTable by lazy {
-        val bodyTable = currentActivity?.let{
-            RecyclerView(currentActivity as Activity)
-            bodyTable
-        }
-    }*/
+class BaseRecyclerView: RecyclerView(currentActivity as Context) {
+    val bodyTable by lazy {
+        val bodyTable = RecyclerView(currentActivity as Activity)
+        bodyTable
+    }
 
 }

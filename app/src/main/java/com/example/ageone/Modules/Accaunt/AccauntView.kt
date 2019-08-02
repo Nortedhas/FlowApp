@@ -1,7 +1,11 @@
 package com.example.ageone.Modules.Accaunt
 
+import android.app.Activity
+import android.content.Context
 import android.graphics.Color
-import com.bumptech.glide.Glide
+import android.graphics.drawable.LayerDrawable
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
@@ -9,11 +13,8 @@ import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Libraries.Glide.GlideApp
 import yummypets.com.stevia.*
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestOptions
-
-
 
 
 class AccauntView: BaseModule(currentActivity) {
@@ -37,9 +38,26 @@ class AccauntView: BaseModule(currentActivity) {
             .height(40F.dp)
             .width(40F.dp)
 
-        Glide.with(this)
-            .load(R.drawable.kitty)
+        val circularProgressDrawable = CircularProgressDrawable(currentActivity as Context)
+        circularProgressDrawable.strokeWidth = 15f.dp
+        circularProgressDrawable.centerRadius = 100f.dp
+        circularProgressDrawable.start()
+
+        val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
+        placeholderImage
+
+        val placeholder = LayerDrawable(
+            arrayOf(
+                placeholderImage,
+                circularProgressDrawable
+            )
+        )
+
+        GlideApp
+            .with(this)
+            .load("")
             .transform(CenterCrop(), RoundedCorners(25F.dp.toInt()))
+            .placeholder(placeholder)
             .into(image)
 
 

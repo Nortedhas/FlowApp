@@ -6,4 +6,5 @@ import com.example.ageone.External.Utils.Variable
 class Utils {
     val tools = Tools
     val variable = Variable
+    var isNetworkReachable = false
 }
