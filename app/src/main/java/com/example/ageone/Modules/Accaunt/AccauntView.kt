@@ -15,6 +15,8 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.Libraries.Glide.GlideApp
 import yummypets.com.stevia.*
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.Priority
 
 
 class AccauntView: BaseModule(currentActivity) {
@@ -52,6 +54,14 @@ class AccauntView: BaseModule(currentActivity) {
                 circularProgressDrawable
             )
         )
+
+        //for cashing photo
+        /*val requestOptions = RequestOptions().priority(Priority.IMMEDIATE)
+        GlideApp
+            .with(this)
+            .downloadOnly()
+            .apply(requestOptions)
+            .submit()*/
 
         GlideApp
             .with(this)
