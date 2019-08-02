@@ -15,7 +15,8 @@ fun FlowCoordinator.runFlowAuth() {
     flow?.let{ module ->
         viewFlipperFlow.addView(module.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
-        isBottomNavigationVisible(false)
+
+        isBottomNavigationVisible(true)
         setStatusBarColor(Color.TRANSPARENT)
     }
 

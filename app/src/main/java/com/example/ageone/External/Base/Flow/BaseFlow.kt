@@ -1,11 +1,13 @@
 package com.example.ageone.External.Base.Flow
 
+import android.view.View
 import androidx.core.view.contains
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import timber.log.Timber
 
-open class BaseFlow {
+open class BaseFlow: View(currentActivity){
 
     val stack = mutableSetOf<Int>()
 

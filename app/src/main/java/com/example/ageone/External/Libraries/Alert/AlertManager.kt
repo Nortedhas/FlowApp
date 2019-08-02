@@ -64,7 +64,7 @@ class AlertManager {
     // MARK: textViewTitle
 
     val textViewTitle: BaseTextView by lazy {
-        val textViewTitle = BaseTextView(currentActivity)
+        val textViewTitle = BaseTextView()
         textViewTitle.gravity = View.TEXT_ALIGNMENT_VIEW_END
         textViewTitle.typeface = Typeface.DEFAULT_BOLD
         textViewTitle.textSize = 6F.dp
@@ -77,7 +77,7 @@ class AlertManager {
     // MARK: textViewMessage
 
     val textViewMessage: BaseTextView by lazy {
-        val textViewMessage = BaseTextView(currentActivity)
+        val textViewMessage = BaseTextView()
         textViewMessage.gravity = View.TEXT_ALIGNMENT_VIEW_END
         textViewMessage.typeface = Typeface.DEFAULT_BOLD
         textViewMessage.textSize = 5F.dp

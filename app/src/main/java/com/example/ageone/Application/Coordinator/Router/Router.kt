@@ -2,6 +2,7 @@ package com.example.ageone.Application.Coordinator.Router
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import timber.log.Timber
 
@@ -28,6 +29,10 @@ class Router {
     fun pop() {
 
         Timber.i("Delete module")
+
+    }
+
+    fun setCurrentFLow(baseFlow: BaseFlow) {
 
     }
 }

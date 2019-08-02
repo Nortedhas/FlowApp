@@ -2,26 +2,17 @@ package com.example.ageone.Application.Coordinator.Flow
 
 import android.graphics.Color
 import android.view.View
-import android.view.WindowInsets
-import android.widget.Button
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.example.ageone.Application.*
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.stack.flows
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.stack.items
 import com.example.ageone.Application.R
-import com.example.ageone.Application.R.color
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.Network.HTTP.Methods.handshake
 import com.swarmnyc.promisekt.Promise
-import io.socket.client.IO
-import io.socket.client.Manager
-import io.socket.client.Socket.EVENT_CONNECT
-import io.socket.client.Socket.EVENT_DISCONNECT
-import io.socket.emitter.Emitter
-import io.socket.engineio.client.Transport
-import timber.log.Timber
 import yummypets.com.stevia.*
 
 
@@ -66,17 +57,25 @@ class FlowCoordinator {
 
     private fun start() {
 
+
         when (instructor) {
             LaunchInstructor.Main -> runFlowMain()
             LaunchInstructor.Auth -> runFlowAuth()
         }
 
+        createStack()
+        setUpTabs()
     }
 
     private fun renderUI() {
 
-        createStack()
-        setUpTabs()
+        bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
+            if (!wasSelected) {
+                viewFlipperFlow.displayedChild = position
+//                router.setCurrentFLow(flows[position])
+            }
+            true
+        }
 
         router.layout.subviews(
             viewFlipperFlow,
@@ -98,15 +97,36 @@ class FlowCoordinator {
             bottomNavigation.addItem(item)
         }
 
+        for (flow in flows) {
+            viewFlipperFlow.addView(flow)
+        }
+
     }
 
     private fun createStack() {
 
         items = arrayListOf(
-            AHBottomNavigationItem("One", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
-            AHBottomNavigationItem("Two", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
+            AHBottomNavigationItem("Auth", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
+            AHBottomNavigationItem("Main", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
         )
 
+        flows = arrayListOf(
+            flowAuth,
+            flowMain
+        )
+
+    }
+
+    val flowMain by lazy {
+        val flowMain = FlowMain()
+//        runFlowMain()
+        flowMain
+    }
+
+    val flowAuth by lazy {
+        val flowAuth = FlowAuth()
+//        runFlowAuth()
+        flowAuth
     }
 
     val viewFlipperFlow by lazy {
