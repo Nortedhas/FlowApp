@@ -10,11 +10,12 @@ fun FlowCoordinator.runFlowMain() {
     var flow: FlowMain? = FlowMain()
 
     flow?.let{ module ->
+        module.colorStatusBar = Color.CYAN
         viewFlipperFlow.addView(module.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
         
         isBottomNavigationVisible(true)
-        setStatusBarColor(Color.CYAN)
+        setStatusBarColor(module.colorStatusBar)
     }
 
     flow?.onFinish = {

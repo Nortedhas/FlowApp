@@ -1,4 +1,4 @@
-package com.example.ageone.Application
+package com.example.ageone.External.Extensions.Application
 
 import android.app.Activity
 import android.app.Application

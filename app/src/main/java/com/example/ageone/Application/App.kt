@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Router.Router
+import com.example.ageone.External.Extensions.Application.FTActivityLifecycleCallbacks
 import com.example.ageone.External.Libraries.Loger.TimberTree
 import com.example.ageone.Internal.Utilities.Utils
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
@@ -28,7 +29,8 @@ class App: Application()  {
         instance = this
     }
 
-    val mFTActivityLifecycleCallbacks = FTActivityLifecycleCallbacks()
+    val mFTActivityLifecycleCallbacks =
+        FTActivityLifecycleCallbacks()
 
     override fun onCreate() {
         super.onCreate()
@@ -47,10 +49,9 @@ class App: Application()  {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { isConnectedToInternet ->
                 // do something with isConnectedToInternet value
-                if (isConnectedToInternet != utils.isNetworkReachable) {
+
 //                    Timber.i("Internet are allowed")
                     utils.isNetworkReachable = isConnectedToInternet
-                }
             }
 
         registerActivityLifecycleCallbacks(mFTActivityLifecycleCallbacks)

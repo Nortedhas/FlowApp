@@ -1,23 +1,17 @@
 package com.example.ageone.External.Base.Module
 
-import android.content.Context
 import android.graphics.Color
 import android.view.View
-import android.view.WindowInsets
-import android.widget.ImageView
-import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
-import com.example.ageone.Internal.Utilities.Utils
 import timber.log.Timber
 import yummypets.com.stevia.*
 
-open class BaseModule(context: Context?): ConstraintLayout(context) {
+open class BaseModule : ConstraintLayout(currentActivity) {
 
     val backgroundImage by lazy {
         val image = BaseImageView()

@@ -8,7 +8,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import yummypets.com.stevia.constrainTopToBottomOf
 import yummypets.com.stevia.subviews
 
-class PasswordView(context: Context?): BaseModule(context) {
+class PasswordView(context: Context?): BaseModule(/*context*/) {
 
     init {
         setBackgroundColor(Color.GREEN)

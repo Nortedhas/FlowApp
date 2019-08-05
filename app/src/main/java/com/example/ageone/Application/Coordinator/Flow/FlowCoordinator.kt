@@ -11,8 +11,10 @@ import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.Network.HTTP.Methods
 import com.example.ageone.Network.HTTP.Methods.handshake
 import com.swarmnyc.promisekt.Promise
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 
@@ -28,8 +30,13 @@ class FlowCoordinator {
         router.initialize()
         renderUI()
 
-        val launch = BaseModule(currentActivity)
+        Timber.i("1")
+
+
+        val launch = BaseModule()
+        Timber.i("2")
         launch.setBackgroundColor(Color.TRANSPARENT)
+        Timber.i("3")
 
         viewFlipperFlow.subviews(
             launch
@@ -38,24 +45,11 @@ class FlowCoordinator {
         launch.toolBar
             .height(0)
 
-        Promise<Unit>{resolve,_ ->
-                router.layout.setOnApplyWindowInsetsListener { _, insets ->
-                    utils.variable.statusBarHeight = insets.systemWindowInsetTop
-                    resolve(Unit)
-
-                    insets
-                }
-        }.then {
-            handshake()
-        }.then {
-            start()
-        }
-
     }
 
     private var instructor = LaunchInstructor.configure()
 
-    private fun start() {
+    fun start() {
 
 
         when (instructor) {
@@ -155,7 +149,7 @@ fun FlowCoordinator.isBottomNavigationVisible(visible: Boolean) = if (visible) {
     bottomNavigation.visibility = View.GONE
 }
 
-fun FlowCoordinator.setStatusBarColor(color: Int) {
+fun setStatusBarColor(color: Int) {
     (currentActivity as AppActivity).setStatusBarColor(color)
 }
 

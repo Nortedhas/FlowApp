@@ -1,5 +1,6 @@
 package com.example.ageone.External.Base.Flow
 
+import android.graphics.Color
 import android.view.View
 import androidx.core.view.contains
 import com.example.ageone.Application.currentActivity
@@ -13,6 +14,9 @@ open class BaseFlow: View(currentActivity){
 
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null
+
+    var colorStatusBar = Color.TRANSPARENT
+    var isBottomNavigationVisible = false
 
     val viewFlipperModule by lazy {
         val viewFlipperModule = BaseViewFlipper()

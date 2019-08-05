@@ -15,7 +15,7 @@ import timber.log.Timber
 import yummypets.com.stevia.constrainTopToBottomOf
 import yummypets.com.stevia.subviews
 
-class AuthView(context: Context?): BaseModule(context) {
+class AuthView(context: Context?): BaseModule(/*context*/) {
 
     init {
         setBackgroundColor(Color.LTGRAY)
