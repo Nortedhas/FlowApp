@@ -1,6 +1,7 @@
 package com.example.ageone.Application.Coordinator.Flow
 
 import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.viewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Auth.AuthView
