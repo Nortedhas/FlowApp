@@ -1,20 +1,14 @@
 package com.example.ageone.Modules.Accaunt
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.text.InputType
-import android.widget.EditText
-import com.example.ageone.Application.R
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.TextInputLayout.getPasswordInputBordered
+import com.example.ageone.External.Base.TextInputLayout.getSimpleTextInputLayoutBordered
+import com.example.ageone.External.Base.TextInputLayout.getSimpleTextInputLayoutUnderlined
 import com.example.ageone.External.Base.TextView.BaseTextView
 import yummypets.com.stevia.*
-import com.example.ageone.External.Libraries.Glide.addImageFromGlide
-import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textfield.TextInputEditText
 
 class AccauntView: BaseModule() {
 
@@ -25,47 +19,11 @@ class AccauntView: BaseModule() {
         val textView = BaseTextView()
         val image = BaseImageView()
 
-        val textInputLayout = TextInputLayout(currentActivity)
-        textInputLayout.style {
-            hint = "Please Enter Email Address"
-            setHintTextAppearance(R.style.MyHintText)
-            defaultHintTextColor = ColorStateList.valueOf(Color.GREEN)
+        val textInputLayout =
+            getSimpleTextInputLayoutUnderlined("hiiii", Color.BLACK, 15f, Color.GREEN)
 
-            setErrorTextAppearance(R.style.MyHintText)
-
-            setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE)
-            setBoxCornerRadii(5f,5f,
-                5f,5f)
-
-        }
-
-        val edtEmail = TextInputEditText(textInputLayout.context)
-        edtEmail.style{
-            textSize = 14F
-            textColor = Color.GREEN
-//            setHintTextColor(Color.GREEN)
-        }
-        textInputLayout.addView(edtEmail)
-
-        val passTextInputLayout = TextInputLayout(currentActivity)
-        passTextInputLayout.style {
-            hint = "Please Enter Password"
-            setHintTextAppearance(R.style.MyHintText)
-            setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
-            setBoxCornerRadii(5f, 5f,
-                5f, 5f)
-            isPasswordVisibilityToggleEnabled = true
-
-            boxBackgroundColor = Color.WHITE
-            setPasswordVisibilityToggleTintList(ColorStateList.valueOf(Color.YELLOW))
-        }
-
-        val edtPass = TextInputEditText(passTextInputLayout.context)
-        edtPass.style {
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            background?.mutate()?.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
-        }
-        passTextInputLayout.addView(edtPass)
+        val passTextInputLayout =
+            getPasswordInputBordered("Enter password", Color.DKGRAY, 25F, Color.BLUE)
 
         innerContent.subviews(
             btn,
