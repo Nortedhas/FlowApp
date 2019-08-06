@@ -3,6 +3,8 @@ package com.example.ageone.Modules.Accaunt
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.view.View
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
@@ -31,7 +33,7 @@ class AccauntView: BaseModule() {
         val textInputL by lazy {
             val textInputL = BaseTextInputLayout()
             textInputL.hint = "phone"
-            textInputL.boxStrokeColor = Color.MAGENTA
+            textInputL.boxStrokeColor = Color.TRANSPARENT
             textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
             textInputL.addView(textInputEditText)
             textInputL

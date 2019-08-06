@@ -55,7 +55,6 @@ class FlowCoordinator {
     }
 
     private fun renderUI() {
-        //TODO
         createStack()
         createBottomNavigation()
 
@@ -68,8 +67,8 @@ class FlowCoordinator {
             .fillVertically()
             .fillHorizontally()
 
-        /*bottomNavigation.constrainBottomToBottomOf(router.layout)
-        setBottomNavigationVisible(true)*/
+        bottomNavigation.constrainBottomToBottomOf(router.layout)
+        setBottomNavigationVisible(true)
 
     }
 
@@ -98,7 +97,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = true): LaunchInstructor {
+        fun configure(isAutorized: Boolean = false): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main

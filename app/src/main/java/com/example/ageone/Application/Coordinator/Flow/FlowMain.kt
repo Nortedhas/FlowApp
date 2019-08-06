@@ -10,14 +10,16 @@ import timber.log.Timber
 fun FlowCoordinator.runFlowMain() {
     var flow: FlowMain? = FlowMain()
 
-    flow?.let{ module ->
-        module.colorStatusBar = Color.CYAN
-        module.isBottomNavigationVisible = true
-        viewFlipperFlow.addView(module.viewFlipperModule)
-        viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
+    flow?.let{ flow ->
+        flow.colorStatusBar = Color.CYAN
+        flow.isBottomNavigationVisible = true
+        viewFlipperFlow.addView(flow.viewFlipperModule)
+        viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
         
 //        setBottomNavigationVisible(true)
-        setStatusBarColor(module.colorStatusBar)
+        setStatusBarColor(flow.colorStatusBar)
+
+        FlowCoordinator.stack.flows.add(flow)
     }
 
     flow?.onFinish = {
@@ -32,16 +34,18 @@ fun FlowCoordinator.runFlowMain() {
 class FlowMain: BaseFlow() {
 
     fun start() {
-        runModuleAccaunt()
-    }
-    
-    fun runModuleAccaunt() {
-            val module = AccauntView()
-            module.emitEvent = { event ->
-                when(AccauntViewModel.EventType.valueOf(event)) {
-                    AccauntViewModel.EventType.OnPhotoClicked -> Timber.i("clicked photo")
-                }
-            }
-            push(module)
+        if (!FlowCoordinator.stack.flows.contains(this)) {
+            runModuleAccaunt()
         }
+    }
+
+    fun runModuleAccaunt() {
+        val module = AccauntView()
+        module.emitEvent = { event ->
+            when(AccauntViewModel.EventType.valueOf(event)) {
+                AccauntViewModel.EventType.OnPhotoClicked -> Timber.i("clicked photo")
+            }
+        }
+        push(module)
+    }
 }

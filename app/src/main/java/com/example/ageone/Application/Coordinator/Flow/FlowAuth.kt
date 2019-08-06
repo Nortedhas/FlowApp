@@ -21,6 +21,8 @@ fun FlowCoordinator.runFlowAuth() {
 
 //        setBottomNavigationVisible(true)
         setStatusBarColor(Color.TRANSPARENT)
+
+        FlowCoordinator.stack.flows.add(flow)
     }
 
     flow?.onFinish = {
@@ -31,8 +33,6 @@ fun FlowCoordinator.runFlowAuth() {
 
     flow?.start()
 
-    flow?.let { FlowCoordinator.stack.flows.add(it) }
-
 }
 
 class FlowAuth: BaseFlow() {
@@ -40,7 +40,9 @@ class FlowAuth: BaseFlow() {
     fun start() {
 
         //TODO: лежит ли в стеке
-        runModuleAuth()
+        if (!FlowCoordinator.stack.flows.contains(this)) {
+            runModuleAuth()
+        }
     }
 
     fun runModuleAuth() {
