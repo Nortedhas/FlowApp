@@ -19,13 +19,9 @@ class AppActivity: BaseActivity()  {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
-        coordinator.setLaunchScreen()
+
         Promise<Unit> { resolve, _ ->
-            router.layout.setOnApplyWindowInsetsListener { _, insets ->
-                utils.variable.statusBarHeight = insets.systemWindowInsetTop
-                resolve(Unit)
-                insets
-            }
+            coordinator.setLaunchScreen()
         }.then {
             Methods.handshake()
         }.then {

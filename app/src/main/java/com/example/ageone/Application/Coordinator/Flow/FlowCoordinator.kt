@@ -6,18 +6,16 @@ import android.view.View
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
-import com.example.ageone.Application.AppActivity
+import com.example.ageone.Application.*
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
-import com.example.ageone.Application.currentActivity
-import com.example.ageone.Application.router
-import com.example.ageone.Application.setStatusBarColor
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.External.Libraries.Glide.GlideApp
 import com.example.ageone.Models.User.UserData
+import com.swarmnyc.promisekt.Promise.Companion.resolve
 import timber.log.Timber
 import yummypets.com.stevia.*
 
@@ -43,14 +41,11 @@ class FlowCoordinator {
         launch.toolBar
             .height(0)
 
-        //for cashing photo
-        val requestOptions = RequestOptions().priority(Priority.IMMEDIATE)
-        GlideApp
-            .with(currentActivity as Activity)
-            .downloadOnly()
-            .apply(requestOptions)
-            .load()
-            .submit()
+        router.layout.setOnApplyWindowInsetsListener { _, insets ->
+            utils.variable.statusBarHeight = insets.systemWindowInsetTop
+            resolve(Unit)
+            insets
+        }
 
     }
 
