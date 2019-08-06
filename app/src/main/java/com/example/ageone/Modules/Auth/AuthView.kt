@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.widget.Button
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
+import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.TextView.BaseTextView
 import io.socket.client.IO
@@ -12,8 +13,7 @@ import io.socket.client.Manager
 import io.socket.client.Socket
 import io.socket.engineio.client.Transport
 import timber.log.Timber
-import yummypets.com.stevia.constrainTopToBottomOf
-import yummypets.com.stevia.subviews
+import yummypets.com.stevia.*
 
 class AuthView(context: Context?): BaseModule(/*context*/) {
 

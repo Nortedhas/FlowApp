@@ -1,8 +1,11 @@
 package com.example.ageone.Application.Coordinator.Flow
 
+import android.app.Activity
 import android.graphics.Color
 import android.view.View
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
@@ -13,6 +16,7 @@ import com.example.ageone.Application.setStatusBarColor
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.External.Libraries.Glide.GlideApp
 import com.example.ageone.Models.User.UserData
 import timber.log.Timber
 import yummypets.com.stevia.*
@@ -38,6 +42,15 @@ class FlowCoordinator {
 
         launch.toolBar
             .height(0)
+
+        //for cashing photo
+        val requestOptions = RequestOptions().priority(Priority.IMMEDIATE)
+        GlideApp
+            .with(currentActivity as Activity)
+            .downloadOnly()
+            .apply(requestOptions)
+            .load()
+            .submit()
 
     }
 
@@ -93,7 +106,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = true): LaunchInstructor {
+        fun configure(isAutorized: Boolean = false): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main

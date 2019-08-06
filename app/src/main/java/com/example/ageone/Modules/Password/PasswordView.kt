@@ -4,17 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.Button
 import com.example.ageone.External.Base.Button.BaseButton
+import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
-import yummypets.com.stevia.constrainTopToBottomOf
-import yummypets.com.stevia.subviews
+import yummypets.com.stevia.*
 
 class PasswordView(context: Context?): BaseModule(/*context*/) {
 
     init {
         setBackgroundColor(Color.GREEN)
         val btn = BaseButton()
+        val image = BaseImageView()
         innerContent.subviews(
-            btn
+            btn,
+            image
         )
         btn.text = "Back"
         btn.constrainTopToBottomOf(toolBar, 8)
@@ -23,5 +25,12 @@ class PasswordView(context: Context?): BaseModule(/*context*/) {
         btn.setOnClickListener {
             emitEvent?.invoke(PasswordViewModel.EventType.OnBackPressed.toString())
         }
+
+        image
+            .width(40F.dp)
+            .height(40F.dp)
+            .backgroundColor = Color.BLUE
+
+        image.constrainTopToBottomOf(btn, 8)
     }
 }
