@@ -20,8 +20,14 @@ class AppActivity: BaseActivity()  {
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
 
+        coordinator.setLaunchScreen()
         Promise<Unit> { resolve, _ ->
-            coordinator.setLaunchScreen()
+
+            router.layout.setOnApplyWindowInsetsListener { _, insets ->
+                utils.variable.statusBarHeight = insets.systemWindowInsetTop
+                Promise.resolve(Unit)
+                insets
+            }
         }.then {
             Methods.handshake()
         }.then {

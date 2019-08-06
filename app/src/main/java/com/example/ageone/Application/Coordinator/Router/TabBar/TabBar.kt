@@ -38,7 +38,7 @@ object TabBar {
         bottomNavigation
     }
 
-    val flowMain by lazy {
+    /*val flowMain by lazy {
         val flowMain = FlowMain()
 //        runFlowMain()
         flowMain
@@ -48,7 +48,7 @@ object TabBar {
         val flowAuth = FlowAuth()
 //        runFlowAuth()
         flowAuth
-    }
+    }*/
 
     private fun setUpTabs() {
 
@@ -60,7 +60,10 @@ object TabBar {
             viewFlipperFlow.addView(flow)
         }
 
-    }
+    }/*FlowCoordinator.stack.flows = arrayListOf(
+            flowAuth,
+            flowMain
+        )*/
 
     private fun createStack() {
 
@@ -69,10 +72,10 @@ object TabBar {
             AHBottomNavigationItem("Main", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
         )
 
-        FlowCoordinator.stack.flows = arrayListOf(
+        /*FlowCoordinator.stack.flows = arrayListOf(
             flowAuth,
             flowMain
-        )
+        )*/
 
     }
 }

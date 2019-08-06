@@ -10,6 +10,7 @@ import com.example.ageone.Application.*
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
+import com.example.ageone.Application.Coordinator.Router.createStack
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
@@ -41,12 +42,6 @@ class FlowCoordinator {
         launch.toolBar
             .height(0)
 
-        router.layout.setOnApplyWindowInsetsListener { _, insets ->
-            utils.variable.statusBarHeight = insets.systemWindowInsetTop
-            resolve(Unit)
-            insets
-        }
-
     }
 
     private var instructor = LaunchInstructor.configure()
@@ -60,6 +55,8 @@ class FlowCoordinator {
     }
 
     private fun renderUI() {
+        //TODO
+        createStack()
         createBottomNavigation()
 
         router.layout.subviews(
@@ -71,8 +68,8 @@ class FlowCoordinator {
             .fillVertically()
             .fillHorizontally()
 
-        bottomNavigation.constrainBottomToBottomOf(router.layout)
-        setBottomNavigationVisible(true)
+        /*bottomNavigation.constrainBottomToBottomOf(router.layout)
+        setBottomNavigationVisible(true)*/
 
     }
 
@@ -101,7 +98,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = false): LaunchInstructor {
+        fun configure(isAutorized: Boolean = true): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main

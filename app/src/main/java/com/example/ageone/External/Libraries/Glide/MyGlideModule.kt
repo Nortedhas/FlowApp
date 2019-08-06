@@ -38,7 +38,12 @@ fun addImageFromGlide(image: ImageView, uri: String) {
         .with(this)
         .downloadOnly()
         .apply(requestOptions)
-        .submit()*/
+        .submit()
+
+        Glide.with(this)
+    .load(url)
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
+        */
 
     GlideApp
         .with(image)

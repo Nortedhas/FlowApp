@@ -10,8 +10,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/launch_screen</item>
 
-        <item name="colorControlNormal">#11F</item>
-        <item name="colorControlActivated">#860</item>
+        <!--<item name="colorControlNormal">#11F</item>
+        <item name="colorControlActivated">#2196F3</item>-->
 
     </style>
 
@@ -26,7 +26,6 @@
     <style name="MyHintText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#FF0</item>
-        <item name="colorAccent">#396</item>
     </style>
 
     <style name="ErrorText" parent="TextAppearance.AppCompat">
@@ -40,27 +39,7 @@
         <item name="colorControlActivated">#9103</item>
     </style>
 
-    <!--<style name="YTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/colorAccent</item>
-        <item name="boxStrokeWidth">1dp</item>
-        <item name="android:textColorHint">#F99</item>
-    </style>-->
-
-
     <!-- color borders text input layout outline-->
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#FFF</color>
-
-    <!--<style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
-        &lt;!&ndash; reference our hint & error styles &ndash;&gt;
-        <item name="hintTextAppearance">@style/MyHintText</item>
-        <item name="errorTextAppearance">@style/ErrorText</item>
-        <item name="android:textColor">#F373</item>
-        &lt;!&ndash; unfocused color &ndash;&gt;
-        <item name="android:textColorHint">#395954</item>
-        <item name="colorControlNormal">#FFF</item>
-        <item name="colorControlActivated">#F5F</item>
-        <item name="colorControlHighlight">#3217</item>
-    </style>-->
-
 
 </resources>

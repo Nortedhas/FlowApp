@@ -13,11 +13,11 @@ fun FlowCoordinator.runFlowAuth() {
 
     var flow: FlowAuth? = FlowAuth()
 
-    flow?.let{ module ->
-        module.isBottomNavigationVisible = true
+    flow?.let{ flow ->
+        flow.isBottomNavigationVisible = true
 
-        viewFlipperFlow.addView(module.viewFlipperModule)
-        viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
+        viewFlipperFlow.addView(flow.viewFlipperModule)
+        viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
 
 //        setBottomNavigationVisible(true)
         setStatusBarColor(Color.TRANSPARENT)
@@ -31,11 +31,15 @@ fun FlowCoordinator.runFlowAuth() {
 
     flow?.start()
 
+    flow?.let { FlowCoordinator.stack.flows.add(it) }
+
 }
 
 class FlowAuth: BaseFlow() {
 
     fun start() {
+
+        //TODO: лежит ли в стеке
         runModuleAuth()
     }
 

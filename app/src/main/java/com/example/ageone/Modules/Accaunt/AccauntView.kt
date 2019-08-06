@@ -1,14 +1,14 @@
 package com.example.ageone.Modules.Accaunt
 
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.PorterDuff
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
-import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
-import com.example.ageone.External.Base.TextInputLayout.InputLayoutType
-import com.example.ageone.External.Base.TextInputLayout.getSimpleTextInputLayout
-import com.example.ageone.External.Base.TextInputLayout.withText
+import com.example.ageone.External.Base.TextInputLayout.*
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.google.android.material.textfield.TextInputLayout
 import yummypets.com.stevia.*
 
 class AccauntView: BaseModule() {
@@ -20,50 +20,45 @@ class AccauntView: BaseModule() {
         val textView = BaseTextView()
         val image = BaseImageView()
 
-        val textInputLayout =
-            getSimpleTextInputLayout("hiiii", Color.BLACK, 15f, Color.GREEN,
-                inputLayoutType = InputLayoutType.BORDERED).withText()
+        val textInputEditText by lazy {
+            val textInputEditText = BaseTextInputEditText()
+            textInputEditText.textColor = Color.MAGENTA
+            textInputEditText.defineType(InputEditTextType.PHONE)
+            textInputEditText.setInactiveUnderlineColor(Color.GREEN)
+            textInputEditText
+        }
 
-        val passTextInputLayout =
-            getSimpleTextInputLayout("Enter password",
-                activeHintColor = Color.RED,
-                cornerRadius = 5F,
-                backgroundColor = Color.WHITE,
-                borderColor = Color.YELLOW,
-                inputLayoutType = InputLayoutType.UNDERLINED).withText(isPassword = true)
+        val textInputL by lazy {
+            val textInputL = BaseTextInputLayout()
+            textInputL.hint = "phone"
+            textInputL.boxStrokeColor = Color.MAGENTA
+            textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
+            textInputL.addView(textInputEditText)
+            textInputL
+        }
 
-        val numericTextInputLayout =
-            getSimpleTextInputLayout("Enter numeric",
-                activeHintColor = Color.RED,
-                cornerRadius = 5F,
-                backgroundColor = Color.WHITE,
-                borderColor = Color.YELLOW,
-                inputLayoutType = InputLayoutType.UNDERLINED).withText(inputType = InputEditTextType.PHONE)
+        val textInputEditTextPassword by lazy {
+            val textInputEditText = BaseTextInputEditText()
+            textInputEditText.textColor = Color.MAGENTA
+            textInputEditText
+        }
 
-        val emailTextInputLayout =
-            getSimpleTextInputLayout("Enter email",
-                activeHintColor = Color.RED,
-                cornerRadius = 5F,
-                backgroundColor = Color.WHITE,
-                borderColor = Color.YELLOW,
-                inputLayoutType = InputLayoutType.UNDERLINED).withText(inputType = InputEditTextType.EMAIL)
-
-        val uriTextInputLayout =
-            getSimpleTextInputLayout("Enter uri",
-                activeHintColor = Color.RED,
-                backgroundColor = Color.WHITE,
-                borderColor = Color.YELLOW,
-                inputLayoutType = InputLayoutType.UNDERLINED).withText(inputType = InputEditTextType.URI)
+        val textInputPassword by lazy {
+            val textInputL = BaseTextInputLayout()
+            textInputL.hint = "password"
+            textInputL.boxStrokeColor = Color.MAGENTA
+            textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE)
+            textInputL.addView(textInputEditTextPassword)
+            textInputL.initPassword()
+            textInputL
+        }
 
         innerContent.subviews(
             btn,
             textView,
             image,
-            textInputLayout,
-            passTextInputLayout,
-            numericTextInputLayout,
-            emailTextInputLayout,
-            uriTextInputLayout
+            textInputL,
+            textInputPassword
         )
 
         btn.text = "Some"
@@ -80,26 +75,13 @@ class AccauntView: BaseModule() {
         textView.constrainTopToBottomOf(btn, 8)
         image.constrainTopToBottomOf(textView, 8)
 
-        textInputLayout
+        textInputL
             .fillHorizontally()
-        textInputLayout.constrainTopToBottomOf(image, 8)
+        textInputL.constrainTopToBottomOf(image, 8)
 
-        passTextInputLayout
+        textInputPassword
             .fillHorizontally()
-        passTextInputLayout.constrainTopToBottomOf(textInputLayout, 8)
-
-        numericTextInputLayout
-            .fillHorizontally()
-        numericTextInputLayout.constrainTopToBottomOf(passTextInputLayout, 8)
-
-        emailTextInputLayout
-            .fillHorizontally()
-        emailTextInputLayout.constrainTopToBottomOf(numericTextInputLayout, 8)
-
-        uriTextInputLayout
-            .fillHorizontally()
-        uriTextInputLayout.constrainTopToBottomOf(emailTextInputLayout, 8)
-
+        textInputPassword.constrainTopToBottomOf(textInputL, 8)
 
         btn.setOnClickListener {
             emitEvent?.invoke(AccauntViewModel.EventType.OnPhotoClicked.toString())
