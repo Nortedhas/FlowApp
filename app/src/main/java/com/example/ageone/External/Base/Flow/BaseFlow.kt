@@ -3,6 +3,7 @@ package com.example.ageone.External.Base.Flow
 import android.graphics.Color
 import android.view.View
 import androidx.core.view.contains
+import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
@@ -25,6 +26,7 @@ open class BaseFlow: View(currentActivity){
 
     init {
         onStart?.invoke()
+        setBottomNavigationVisible(isBottomNavigationVisible)
     }
 
     fun push(module: BaseModule?) {

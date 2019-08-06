@@ -2,6 +2,7 @@ package com.example.ageone.Models.User
 
 import net.alexandroid.shpref.ShPref
 
+//object?
 class UserData {
 
     var hashId: String

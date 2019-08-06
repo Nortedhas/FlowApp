@@ -1,7 +1,7 @@
 package com.example.ageone.Application.Coordinator.Flow
 
 import android.graphics.Color
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.viewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Auth.AuthView
@@ -14,10 +14,12 @@ fun FlowCoordinator.runFlowAuth() {
     var flow: FlowAuth? = FlowAuth()
 
     flow?.let{ module ->
+        module.isBottomNavigationVisible = true
+
         viewFlipperFlow.addView(module.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
 
-        isBottomNavigationVisible(true)
+//        setBottomNavigationVisible(true)
         setStatusBarColor(Color.TRANSPARENT)
     }
 

@@ -6,9 +6,5 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.currentActivity
 
 class BaseRecyclerView: RecyclerView(currentActivity as Context) {
-    val bodyTable by lazy {
-        val bodyTable = RecyclerView(currentActivity as Activity)
-        bodyTable
-    }
 
 }

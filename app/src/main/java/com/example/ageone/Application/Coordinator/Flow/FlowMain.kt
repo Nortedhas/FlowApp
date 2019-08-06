@@ -1,7 +1,7 @@
 package com.example.ageone.Application.Coordinator.Flow
 
 import android.graphics.Color
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.viewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Accaunt.AccauntView
 import com.example.ageone.Modules.Accaunt.AccauntViewModel
@@ -12,10 +12,11 @@ fun FlowCoordinator.runFlowMain() {
 
     flow?.let{ module ->
         module.colorStatusBar = Color.CYAN
+        module.isBottomNavigationVisible = true
         viewFlipperFlow.addView(module.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(module.viewFlipperModule)
         
-        isBottomNavigationVisible(true)
+//        setBottomNavigationVisible(true)
         setStatusBarColor(module.colorStatusBar)
     }
 

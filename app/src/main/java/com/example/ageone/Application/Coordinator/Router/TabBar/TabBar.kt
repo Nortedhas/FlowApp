@@ -5,7 +5,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.example.ageone.Application.Coordinator.Flow.FlowAuth
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.viewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowMain
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity

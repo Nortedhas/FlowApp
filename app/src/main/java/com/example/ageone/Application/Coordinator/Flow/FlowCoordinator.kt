@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.view.View
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.example.ageone.Application.AppActivity
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.viewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
 import com.example.ageone.Application.currentActivity
@@ -13,6 +13,8 @@ import com.example.ageone.Application.setStatusBarColor
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.Models.User.UserData
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 class FlowCoordinator {
@@ -62,23 +64,20 @@ class FlowCoordinator {
             .fillHorizontally()
 
         bottomNavigation.constrainBottomToBottomOf(router.layout)
-        isBottomNavigationVisible(true)
+        setBottomNavigationVisible(true)
 
     }
 
-    object viewFlipperFlowObject{
+
+    object ViewFlipperFlowObject{
         val viewFlipperFlow by lazy {
             val flipper = BaseViewFlipper()
             flipper
         }
     }
-
-
-
-
 }
 
-fun FlowCoordinator.isBottomNavigationVisible(visible: Boolean) = if (visible) {
+fun setBottomNavigationVisible(visible: Boolean) = if (visible) {
     bottomNavigation.visibility = View.VISIBLE
 } else {
     bottomNavigation.visibility = View.GONE

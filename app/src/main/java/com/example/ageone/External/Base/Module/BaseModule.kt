@@ -41,10 +41,6 @@ open class BaseModule : ConstraintLayout(currentActivity) {
         Timber.i("${this.className()} Init ")
     }
 
-    fun getClassName(name: String): String {
-        return name.split("{")[0]
-    }
-
     fun saveArea() = utils.variable.statusBarHeight + toolBar.height
 
     fun renderUI() {
@@ -74,5 +70,4 @@ open class BaseModule : ConstraintLayout(currentActivity) {
     fun className(): String {
         return utils.tools.getClassName(this.toString())
     }
-
 }
