@@ -59,8 +59,6 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation 'com.redmadrobot:input-mask-android:4.3.1'
-
     implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'
     implementation 'com.github.swarmnyc.promisekt:promisekt-android:1.0.5'
 

@@ -1,14 +1,11 @@
 package com.example.ageone.Modules.Accaunt
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.view.View
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
-import com.example.ageone.External.Base.TextInputLayout.*
+import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
+import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.google.android.material.textfield.TextInputLayout
 import yummypets.com.stevia.*

@@ -10,3 +10,4 @@ class BaseTextView(): TextView(currentActivity) {
     }
 
 }
+
