@@ -19,7 +19,7 @@ fun FlowCoordinator.runFlowMain() {
 //        setBottomNavigationVisible(true)
         setStatusBarColor(flow.colorStatusBar)
 
-        FlowCoordinator.stack.flows.add(flow)
+//        FlowCoordinator.stack.flows.add(flow)
     }
 
     flow?.onFinish = {

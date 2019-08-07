@@ -22,27 +22,15 @@ class AccauntView: BaseModule() {
         val textView = BaseTextView()
         val image = BaseImageView()
 
-        val textInputEditText by lazy {
-            val textInputEditText = BaseTextInputEditText()
-            textInputEditText.textColor = Color.MAGENTA
-            textInputEditText.defineType(InputEditTextType.PHONE)
-            textInputEditText.setInactiveUnderlineColor(Color.GREEN)
-            textInputEditText
-        }
-
         val textInputL by lazy {
             val textInputL = BaseTextInputLayout()
             textInputL.hint = "phone"
             textInputL.boxStrokeColor = Color.TRANSPARENT
             textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
-            textInputL.addView(textInputEditText)
+            textInputL.defineType(InputEditTextType.PHONE)
+            textInputL.setInactiveUnderlineColor(Color.GREEN)
+            textInputL.editText?.textColor = Color.MAGENTA
             textInputL
-        }
-
-        val textInputEditTextPassword by lazy {
-            val textInputEditText = BaseTextInputEditText()
-            textInputEditText.textColor = Color.MAGENTA
-            textInputEditText
         }
 
         val textInputPassword by lazy {
@@ -50,7 +38,6 @@ class AccauntView: BaseModule() {
             textInputL.hint = "password"
             textInputL.boxStrokeColor = Color.MAGENTA
             textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE)
-            textInputL.addView(textInputEditTextPassword)
             textInputL.initPassword()
             textInputL
         }

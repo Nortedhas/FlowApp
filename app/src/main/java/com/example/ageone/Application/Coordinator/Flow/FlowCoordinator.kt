@@ -97,7 +97,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = false): LaunchInstructor {
+        fun configure(isAutorized: Boolean = true): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main

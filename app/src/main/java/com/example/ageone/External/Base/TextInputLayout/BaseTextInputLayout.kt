@@ -18,6 +18,9 @@ class BaseTextInputLayout: TextInputLayout(currentActivity) {
             setHintTextAppearance(R.style.MyHintText)
             setErrorTextAppearance(R.style.ErrorText)
         }
+
+        val text = BaseTextInputEditText()
+        addView(text)
     }
 
     fun initPassword(colorToggled: Int = boxStrokeColor) {
@@ -28,40 +31,45 @@ class BaseTextInputLayout: TextInputLayout(currentActivity) {
             setPasswordVisibilityToggleTintList(ColorStateList.valueOf(colorToggled))
         }
     }
-}
 
-class BaseTextInputEditText: TextInputEditText(currentActivity) {
 
     fun defineType (type: InputEditTextType) = when(type) {
 
         InputEditTextType.EMAIL -> {
-            inputType = InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
+            editText?.inputType = InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         }
 
         InputEditTextType.NUMERIC -> {
-            inputType = InputType.TYPE_CLASS_NUMBER
+            editText?.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
         InputEditTextType.URI -> {
-            inputType = InputType.TYPE_TEXT_VARIATION_URI
+            editText?.inputType = InputType.TYPE_TEXT_VARIATION_URI
         }
 
         InputEditTextType.PHONE -> {
-            inputType = InputType.TYPE_CLASS_NUMBER
-            keyListener = DigitsKeyListener.getInstance("1234567890+-() ")
+            editText?.inputType = InputType.TYPE_CLASS_NUMBER
+            editText?.keyListener = DigitsKeyListener.getInstance("1234567890+-() ")
 
-            val listener = MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", this)
+            editText?.let { editText ->
+                val listener = MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", editText)
+                editText.addTextChangedListener(listener)
 
-            addTextChangedListener(listener)
-            onFocusChangeListener = listener
+                onFocusChangeListener = listener
+            }
+
         }
 
         InputEditTextType.TEXT -> {}
     }
 
     fun setInactiveUnderlineColor(color: Int) {
-        backgroundTintList = ColorStateList.valueOf(color)
+        editText?.backgroundTintList = ColorStateList.valueOf(color)
     }
+
+}
+
+class BaseTextInputEditText: TextInputEditText(currentActivity) {
 }
 
 enum class InputEditTextType{

@@ -22,7 +22,7 @@ fun FlowCoordinator.runFlowAuth() {
 //        setBottomNavigationVisible(true)
         setStatusBarColor(Color.TRANSPARENT)
 
-        FlowCoordinator.stack.flows.add(flow)
+//        FlowCoordinator.stack.flows.add(flow)
     }
 
     flow?.onFinish = {
