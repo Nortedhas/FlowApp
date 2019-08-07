@@ -7,6 +7,7 @@ import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
+import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
 import timber.log.Timber
 import yummypets.com.stevia.*
@@ -30,6 +31,11 @@ open class BaseModule : ConstraintLayout(currentActivity) {
         toolBar
             .setBackgroundColor(Color.MAGENTA)
         toolBar
+    }
+    
+    val recyclerViewBodyTable by lazy {
+        val recyclerViewContent = BaseRecyclerView()
+        recyclerViewContent
     }
 
     var onDeInit: (() -> Unit)? = null

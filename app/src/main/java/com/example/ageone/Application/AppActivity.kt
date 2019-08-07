@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.ageone.External.Base.Activity.BaseActivity
 import com.example.ageone.External.Libraries.Glide.GlideApp
 import com.example.ageone.Network.HTTP.Methods
@@ -28,6 +29,7 @@ class AppActivity: BaseActivity()  {
         GlideApp
             .with( this )
             .download("https://i.pinimg.com/originals/8c/d2/f5/8cd2f5f7c3b02db7bf60b5ec68d11398.jpg")
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
 
         Promise<Unit> { resolve, _ ->
 
