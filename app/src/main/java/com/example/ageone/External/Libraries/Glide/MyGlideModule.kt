@@ -23,7 +23,6 @@ fun addImageFromGlide(image: ImageView, uri: String) {
     circularProgressDrawable.start()
 
     val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
-    placeholderImage
 
     val placeholder = LayerDrawable(
         arrayOf(
@@ -32,22 +31,10 @@ fun addImageFromGlide(image: ImageView, uri: String) {
         )
     )
 
-    //for cashing photo
-    /*val requestOptions = RequestOptions().priority(Priority.IMMEDIATE)
-    GlideApp
-        .with(this)
-        .downloadOnly()
-        .apply(requestOptions)
-        .submit()
-
-        Glide.with(this)
-    .load(url)
-    .diskCacheStrategy(DiskCacheStrategy.ALL)
-        */
-
     GlideApp
         .with(image)
         .load(uri)
+        .onlyRetrieveFromCache(true) //only from cache
         .transform(CenterCrop(), RoundedCorners(25F.dp.toInt()))
         .placeholder(placeholder)
         .into(image)

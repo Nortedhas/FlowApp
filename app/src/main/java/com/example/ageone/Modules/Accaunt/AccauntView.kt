@@ -7,6 +7,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Libraries.Glide.addImageFromGlide
 import com.google.android.material.textfield.TextInputLayout
 import yummypets.com.stevia.*
 
@@ -52,9 +53,9 @@ class AccauntView: BaseModule() {
         image
             .height(40F.dp)
             .width(40F.dp)
-            .setBackgroundColor(Color.RED)
+//            .setBackgroundColor(Color.RED)
 
-//        addImageFromGlide(image, "")
+        addImageFromGlide(image, "https://i.pinimg.com/originals/8c/d2/f5/8cd2f5f7c3b02db7bf60b5ec68d11398.jpg")
 
 
         btn.constrainTopToBottomOf(toolBar, 8)
