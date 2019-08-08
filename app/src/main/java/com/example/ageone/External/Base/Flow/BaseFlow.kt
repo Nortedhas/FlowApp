@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.View
 import androidx.core.view.contains
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
@@ -42,7 +43,6 @@ open class BaseFlow: View(currentActivity){
             deInitModule(currentModule)
             
         }
-        viewFlipperModule.displayedChild
     }
 
     fun popToRoot() {
@@ -73,5 +73,4 @@ open class BaseFlow: View(currentActivity){
             }
         }
     }
-
 }

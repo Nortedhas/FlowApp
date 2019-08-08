@@ -3,12 +3,19 @@ package com.example.ageone.Application.Coordinator.Router.TabBar
 import android.graphics.Color
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
-import com.example.ageone.Application.Coordinator.Flow.FlowAuth
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Flow.FlowMain
+import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
+import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
+import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.items
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.router
+import com.example.ageone.External.Base.Flow.BaseFlow
+
+object Stack {
+    var flows = arrayListOf<BaseFlow>()
+    var items = arrayListOf<AHBottomNavigationItem>()
+}
 
 object TabBar {
 
@@ -16,12 +23,14 @@ object TabBar {
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if (!wasSelected) {
                 viewFlipperFlow.displayedChild = position
-//                router.setCurrentFLow(flows[position])
+                router.setCurrentFLow(flows[position])
+
+                setStatusBarColor(flows[position].colorStatusBar)
             }
             true
         }
 
-        createStack()
+        createStackItem()
         setUpTabs()
     }
 
@@ -38,44 +47,25 @@ object TabBar {
         bottomNavigation
     }
 
-    /*val flowMain by lazy {
-        val flowMain = FlowMain()
-//        runFlowMain()
-        flowMain
-    }
-
-    val flowAuth by lazy {
-        val flowAuth = FlowAuth()
-//        runFlowAuth()
-        flowAuth
-    }*/
-
     private fun setUpTabs() {
 
-        for (item in FlowCoordinator.stack.items) {
+        for (item in items) {
             bottomNavigation.addItem(item)
         }
 
-        for (flow in FlowCoordinator.stack.flows) {
+//        viewFlipperFlow.removeAllViews()
+
+        for (flow in flows) {
             viewFlipperFlow.addView(flow)
         }
 
-    }/*FlowCoordinator.stack.flows = arrayListOf(
-            flowAuth,
-            flowMain
-        )*/
+    }
 
-    private fun createStack() {
-
-        FlowCoordinator.stack.items = arrayListOf(
-            AHBottomNavigationItem("Auth", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
+    private fun createStackItem() {
+        items = arrayListOf(
+            AHBottomNavigationItem("One", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
             AHBottomNavigationItem("Main", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
         )
-
-        /*FlowCoordinator.stack.flows = arrayListOf(
-            flowAuth,
-            flowMain
-        )*/
 
     }
 }

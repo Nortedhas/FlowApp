@@ -1,31 +1,21 @@
 package com.example.ageone.Application.Coordinator.Flow
 
-import android.app.Activity
 import android.graphics.Color
 import android.view.View
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
-import com.bumptech.glide.Priority
-import com.bumptech.glide.request.RequestOptions
-import com.example.ageone.Application.*
+import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
-import com.example.ageone.Application.Coordinator.Router.createStack
-import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.Application.Coordinator.Router.createStackFlows
+import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.router
+import com.example.ageone.Application.setStatusBarColor
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
-import com.example.ageone.External.Libraries.Glide.GlideApp
-import com.example.ageone.Models.User.UserData
-import com.swarmnyc.promisekt.Promise.Companion.resolve
-import timber.log.Timber
 import yummypets.com.stevia.*
 
 class FlowCoordinator {
 
-    object stack {
-        var flows = arrayListOf<BaseFlow>()
-        var items = arrayListOf<AHBottomNavigationItem>()
-    }
 
     fun setLaunchScreen() {
 
@@ -47,17 +37,21 @@ class FlowCoordinator {
     private var instructor = LaunchInstructor.configure()
 
     fun start() {
-        when (instructor) {
+
+        /*when (instructor) {
             LaunchInstructor.Main -> runFlowMain()
             LaunchInstructor.Auth -> runFlowAuth()
-        }
+        }*/
 
+        createStackFlows()
+        createBottomNavigation()
+
+        bottomNavigation.constrainBottomToBottomOf(router.layout)
+        bottomNavigation.currentItem = 1
+        setBottomNavigationVisible(true)
     }
 
     private fun renderUI() {
-        createStack()
-        createBottomNavigation()
-
         router.layout.subviews(
             viewFlipperFlow,
             bottomNavigation
@@ -66,9 +60,6 @@ class FlowCoordinator {
         viewFlipperFlow
             .fillVertically()
             .fillHorizontally()
-
-        bottomNavigation.constrainBottomToBottomOf(router.layout)
-        setBottomNavigationVisible(true)
 
     }
 
@@ -97,7 +88,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = true): LaunchInstructor {
+        fun configure(isAutorized: Boolean = false): LaunchInstructor {
 
             return when (isAutorized) {
                 true -> Main

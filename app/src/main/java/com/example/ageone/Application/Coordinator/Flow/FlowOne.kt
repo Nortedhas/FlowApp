@@ -4,22 +4,22 @@ import android.graphics.Color
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.Modules.Accaunt.AccauntView
-import com.example.ageone.Modules.Accaunt.AccauntViewModel
+import com.example.ageone.Modules.Auth.OneView
+import com.example.ageone.Modules.Auth.OneViewModel
 import timber.log.Timber
 
-fun FlowCoordinator.runFlowMain() {
+fun FlowCoordinator.runFlowOne() {
 
-    var flow: FlowMain? = FlowMain()
+    var flow: FlowOne? = FlowOne()
 
     flow?.let{ flow ->
-        flow.colorStatusBar = Color.CYAN
+        flow.colorStatusBar = Color.YELLOW
         flow.isBottomNavigationVisible = true
+
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
-        
-//        setBottomNavigationVisible(true)
-        setStatusBarColor(flow.colorStatusBar)
+
+        setStatusBarColor(Color.TRANSPARENT)
 
         flows.add(flow)
     }
@@ -33,21 +33,22 @@ fun FlowCoordinator.runFlowMain() {
     flow?.start()
 }
 
-class FlowMain: BaseFlow() {
+class FlowOne: BaseFlow() {
 
     fun start() {
         if (!flows.contains(this)) {
-            runModuleAccaunt()
+            runModuleOne()
         }
     }
 
-    fun runModuleAccaunt() {
-        val module = AccauntView()
+    fun runModuleOne() {
+        val module = OneView()
         module.emitEvent = { event ->
-            when(AccauntViewModel.EventType.valueOf(event)) {
-                AccauntViewModel.EventType.OnPhotoClicked -> Timber.i("clicked photo")
+            when(OneViewModel.EventType.valueOf(event)) {
+                OneViewModel.EventType.OnButtonPressed -> Timber.i("One module button")
             }
         }
         push(module)
     }
+
 }

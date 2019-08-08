@@ -52,24 +52,23 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'            //JSON
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'         //HTTP
 
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'             //RecyclerView
 
-    implementation ('io.socket:socket.io-client:1.0.0') {
+    implementation ('io.socket:socket.io-client:1.0.0') {                   //SocketIO
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
 
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'                  //Glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'         //Color shadow for image (with Glide)
 
-    implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'
+    implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'          //PromiseKt
     implementation 'com.github.swarmnyc.promisekt:promisekt-android:1.0.5'
 
-    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'         //ReactiveNetwork
 
-    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'
-
-    implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'               //AHBottomNavigation
 }

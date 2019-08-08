@@ -3,20 +3,21 @@ package com.example.ageone.Modules.Accaunt
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
+import com.example.ageone.External.Base.RecyclerView.inflate
 import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Libraries.Glide.addImageFromGlideWithShadow
 import com.google.android.material.textfield.TextInputLayout
+import io.github.armcha.coloredshadow.ShadowImageView
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 import yummypets.com.stevia.*
 
@@ -42,7 +43,7 @@ class AccauntView: BaseModule() {
         }
 
         val image by lazy {
-            val image = ImageView(currentActivity as Context)
+            val image = ShadowImageView(currentActivity as Context)
             image
                 .height(40F.dp)
                 .width(40F.dp)
@@ -94,7 +95,7 @@ class AccauntView: BaseModule() {
         }
 
         val recyclerView by lazy {
-            val recyclerView = RecyclerView(currentActivity as Context)
+            val recyclerView = BaseRecyclerView()
             recyclerView.layoutManager = viewManager
             recyclerView.adapter = viewAdapter
             recyclerView
@@ -108,7 +109,7 @@ class AccauntView: BaseModule() {
             .fillHorizontally()
             .fillVertically()
 
-//        addImageFromGlideWithShadow(image, "https://i.pinimg.com/originals/8c/d2/f5/8cd2f5f7c3b02db7bf60b5ec68d11398.jpg")
+        addImageFromGlideWithShadow(image, "https://i.pinimg.com/originals/8c/d2/f5/8cd2f5f7c3b02db7bf60b5ec68d11398.jpg")
 
     }
 }
@@ -120,27 +121,28 @@ class MyAdapter(private val views: ArrayList<View>): RecyclerView.Adapter<MyAdap
 
         val inflatedView = parent.inflate(com.example.ageone.Application.R.layout.recyclerview_item_row, false)
         return MyViewHolder(inflatedView)
+
     }
 
     override fun getItemCount() = views.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
         val itemView = views[position]
         holder.bindView(itemView)
+
     }
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         fun bindView(view: View) {
+
             itemView.item_layout.subviews(view)
+
             if (view is BaseTextInputLayout) {
                 view.fillHorizontally()
             }
         }
     }
 
-}
-
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }

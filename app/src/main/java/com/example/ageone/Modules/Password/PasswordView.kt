@@ -1,14 +1,12 @@
 package com.example.ageone.Modules.Password
 
-import android.content.Context
 import android.graphics.Color
-import android.widget.Button
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
 import yummypets.com.stevia.*
 
-class PasswordView(context: Context?): BaseModule(/*context*/) {
+class PasswordView: BaseModule() {
 
     init {
         setBackgroundColor(Color.GREEN)

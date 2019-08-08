@@ -18,8 +18,6 @@ val coordinator = FlowCoordinator()
 
 val utils = Utils()
 
-
-
 val currentActivity: Activity?
     get() = App.instance?.mFTActivityLifecycleCallbacks?.currentActivity
 
@@ -29,8 +27,7 @@ class App: Application()  {
         instance = this
     }
 
-    val mFTActivityLifecycleCallbacks =
-        FTActivityLifecycleCallbacks()
+    val mFTActivityLifecycleCallbacks = FTActivityLifecycleCallbacks()
 
     override fun onCreate() {
         super.onCreate()
@@ -48,8 +45,6 @@ class App: Application()  {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { isConnectedToInternet ->
-                // do something with isConnectedToInternet value
-
 //                    Timber.i("Internet are allowed")
                     utils.isNetworkReachable = isConnectedToInternet
             }

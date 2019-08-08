@@ -6,7 +6,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import yummypets.com.stevia.constrainTopToBottomOf
 import yummypets.com.stevia.subviews
 
-class AuthView: BaseModule() {
+class OneView: BaseModule() {
 
     init {
         setBackgroundColor(Color.LTGRAY)
@@ -15,12 +15,12 @@ class AuthView: BaseModule() {
         innerContent.subviews(
             btn
         )
-        btn.text = "Some"
+        btn.text = "Hello one"
 
         btn.constrainTopToBottomOf(toolBar, 8)
 
         btn.setOnClickListener {
-            emitEvent?.invoke(AuthViewModel.EventType.OnButtonPressed.toString())
+            emitEvent?.invoke(OneViewModel.EventType.OnButtonPressed.toString())
         }
 
     }
