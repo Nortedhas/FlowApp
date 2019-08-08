@@ -64,9 +64,7 @@ class BaseTextInputLayout: TextInputLayout(currentActivity) {
 
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-                    @SuppressLint("SetTextI18n")
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        Timber.i("$s start: $start before: $before count: $count")
 
                         if (before == 0) {
                             val newPhone = when (s?.length ?: 40) {
