@@ -18,6 +18,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        renderscriptTargetApi 28
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
@@ -61,6 +64,8 @@ dependencies {
 
     implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'
     implementation 'com.github.swarmnyc.promisekt:promisekt-android:1.0.5'
+
+    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
 
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'
 
