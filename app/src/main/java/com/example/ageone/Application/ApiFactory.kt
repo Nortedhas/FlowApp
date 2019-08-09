@@ -3,7 +3,6 @@ package com.example.ageone.Application
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -34,27 +33,28 @@ object Apifactory{
     }
 
     //OkhttpClient for building http request url
-    private val tmdbClient = OkHttpClient().newBuilder()
+    private val client = OkHttpClient().newBuilder()
         .addInterceptor(authInterceptor)
         .build()
 
 
 
-    fun retrofit() : Retrofit = Retrofit.Builder()
-        .client(tmdbClient)
+    fun retrofit() = Retrofit.Builder()
+        .client(client)
         .baseUrl("http://194.87.102.35/")
         .addConverterFactory(MoshiConverterFactory.create())
 //        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
 
-    val curApi: CurApi = retrofit().create(CurApi::class.java)
+    val curApi: CurApi
+        get() = retrofit().create(CurApi::class.java)
 
 }
 
 interface CurApi {
     @POST("/database/")
-    fun getDb(@Body dbBody: DbBody): DbResponse
+    fun getDb(@Body dbBody: DbBody): Call<DbResponse>
 }
 
 data class DbResponse(
