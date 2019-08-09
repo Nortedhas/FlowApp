@@ -2,21 +2,19 @@ package com.example.ageone.Application
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.ageone.External.Base.Activity.BaseActivity
-import com.example.ageone.External.Libraries.Glide.GlideApp
 import com.example.ageone.Network.HTTP.Methods
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
+import retrofit2.Callback
 import timber.log.Timber
-import yummypets.com.stevia.subviews
+
 
 class AppActivity: BaseActivity()  {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         // for launchScreen
         setTheme(R.style.AppTheme)
 
@@ -25,7 +23,6 @@ class AppActivity: BaseActivity()  {
         window.decorView.systemUiVisibility =
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-
 
         coordinator.setLaunchScreen()
         Promise<Unit> { resolve, _ ->
@@ -44,6 +41,26 @@ class AppActivity: BaseActivity()  {
         }
 
         setContentView(router.layout)
+
+        /*val getDb = Apifactory.curApi.getDb(
+            DbBody(
+                "fetch",
+                "Tariff",
+                ""
+            )
+        )*/
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Timber.i("fail")
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+                Timber.i("$token")
+            })
 
     }
 

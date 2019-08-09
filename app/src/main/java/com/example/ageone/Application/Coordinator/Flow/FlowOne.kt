@@ -39,6 +39,7 @@ class FlowOne: BaseFlow() {
         if (!flows.contains(this)) {
             runModuleOne()
         }
+        runModuleOne()
     }
 
     fun runModuleOne() {

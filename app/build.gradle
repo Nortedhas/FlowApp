@@ -7,6 +7,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
+
 
 android {
     compileSdkVersion 28
@@ -38,6 +41,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta2'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
@@ -57,7 +61,7 @@ dependencies {
 
     implementation 'com.android.support:recyclerview-v7:28.0.0'             //RecyclerView
 
-    implementation ('io.socket:socket.io-client:1.0.0') {                   //SocketIO
+    implementation('io.socket:socket.io-client:1.0.0') {                   //SocketIO
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
@@ -75,15 +79,7 @@ dependencies {
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'               //AHBottomNavigation
 
-    // Check for v11.4.2 or higher
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-
-    // (Recommended) Add Analytics
-    implementation 'com.google.firebase:firebase-analytics:17.0.1'
-
-    // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
-    implementation 'com.google.firebase:firebase-messaging:19.0.1'
 
 }

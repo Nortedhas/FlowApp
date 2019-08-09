@@ -38,17 +38,19 @@ class FlowCoordinator {
 
     fun start() {
 
+        runFlowOne()
+
         /*when (instructor) {
             LaunchInstructor.Main -> runFlowMain()
             LaunchInstructor.Auth -> runFlowAuth()
         }*/
 
-        createStackFlows()
+        /*createStackFlows()
         createBottomNavigation()
 
         bottomNavigation.constrainBottomToBottomOf(router.layout)
         bottomNavigation.currentItem = 1
-        setBottomNavigationVisible(true)
+        setBottomNavigationVisible(true)*/
     }
 
     private fun renderUI() {
