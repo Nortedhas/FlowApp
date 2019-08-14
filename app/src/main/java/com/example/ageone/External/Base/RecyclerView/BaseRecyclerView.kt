@@ -12,6 +12,6 @@ class BaseRecyclerView: RecyclerView(currentActivity as Context) {
 
 }
 
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+open class BaseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
 }

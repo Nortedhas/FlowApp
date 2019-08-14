@@ -36,9 +36,6 @@ fun FlowCoordinator.runFlowOne() {
 class FlowOne: BaseFlow() {
 
     fun start() {
-        if (!flows.contains(this)) {
-            runModuleOne()
-        }
         runModuleOne()
     }
 
@@ -46,7 +43,10 @@ class FlowOne: BaseFlow() {
         val module = OneView()
         module.emitEvent = { event ->
             when(OneViewModel.EventType.valueOf(event)) {
-                OneViewModel.EventType.OnButtonPressed -> Timber.i("One module button")
+                OneViewModel.EventType.OnButtonPressed -> {
+                    Timber.i("One module button")
+
+                }
             }
         }
         push(module)

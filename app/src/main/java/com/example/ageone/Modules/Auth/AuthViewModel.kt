@@ -5,7 +5,8 @@ import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class AuthViewModel: InterfaceViewModel {
     enum class EventType {
-        OnButtonPressed
+        OnButtonPressed,
+        OnButonOpenNavPressed
     }
 }
 

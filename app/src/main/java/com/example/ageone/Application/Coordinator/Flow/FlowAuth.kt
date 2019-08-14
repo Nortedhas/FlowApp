@@ -2,6 +2,7 @@ package com.example.ageone.Application.Coordinator.Flow
 
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
+import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Auth.AuthView
 import com.example.ageone.Modules.Auth.AuthViewModel
@@ -32,10 +33,8 @@ fun FlowCoordinator.runFlowAuth() {
 class FlowAuth: BaseFlow() {
 
     fun start() {
-
-        if (!flows.contains(this)) {
             runModuleAuth()
-        }
+
     }
 
     fun runModuleAuth() {
@@ -43,6 +42,11 @@ class FlowAuth: BaseFlow() {
         module.emitEvent = { event ->
             when(AuthViewModel.EventType.valueOf(event)) {
                 AuthViewModel.EventType.OnButtonPressed -> runModulePassword()
+                AuthViewModel.EventType.OnButonOpenNavPressed -> {
+
+                    coordinator.start()
+                }
+
             }
         }
         push(module)

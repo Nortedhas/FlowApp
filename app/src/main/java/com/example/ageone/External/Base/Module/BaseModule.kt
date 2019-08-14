@@ -3,6 +3,7 @@ package com.example.ageone.External.Base.Module
 import android.graphics.Color
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
@@ -32,10 +33,16 @@ open class BaseModule : ConstraintLayout(currentActivity) {
             .setBackgroundColor(Color.MAGENTA)
         toolBar
     }
+
+    val viewManagerBodyTable by lazy {
+        val viewManager = LinearLayoutManager(currentActivity)
+        viewManager
+    }
     
-    val recyclerViewBodyTable by lazy {
-        val recyclerViewContent = BaseRecyclerView()
-        recyclerViewContent
+    val bodyTable by lazy {
+        val recyclerView = BaseRecyclerView()
+        recyclerView.layoutManager = viewManagerBodyTable
+        recyclerView
     }
 
     var onDeInit: (() -> Unit)? = null
@@ -61,6 +68,7 @@ open class BaseModule : ConstraintLayout(currentActivity) {
         innerContent
             .fillHorizontally()
             .fillVertically()
+
 
         toolBar
             .constrainTopToTopOf(innerContent, 0)

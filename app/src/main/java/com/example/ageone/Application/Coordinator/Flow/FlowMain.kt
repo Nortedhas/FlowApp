@@ -18,7 +18,7 @@ fun FlowCoordinator.runFlowMain() {
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
         
-//        setBottomNavigationVisible(true)
+        setBottomNavigationVisible(true)
         setStatusBarColor(flow.colorStatusBar)
 
         flows.add(flow)
@@ -36,9 +36,7 @@ fun FlowCoordinator.runFlowMain() {
 class FlowMain: BaseFlow() {
 
     fun start() {
-        if (!flows.contains(this)) {
             runModuleAccaunt()
-        }
     }
 
     fun runModuleAccaunt() {
