@@ -20,10 +20,14 @@ object Stack {
 object TabBar {
 
     fun createBottomNavigation() {
+
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if (!wasSelected) {
                 viewFlipperFlow.displayedChild = position
-                router.setCurrentFLow(flows[position])
+
+                if (!flows[position].isStarted) {
+                    flows[position].start()
+                }
 
                 setStatusBarColor(flows[position].colorStatusBar)
             }
@@ -58,6 +62,8 @@ object TabBar {
         for (flow in flows) {
             viewFlipperFlow.addView(flow)
         }
+
+//        flows[0].start()
 
     }
 

@@ -76,7 +76,7 @@ class AppActivity: BaseActivity()  {
 
                 // Get new Instance ID token
                 val token = task.result?.token
-                Timber.i("$token")
+//                Timber.i("$token")
             })
 
     }

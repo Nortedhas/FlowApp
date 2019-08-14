@@ -1,7 +1,9 @@
-package com.example.ageone.Application.Coordinator.Flow
+package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Accaunt.AccauntView
@@ -10,7 +12,8 @@ import timber.log.Timber
 
 fun FlowCoordinator.runFlowMain() {
 
-    var flow: FlowMain? = FlowMain()
+    var flow: FlowMain? =
+        FlowMain()
 
     flow?.let{ flow ->
         flow.colorStatusBar = Color.CYAN
@@ -29,16 +32,13 @@ fun FlowCoordinator.runFlowMain() {
         flow?.viewFlipperModule?.removeAllViews()
         flow = null
     }
-
-    flow?.start()
 }
 
 class FlowMain: BaseFlow() {
 
-    fun start() {
-        if (!flows.contains(this)) {
-            runModuleAccaunt()
-        }
+    override fun start() {
+        isStarted = true
+        runModuleAccaunt()
     }
 
     fun runModuleAccaunt() {

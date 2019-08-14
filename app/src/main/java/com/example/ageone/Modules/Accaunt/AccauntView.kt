@@ -1,148 +1,106 @@
 package com.example.ageone.Modules.Accaunt
 
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ageone.Application.currentActivity
-import com.example.ageone.External.Base.Button.BaseButton
+import com.example.ageone.Application.R
+import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
-import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
-import com.example.ageone.External.Base.RecyclerView.inflate
-import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
-import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
-import com.example.ageone.External.Base.TextView.BaseTextView
-import com.example.ageone.External.Libraries.Glide.addImageFromGlideWithShadow
-import com.google.android.material.textfield.TextInputLayout
-import io.github.armcha.coloredshadow.ShadowImageView
-import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
+import com.example.ageone.External.Base.ViewHolder.BaseViewHolder
+import com.example.ageone.External.Base.ViewHolder.NothingViewHolder
+import com.example.ageone.Modules.Accaunt.rows.AccauntButtonViewHolder
+import com.example.ageone.Modules.Accaunt.rows.AccauntNameViewHolder
+import com.example.ageone.Modules.Accaunt.rows.AccauntPhoneViewHolder
+import com.example.ageone.Modules.Accaunt.rows.initialize
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 
-class AccauntView: BaseModule() {
+class AccauntView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
     init {
-        setBackgroundColor(Color.LTGRAY)
+        /*setBackgroundResource(R.drawable.first_fone)
 
-        val btn by lazy {
-            val btn = BaseButton()
-            btn.text = "Some"
-            btn.setOnClickListener {
-                emitEvent?.invoke(AccauntViewModel.EventType.OnPhotoClicked.toString())
-            }
-            btn
-        }
-
-        val textView by lazy {
-            val textView = BaseTextView()
-            textView.text = "Accaunt"
-            textView
-        }
-
-        val image by lazy {
-            val image = ShadowImageView(currentActivity as Context)
-            image
-                .height(40F.dp)
-                .width(40F.dp)
-                .setBackgroundColor(Color.RED)
-            image
-        }
-
-        val textInputL by lazy {
-            val textInputL = BaseTextInputLayout()
-            textInputL.hint = "phone"
-            textInputL.boxStrokeColor = Color.TRANSPARENT
-            textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
-            textInputL.defineType(InputEditTextType.PHONE)
-            textInputL.setInactiveUnderlineColor(Color.GREEN)
-            textInputL.editText?.textColor = Color.MAGENTA
-            textInputL
-        }
-
-        val textInputPassword by lazy {
-            val textInputL = BaseTextInputLayout()
-            textInputL.hint = "password"
-            textInputL.boxStrokeColor = Color.MAGENTA
-            textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE)
-            textInputL.initPassword()
-            textInputL
-        }
-
-        val text by lazy {
-            val text = BaseTextView()
-            text.text = "elevation"
-            val shape = GradientDrawable()
-            shape.shape = GradientDrawable.RECTANGLE
-            shape.setColor(Color.parseColor("#30bcff"))
-            text.background = shape
-            text.width(25F.dp)
-            text.elevation = 8F.dp
-            text
-        }
-
-        val viewManager by lazy {
-            val viewManager = LinearLayoutManager(currentActivity)
-            viewManager
-        }
-
-        val myDataSet = arrayListOf(btn, textView, image, textInputL, textInputPassword, text)
         val viewAdapter by lazy {
-            val viewAdapter = MyAdapter(myDataSet)
+            val viewAdapter = DataAdapter()
             viewAdapter
         }
 
-        val recyclerView by lazy {
-            val recyclerView = BaseRecyclerView()
-            recyclerView.layoutManager = viewManager
-            recyclerView.adapter = viewAdapter
-            recyclerView
-        }
+        bodyTable.adapter = viewAdapter
 
         innerContent.subviews(
-            recyclerView
+            bodyTable
         )
 
-        recyclerView
+        bodyTable
             .fillHorizontally()
             .fillVertically()
-
-        addImageFromGlideWithShadow(image, "https://i.pinimg.com/originals/8c/d2/f5/8cd2f5f7c3b02db7bf60b5ec68d11398.jpg")
+            .constrainTopToBottomOf(toolBar, 0)*/
 
     }
 }
 
+/*
+class DataAdapter: RecyclerView.Adapter<BaseViewHolder>() {
 
-class MyAdapter(private val views: ArrayList<View>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+    override fun getItemCount() = 3
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
-        val inflatedView = parent.inflate(com.example.ageone.Application.R.layout.recyclerview_item_row, false)
-        return MyViewHolder(inflatedView)
-
+    companion object {
+        private const val AccauntTitleType = 0
+        private const val AccauntPhoneType = 1
+        private const val AccauntButtonType = 2
     }
 
-    override fun getItemCount() = views.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val view = ConstraintLayout(parent.context)
+        view.height(wrapContent)
+        view.width(matchParent)
 
-        val itemView = views[position]
-        holder.bindView(itemView)
-
-    }
-
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-
-        fun bindView(view: View) {
-
-            itemView.item_layout.subviews(view)
-
-            if (view is BaseTextInputLayout) {
-                view.fillHorizontally()
+        return when (viewType) {
+            AccauntNameType -> {
+                val cell = AccauntNameViewHolder(view)
+                cell
             }
+            AccauntPhoneType -> {
+                val cell = AccauntPhoneViewHolder(view)
+                cell
+            }
+            AccauntButtonType -> {
+                val cell = AccauntButtonViewHolder(view)
+                cell
+            }
+            else -> NothingViewHolder(view)
         }
     }
 
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        when (holder) {
+            is AccauntNameViewHolder ->
+                holder.initialize("Введите ваше имя и фамилию:")
+            is AccauntPhoneViewHolder ->
+                holder.initialize("Введите номер телефона:")
+            is AccauntButtonViewHolder -> {
+                holder.initialize("Press")
+                holder.button.setOnClickListener {
+                    Timber.i("Hello world")
+                }
+            }
+
+            else -> throw IllegalArgumentException()
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+
+        return when (position) {
+            0 -> AccauntNameType
+            1 -> AccauntPhoneType
+            2 -> AccauntButtonType
+            else -> -1
+        }
+    }
+
+
 }
+*/

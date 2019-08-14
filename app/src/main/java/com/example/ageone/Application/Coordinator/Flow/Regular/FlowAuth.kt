@@ -1,8 +1,10 @@
-package com.example.ageone.Application.Coordinator.Flow
+package com.example.ageone.Application.Coordinator.Flow.Regular
 
+import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.Modules.Auth.AuthView
 import com.example.ageone.Modules.Auth.AuthViewModel
 import com.example.ageone.Modules.Password.PasswordView
@@ -10,10 +12,10 @@ import com.example.ageone.Modules.Password.PasswordViewModel
 
 fun FlowCoordinator.runFlowAuth() {
 
-    var flow: FlowAuth? = FlowAuth()
+    var flow: FlowAuth? =
+        FlowAuth()
 
     flow?.let{ flow ->
-
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
 
@@ -31,15 +33,14 @@ fun FlowCoordinator.runFlowAuth() {
 
 class FlowAuth: BaseFlow() {
 
-    fun start() {
-
-        if (!flows.contains(this)) {
-            runModuleAuth()
-        }
+    override fun start() {
+        isStarted = true
+        runModuleAuth()
     }
 
     fun runModuleAuth() {
-        val module = AuthView()
+        val initModuleUI = InitModuleUI(true, Color.TRANSPARENT)
+        val module = AuthView(initModuleUI)
         module.emitEvent = { event ->
             when(AuthViewModel.EventType.valueOf(event)) {
                 AuthViewModel.EventType.OnButtonPressed -> runModulePassword()

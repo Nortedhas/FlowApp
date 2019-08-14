@@ -1,18 +1,19 @@
 package com.example.ageone.External.Base.Module
 
-import android.graphics.Color
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
+import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
 import timber.log.Timber
 import yummypets.com.stevia.*
 
-open class BaseModule : ConstraintLayout(currentActivity) {
+open class BaseModule(initModuleUI: InitModuleUI) : ConstraintLayout(currentActivity) {
 
     val backgroundImage by lazy {
         val image = BaseImageView()
@@ -29,12 +30,21 @@ open class BaseModule : ConstraintLayout(currentActivity) {
     val toolBar by lazy {
         val toolBar = BaseToolbar()
         toolBar
-            .setBackgroundColor(Color.MAGENTA)
+            .setBackgroundColor(initModuleUI.colorToolbar)
+        if (initModuleUI.isHidden) {
+            toolBar.visibility = View.GONE
+        }
         toolBar
     }
-    
-    val recyclerViewBodyTable by lazy {
+
+    val viewManager by lazy {
+        val viewManager = LinearLayoutManager(currentActivity)
+        viewManager
+    }
+
+    val bodyTable by lazy {
         val recyclerViewContent = BaseRecyclerView()
+        recyclerViewContent.layoutManager = viewManager
         recyclerViewContent
     }
 
@@ -48,6 +58,10 @@ open class BaseModule : ConstraintLayout(currentActivity) {
     }
 
     fun saveArea() = utils.variable.statusBarHeight + toolBar.height
+
+    fun reload() {
+        //перезагрузка страницы
+    }
 
     fun renderUI() {
 

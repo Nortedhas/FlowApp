@@ -1,7 +1,9 @@
-package com.example.ageone.Application.Coordinator.Flow
+package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Modules.Auth.OneView
@@ -10,7 +12,8 @@ import timber.log.Timber
 
 fun FlowCoordinator.runFlowOne() {
 
-    var flow: FlowOne? = FlowOne()
+    var flow: FlowOne? =
+        FlowOne()
 
     flow?.let{ flow ->
         flow.colorStatusBar = Color.YELLOW
@@ -30,15 +33,12 @@ fun FlowCoordinator.runFlowOne() {
         flow = null
     }
 
-    flow?.start()
 }
 
 class FlowOne: BaseFlow() {
 
-    fun start() {
-        if (!flows.contains(this)) {
-            runModuleOne()
-        }
+    override fun start() {
+        isStarted = true
         runModuleOne()
     }
 

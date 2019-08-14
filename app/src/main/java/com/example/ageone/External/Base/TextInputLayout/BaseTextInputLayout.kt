@@ -1,6 +1,5 @@
 package com.example.ageone.External.Base.TextInputLayout
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.InputFilter
@@ -10,11 +9,11 @@ import android.text.method.DigitsKeyListener
 import android.widget.EditText
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.External.Base.EditText.limitLength
+import com.example.ageone.External.Base.EditText.phoneMask
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import timber.log.Timber
 import yummypets.com.stevia.style
-
 
 class BaseTextInputLayout: TextInputLayout(currentActivity) {
 
@@ -58,67 +57,14 @@ class BaseTextInputLayout: TextInputLayout(currentActivity) {
                 editText.keyListener = DigitsKeyListener.getInstance("1234567890")
                 editText.limitLength(18)
 
-
                 editText.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {}
 
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                         if (before == 0) {
-                            val newPhone = when (s?.length ?: 40) {
-                                1 -> {
-                                    when (s?.last() ?: '0') {
-                                        '7', '8' -> {
-                                            "+7"
-                                        }
-                                        '9' -> {
-                                            "+7 (9"
-                                        }
-                                        else -> {
-                                            ""
-                                        }
-                                    }
-                                }
-
-                                2 -> {
-                                    when (s?.last() ?: '0') {
-                                        '9' -> {
-                                            "+7 (9"
-                                        }
-                                        else -> {
-                                            "+7"
-                                        }
-                                    }
-                                }
-
-                                in (3..5) -> {
-                                    "+7 (9"
-                                }
-
-                                7 -> {
-                                    editText.text.toString() + ") "
-                                }
-
-                                8 -> {
-                                    val last = editText.text?.last()
-                                    editText.text.toString().dropLast(1) + ") " + last
-                                }
-
-                                9 -> {
-                                    val last = editText.text?.last()
-                                    editText.text.toString().dropLast(2) + ") " + last
-                                }
-
-                                13, 16 -> {
-                                    val last = editText.text?.last()
-                                    editText.text.toString().dropLast(1) + "-" + last
-                                }
-
-                                else -> editText.text
-
-                            }
+                            val newPhone = editText.phoneMask(s)
                             editText.setText(newPhone)
                             editText.setSelection(editText.text?.length ?: 0)
                         }
@@ -141,10 +87,28 @@ class BaseTextInputLayout: TextInputLayout(currentActivity) {
 class BaseTextInputEditText: TextInputEditText(currentActivity) {
 }
 
-fun EditText.limitLength(maxLength: Int) {
-    filters = arrayOf(InputFilter.LengthFilter(maxLength))
-}
-
 enum class InputEditTextType{
     TEXT, NUMERIC, EMAIL, URI, PHONE;
 }
+
+
+/*
+val textInputL by lazy {
+    val textInputL = BaseTextInputLayout()
+    textInputL.hint = "phone"
+    textInputL.boxStrokeColor = Color.TRANSPARENT
+    textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
+    textInputL.defineType(InputEditTextType.PHONE)
+    textInputL.setInactiveUnderlineColor(Color.GREEN)
+    textInputL.editText?.textColor = Color.MAGENTA
+    textInputL
+}
+
+val textInputPassword by lazy {
+    val textInputL = BaseTextInputLayout()
+    textInputL.hint = "password"
+    textInputL.boxStrokeColor = Color.MAGENTA
+    textInputL.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE)
+    textInputL.initPassword()
+    textInputL
+}*/

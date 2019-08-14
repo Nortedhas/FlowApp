@@ -2,9 +2,11 @@ package com.example.ageone.Application.Coordinator.Router
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.router
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import timber.log.Timber
+import yummypets.com.stevia.style
 import yummypets.com.stevia.subviews
 
 class Router {
@@ -18,6 +20,12 @@ class Router {
     fun initialize() {
 
         layout = ConstraintLayout(currentActivity)
+
+        router.layout.style {
+            isFocusable = true
+            isFocusableInTouchMode = true
+
+        }
 
     }
 

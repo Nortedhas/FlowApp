@@ -4,12 +4,15 @@ import android.graphics.Color
 import android.view.View
 import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowAuth
+import com.example.ageone.Application.Coordinator.Flow.Stack.runFlowOne
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
 import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
 import com.example.ageone.Application.setStatusBarColor
+import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import yummypets.com.stevia.*
@@ -22,7 +25,7 @@ class FlowCoordinator {
         router.initialize()
         renderUI()
 
-        val launch = BaseModule()
+        val launch = BaseModule(InitModuleUI(colorToolbar = Color.TRANSPARENT))
         launch.setBackgroundColor(Color.TRANSPARENT)
 
         viewFlipperFlow.subviews(
@@ -38,22 +41,28 @@ class FlowCoordinator {
 
     fun start() {
 
-        runFlowOne()
+        viewFlipperFlow.removeAllViews()
 
-        /*when (instructor) {
-            LaunchInstructor.Main -> runFlowMain()
+        when (instructor) {
+
+            LaunchInstructor.Main -> {
+                val startFlow = 1
+                createStackFlows(startFlow)
+                createBottomNavigation()
+
+                bottomNavigation.constrainBottomToBottomOf(router.layout)
+                viewFlipperFlow.constrainBottomToTopOf(bottomNavigation, 0)
+                viewFlipperFlow.displayedChild = startFlow
+                bottomNavigation.currentItem = startFlow
+                setBottomNavigationVisible(true)
+            }
             LaunchInstructor.Auth -> runFlowAuth()
-        }*/
-
-        /*createStackFlows()
-        createBottomNavigation()
-
-        bottomNavigation.constrainBottomToBottomOf(router.layout)
-        bottomNavigation.currentItem = 1
-        setBottomNavigationVisible(true)*/
+        }
     }
 
     private fun renderUI() {
+
+
         router.layout.subviews(
             viewFlipperFlow,
             bottomNavigation
@@ -65,7 +74,6 @@ class FlowCoordinator {
 
     }
 
-
     object ViewFlipperFlowObject{
         val viewFlipperFlow by lazy {
             val flipper = BaseViewFlipper()
@@ -76,8 +84,10 @@ class FlowCoordinator {
 
 fun setBottomNavigationVisible(visible: Boolean) = if (visible) {
     bottomNavigation.visibility = View.VISIBLE
+
 } else {
     bottomNavigation.visibility = View.GONE
+
 }
 
 fun setStatusBarColor(color: Int) {
