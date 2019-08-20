@@ -34,7 +34,7 @@ class SetViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(cons
     val imageViewCount by lazy {
         val imageView = BaseImageView()
         imageView.cornerRadius = 8.dp
-        imageView.backgroundColor = Color.argb(0x60, 0, 0,0с
+        imageView.backgroundColor = Color.argb(0x60, 0, 0,0)
 
         imageView.initialize()
         imageView
