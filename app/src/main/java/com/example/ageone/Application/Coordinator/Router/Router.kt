@@ -6,13 +6,7 @@ import com.example.ageone.Application.router
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import timber.log.Timber
-<<<<<<< HEAD
 import yummypets.com.stevia.style
-=======
-import yummypets.com.stevia.fillHorizontally
-import yummypets.com.stevia.fillVertically
->>>>>>> temp
-import yummypets.com.stevia.subviews
 
 class Router {
     val collection = arrayListOf<BaseModule>()

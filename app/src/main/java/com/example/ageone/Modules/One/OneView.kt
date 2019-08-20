@@ -2,9 +2,8 @@ package com.example.ageone.Modules.Auth
 
 import android.graphics.Color
 import com.example.ageone.External.Base.Button.BaseButton
-import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
-import yummypets.com.stevia.constrainTopToBottomOf
+import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.constrainTopToTopOf
 import yummypets.com.stevia.subviews
 

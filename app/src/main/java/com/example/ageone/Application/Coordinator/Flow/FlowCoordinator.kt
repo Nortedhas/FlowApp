@@ -11,9 +11,9 @@ import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
 import com.example.ageone.Application.setStatusBarColor
-import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 
 class FlowCoordinator {
@@ -37,23 +37,7 @@ class FlowCoordinator {
     fun start() {
 
         viewFlipperFlow.removeAllViews()
-        val instructor = LaunchInstructor.configure()
 
-        when (instructor) {
-
-            LaunchInstructor.Main -> {
-                val startFlow = 1
-                createStackFlows(startFlow)
-                createBottomNavigation()
-
-                bottomNavigation.constrainBottomToBottomOf(router.layout)
-                viewFlipperFlow.constrainBottomToTopOf(bottomNavigation, 0)
-                viewFlipperFlow.displayedChild = startFlow
-                bottomNavigation.currentItem = startFlow
-                setBottomNavigationVisible(true)
-            }
-            LaunchInstructor.Auth -> runFlowAuth()
-        }
         when (LaunchInstructor.configure()) {
             LaunchInstructor.Main -> {
                 val startFlow = 0

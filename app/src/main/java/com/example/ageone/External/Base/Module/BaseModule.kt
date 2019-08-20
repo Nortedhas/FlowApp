@@ -7,9 +7,9 @@ import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
-import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
+import com.example.ageone.External.InitModuleUI
 import timber.log.Timber
 import yummypets.com.stevia.*
 

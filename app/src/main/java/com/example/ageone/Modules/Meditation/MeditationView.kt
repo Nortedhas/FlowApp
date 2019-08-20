@@ -12,12 +12,12 @@ import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+
 import com.example.ageone.Modules.Meditation.rows.MeditationPopularViewHolder
 import com.example.ageone.Modules.Meditation.rows.MeditationSearchViewHolder
 import com.example.ageone.Modules.Meditation.rows.MeditationTitleViewHolder
 import com.example.ageone.Modules.Meditation.rows.initialize
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
-import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 

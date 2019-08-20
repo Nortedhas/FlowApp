@@ -3,8 +3,8 @@ package com.example.ageone.Modules.Password
 import android.graphics.Color
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
-import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 
 class PasswordView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI)  {
