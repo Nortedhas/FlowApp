@@ -5,7 +5,6 @@ import android.view.View
 import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowAuth
-import com.example.ageone.Application.Coordinator.Flow.Stack.runFlowOne
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
 import com.example.ageone.Application.Coordinator.Router.createStackFlows
@@ -18,8 +17,6 @@ import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import yummypets.com.stevia.*
 
 class FlowCoordinator {
-
-
     fun setLaunchScreen() {
 
         router.initialize()
@@ -37,11 +34,10 @@ class FlowCoordinator {
 
     }
 
-    private var instructor = LaunchInstructor.configure()
-
     fun start() {
 
         viewFlipperFlow.removeAllViews()
+        val instructor = LaunchInstructor.configure()
 
         when (instructor) {
 
@@ -58,20 +54,34 @@ class FlowCoordinator {
             }
             LaunchInstructor.Auth -> runFlowAuth()
         }
+        when (LaunchInstructor.configure()) {
+            LaunchInstructor.Main -> {
+                val startFlow = 0
+                createStackFlows(startFlow)
+                createBottomNavigation()
+
+                bottomNavigation.currentItem = startFlow
+                viewFlipperFlow.displayedChild = startFlow
+
+                setBottomNavigationVisible(true)
+            }
+            LaunchInstructor.Auth -> runFlowAuth()
+        }
     }
 
     private fun renderUI() {
-
 
         router.layout.subviews(
             viewFlipperFlow,
             bottomNavigation
         )
 
+        bottomNavigation.constrainBottomToBottomOf(router.layout)
+
         viewFlipperFlow
             .fillVertically()
             .fillHorizontally()
-
+            .constrainBottomToTopOf(bottomNavigation)
     }
 
     object ViewFlipperFlowObject{
@@ -80,6 +90,7 @@ class FlowCoordinator {
             flipper
         }
     }
+
 }
 
 fun setBottomNavigationVisible(visible: Boolean) = if (visible) {
@@ -100,8 +111,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = false): LaunchInstructor {
-
+        fun configure(isAutorized: Boolean = true/*user.isAuthorized*/): LaunchInstructor {
             return when (isAutorized) {
                 true -> Main
                 false -> Auth

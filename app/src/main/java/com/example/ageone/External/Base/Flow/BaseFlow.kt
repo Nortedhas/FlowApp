@@ -28,6 +28,7 @@ abstract class BaseFlow: View(currentActivity){
     }
 
     init {
+
         onStart?.invoke()
         setBottomNavigationVisible(isBottomNavigationVisible)
 
@@ -77,7 +78,5 @@ abstract class BaseFlow: View(currentActivity){
         }
     }
 
-    abstract fun start() /*{
-        isStarted = true
-    }*/
+    abstract fun start()
 }

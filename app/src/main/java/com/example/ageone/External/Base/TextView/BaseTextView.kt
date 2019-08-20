@@ -1,5 +1,6 @@
 package com.example.ageone.External.Base.TextView
 
+import android.graphics.Paint
 import android.widget.TextView
 import com.example.ageone.Application.currentActivity
 
@@ -23,3 +24,6 @@ val text by lazy {
     text.elevation = 8F.dp
     text
 }*/
+fun TextView.underline() {
+    paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
+}

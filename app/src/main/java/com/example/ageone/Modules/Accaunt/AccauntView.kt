@@ -1,28 +1,23 @@
 package com.example.ageone.Modules.Accaunt
 
+import android.graphics.Color
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
-import com.example.ageone.External.Base.InitModuleUI
 import com.example.ageone.External.Base.Module.BaseModule
-import com.example.ageone.External.Base.ViewHolder.BaseViewHolder
-import com.example.ageone.External.Base.ViewHolder.NothingViewHolder
-import com.example.ageone.Modules.Accaunt.rows.AccauntButtonViewHolder
-import com.example.ageone.Modules.Accaunt.rows.AccauntNameViewHolder
-import com.example.ageone.Modules.Accaunt.rows.AccauntPhoneViewHolder
-import com.example.ageone.Modules.Accaunt.rows.initialize
-import timber.log.Timber
+import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.Modules.Accaunt.rows.*
 import yummypets.com.stevia.*
 
 
-class AccauntView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
+class AccauntView: BaseModule() {
 
     init {
-        /*setBackgroundResource(R.drawable.first_fone)
+        setBackgroundColor(Color.LTGRAY)
 
         val viewAdapter by lazy {
-            val viewAdapter = DataAdapter()
+            val viewAdapter = MyAdapter()
             viewAdapter
         }
 
@@ -33,74 +28,72 @@ class AccauntView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initM
         )
 
         bodyTable
-            .fillHorizontally()
             .fillVertically()
-            .constrainTopToBottomOf(toolBar, 0)*/
+            .fillHorizontally()
+            .constrainTopToTopOf(innerContent)
+//            .constrainTopToBottomOf(toolBar)
 
     }
 }
 
-/*
-class DataAdapter: RecyclerView.Adapter<BaseViewHolder>() {
 
-    override fun getItemCount() = 3
+class MyAdapter: RecyclerView.Adapter<BaseViewHolder>() {
 
     companion object {
-        private const val AccauntTitleType = 0
-        private const val AccauntPhoneType = 1
-        private const val AccauntButtonType = 2
+        private const val EnterTitleType = 0
+        private const val EnterButtonType = 1
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
-        val view = ConstraintLayout(parent.context)
-        view.height(wrapContent)
-        view.width(matchParent)
+        val layout = ConstraintLayout(parent.context)
 
-        return when (viewType) {
-            AccauntNameType -> {
-                val cell = AccauntNameViewHolder(view)
-                cell
+        layout
+            .width(matchParent)
+            .height(wrapContent)
+
+        val holder = when(viewType) {
+            EnterTitleType -> {
+                EnterTitleViewHolder(layout)
             }
-            AccauntPhoneType -> {
-                val cell = AccauntPhoneViewHolder(view)
-                cell
+            EnterButtonType -> {
+                EnterButtonViewHolder(layout)
             }
-            AccauntButtonType -> {
-                val cell = AccauntButtonViewHolder(view)
-                cell
+            else -> {
+                TextViewHolder(layout)
             }
-            else -> NothingViewHolder(view)
         }
+
+//        (holder as EnterTitleViewHolder).imageViewPhoto?.setImageResource(R.drawable.logo)
+
+        return holder
     }
+
+    override fun getItemViewType(position: Int):Int = when(position % 2) {
+        0 -> EnterTitleType
+        1 -> EnterButtonType
+        else -> -1
+    }
+
+    override fun getItemCount() = 20
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when (holder) {
-            is AccauntNameViewHolder ->
-                holder.initialize("Введите ваше имя и фамилию:")
-            is AccauntPhoneViewHolder ->
-                holder.initialize("Введите номер телефона:")
-            is AccauntButtonViewHolder -> {
-                holder.initialize("Press")
-                holder.button.setOnClickListener {
-                    Timber.i("Hello world")
+
+        when(holder) {
+            is ButtonViewHolder -> {
+                holder.button?.text = "$position"
+                holder.button?.setOnClickListener {
+
                 }
             }
-
-            else -> throw IllegalArgumentException()
+            is EnterTitleViewHolder -> {
+                holder.initialize("Добро пожаловать\nв Поток", "Познай себя и свои энергии", R.drawable.logo)
+            }
+            is EnterButtonViewHolder -> {
+                holder.initialize("Вход в приложение", "По номеру телефона")
+            }
         }
+
     }
-
-    override fun getItemViewType(position: Int): Int {
-
-        return when (position) {
-            0 -> AccauntNameType
-            1 -> AccauntPhoneType
-            2 -> AccauntButtonType
-            else -> -1
-        }
-    }
-
 
 }
-*/

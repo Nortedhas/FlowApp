@@ -1,13 +1,16 @@
 package com.example.ageone.External.Base.Button
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.widget.Button
-import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import yummypets.com.stevia.dp
+import android.graphics.drawable.VectorDrawable
+import com.example.ageone.Application.R
+import timber.log.Timber
 
 class BaseButton: Button(currentActivity) {
     val gradientDrawable = GradientDrawable()
@@ -17,8 +20,10 @@ class BaseButton: Button(currentActivity) {
 
     var imageIcon: Int? = null
 
-    var sizeIconWidth = 22F
-    var sizeIconHeight = 22F
+    /*var sizeIconWidth = 22F
+    var sizeIconHeight = 22F*/
+
+    var sizeIcon = Pair(22F, 22F)
 
     var borderColor: Int? = null
     var borderWidth: Int? = null
@@ -39,10 +44,31 @@ class BaseButton: Button(currentActivity) {
         }
 
         imageIcon?.let { imageIcon ->
-            val phone = currentActivity?.resources?.getDrawable(imageIcon)
+            val drawable = currentActivity?.resources?.getDrawable(imageIcon)
 
-            val bitmap = (phone as BitmapDrawable).bitmap
-            val d = BitmapDrawable(currentActivity?.resources, Bitmap.createScaledBitmap(bitmap, sizeIconWidth.dp.toInt(), sizeIconHeight.dp.toInt(), true))
+            val bitmap = when (drawable){
+                is BitmapDrawable -> {
+                    drawable.bitmap
+                }
+
+                is VectorDrawable -> {
+                    val bitmap = Bitmap.createBitmap(
+                        drawable.getIntrinsicWidth(),
+                        drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888
+                    )
+                    val canvas = Canvas(bitmap)
+                    drawable.setBounds(0, 0, canvas.width, canvas.height)
+                    drawable.draw(canvas)
+                    bitmap
+
+                }
+                else -> {
+                    currentActivity?.resources?.getDrawable(R.drawable.kitty) as Bitmap//заглушка
+                }
+            }
+
+            val d = BitmapDrawable(currentActivity?.resources,
+                Bitmap.createScaledBitmap(bitmap, sizeIcon.first.dp.toInt(), sizeIcon.second.dp.toInt(), true))
             setCompoundDrawablesWithIntrinsicBounds(d, null, null, null)
             setPadding(50, 0, 10, 0)
         }

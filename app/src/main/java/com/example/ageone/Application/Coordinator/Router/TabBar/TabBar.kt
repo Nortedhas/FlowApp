@@ -9,7 +9,6 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.items
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
-import com.example.ageone.Application.router
 import com.example.ageone.External.Base.Flow.BaseFlow
 
 object Stack {
@@ -57,8 +56,6 @@ object TabBar {
             bottomNavigation.addItem(item)
         }
 
-//        viewFlipperFlow.removeAllViews()
-
         for (flow in flows) {
             viewFlipperFlow.addView(flow)
         }
@@ -69,8 +66,11 @@ object TabBar {
 
     private fun createStackItem() {
         items = arrayListOf(
-            AHBottomNavigationItem("One", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
-            AHBottomNavigationItem("Main", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
+            AHBottomNavigationItem("Главная", R.drawable.home),
+            AHBottomNavigationItem("Сеты", R.drawable.sets)/*,
+            AHBottomNavigationItem("Анонсы", R.drawable.anons),
+            AHBottomNavigationItem("Покупки", R.drawable.buy),
+            AHBottomNavigationItem("Профиль", R.drawable.profile)*/
         )
 
     }

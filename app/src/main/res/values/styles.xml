@@ -39,7 +39,7 @@
         <item name="colorControlActivated">#9103</item>
     </style>
 
-    <!-- color borders text input layout outline-->
+    <!-- color borders textView input layout outline-->
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#FFF</color>
 
 </resources>

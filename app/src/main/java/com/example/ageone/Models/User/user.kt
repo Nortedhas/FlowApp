@@ -3,7 +3,7 @@ package com.example.ageone.Models.User
 import net.alexandroid.shpref.ShPref
 
 //object?
-class UserData {
+object user {
 
     var hashId: String
         get() = ShPref.getString("userHashId", "")
@@ -21,4 +21,7 @@ class UserData {
         get() = ShPref.getString("userFullName", "")
         set(value) = ShPref.put("userFullName", value)
 
+    var isAuthorized: Boolean
+        get() = ShPref.getBoolean("userIsAuthorized", false)
+        set(value) = ShPref.put("userIsAuthorized", value)
 }

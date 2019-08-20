@@ -31,6 +31,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        pickFirst 'lib/mips/librsjni.so'
+        pickFirst 'lib/mips/libRSSupport.so'
+        pickFirst 'lib/armeabi-v7a/libRSSupport.so'
+        pickFirst 'lib/arm64-v8a/libRSSupport.so'
+        pickFirst 'lib/x86_64/libRSSupport.so'
+        pickFirst 'lib/x86/libRSSupport.so'
+        pickFirst 'lib/arm64-v8a/librsjni.so'
+        pickFirst 'lib/x86/librsjni.so'
+        pickFirst 'lib/x86_64/librsjni.so'
+        pickFirst 'lib/armeabi-v7a/librsjni.so'
+        pickFirst 'lib/x86_64/librsjni_androidx.so'
+        pickFirst 'lib/armeabi-v7a/librsjni_androidx.so'
+        pickFirst 'lib/x86/librsjni_androidx.so'
+        pickFirst 'lib/arm64-v8a/librsjni_androidx.so'
+    }
 }
 
 dependencies {
@@ -79,7 +96,11 @@ dependencies {
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'               //AHBottomNavigation
 
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'         //Crashlythics
+
+                             //BlurImage
+
+    implementation 'com.fivehundredpx:blurringview:1.0.0'
 
 
 }

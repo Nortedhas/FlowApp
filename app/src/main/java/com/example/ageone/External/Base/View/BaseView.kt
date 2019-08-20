@@ -5,7 +5,6 @@ import android.view.View
 import com.example.ageone.Application.currentActivity
 
 class BaseView: View(currentActivity) {
-
     var gradientDrawable = GradientDrawable()
 
     var cornerRadius: Int? = null
