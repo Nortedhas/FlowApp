@@ -11,6 +11,7 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Registration.rows.RegistrationInputViewHolder
+import com.example.ageone.Modules.Registration.rows.RegistrationTextHolder
 import com.example.ageone.Modules.Registration.rows.initialize
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -49,6 +50,7 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
     companion object {
         private const val RegistrationInputType = 0
         private const val RegistrationButtonType = 1
+        private const val RegistrationTextType = 2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -65,6 +67,9 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
             RegistrationButtonType -> {
                 ButtonViewHolder(layout)
             }
+            RegistrationTextType -> {
+                RegistrationTextHolder(layout)
+            }
             else ->
                 BaseViewHolder(layout)
         }
@@ -72,7 +77,7 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
         return holder
     }
 
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = 5
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when(holder) {
@@ -87,12 +92,17 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
             is ButtonViewHolder -> {
                 holder.initialize("Зарегистрироваться")
             }
+
+            is RegistrationTextHolder -> {
+                holder.initialize()
+            }
         }
     }
 
     override fun getItemViewType(position: Int):Int = when(position) {
         in 0..2 -> RegistrationInputType
         3 -> RegistrationButtonType
+        4 -> RegistrationTextType
         else -> -1
     }
 

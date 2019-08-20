@@ -55,7 +55,6 @@ class EnterButtonViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(
         button.gradient = Color.rgb(0x8B, 0x91, 0xC7)
         button.orientation = GradientDrawable.Orientation.TOP_BOTTOM
         button.imageIcon = R.drawable.phone
-
         button.initialize()
         button
     }

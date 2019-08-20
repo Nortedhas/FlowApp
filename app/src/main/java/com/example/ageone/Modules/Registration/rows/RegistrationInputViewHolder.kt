@@ -14,7 +14,7 @@ class RegistrationInputViewHolder(constraintLayout: ConstraintLayout): BaseViewH
         val textInput = BaseTextInputLayout()
         textInput.boxStrokeColor = Color.parseColor("#707ABA")
         textInput.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_FILLED)
-        textInput.setInactiveUnderlineColor(Color.GREEN)
+        textInput.setInactiveUnderlineColor(Color.GRAY)
         textInput.editText?.textColor = Color.parseColor("#333333")
         textInput.editText?.textSize = 15F
         textInput
