@@ -98,7 +98,7 @@ dependencies {
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'         //Crashlythics
 
-                             //BlurImage
+    implementation 'com.eightbitlab:blurview:1.6.2'                         //BlurImage
 
     implementation 'com.fivehundredpx:blurringview:1.0.0'
 
