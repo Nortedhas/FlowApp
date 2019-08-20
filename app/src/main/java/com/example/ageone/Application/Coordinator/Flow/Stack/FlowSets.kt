@@ -1,25 +1,28 @@
-package com.example.ageone.Application.Coordinator.Flow
+package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Auth.OneView
 import com.example.ageone.Modules.Auth.OneViewModel
+import com.example.ageone.Modules.Sets.SetsView
+import com.example.ageone.Modules.Sets.SetsViewModel
 import timber.log.Timber
 
-fun FlowCoordinator.runFlowOne() {
+fun FlowCoordinator.runFlowSets() {
 
-    var flow: FlowOne? = FlowOne()
+    var flow: FlowSets? =
+        FlowSets()
 
     flow?.let{ flow ->
-        flow.colorStatusBar = Color.YELLOW
         flow.isBottomNavigationVisible = true
 
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
-
-        setStatusBarColor(Color.TRANSPARENT)
 
         flows.add(flow)
     }
@@ -30,21 +33,22 @@ fun FlowCoordinator.runFlowOne() {
         flow = null
     }
 
-    flow?.start()
+//    flow?.start()
 }
 
-class FlowOne: BaseFlow() {
+class FlowSets: BaseFlow() {
 
-    fun start() {
-        runModuleOne()
+    override fun start() {
+        isStarted = true
+        runModuleSets()
     }
 
-    fun runModuleOne() {
-        val module = OneView()
+    fun runModuleSets() {
+        val module = SetsView(InitModuleUI(colorToolbar = Color.TRANSPARENT))
         module.emitEvent = { event ->
-            when(OneViewModel.EventType.valueOf(event)) {
-                OneViewModel.EventType.OnButtonPressed -> {
-                    Timber.i("One module button")
+            when(SetsViewModel.EventType.valueOf(event)) {
+                SetsViewModel.EventType.OnTestPressed -> {
+                    Timber.i("Sets module button")
 
                 }
             }

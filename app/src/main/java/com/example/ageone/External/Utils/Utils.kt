@@ -14,4 +14,7 @@ object Tools {
 
 object Variable {
     var statusBarHeight = 0
+    var displayWidth = 0
+    var displayHeight = 0
+    var actionBarHeight = 0
 }

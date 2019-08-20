@@ -23,7 +23,11 @@ object TabBar {
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if (!wasSelected) {
                 viewFlipperFlow.displayedChild = position
-                router.setCurrentFLow(flows[position])
+//                router.setCurrentFLow(flows[position])
+
+                if (!flows[position].isStarted) {
+                    flows[position].start()
+                }
 
                 setStatusBarColor(flows[position].colorStatusBar)
             }
@@ -53,8 +57,6 @@ object TabBar {
             bottomNavigation.addItem(item)
         }
 
-//        viewFlipperFlow.removeAllViews()
-
         for (flow in flows) {
             viewFlipperFlow.addView(flow)
         }
@@ -63,8 +65,11 @@ object TabBar {
 
     private fun createStackItem() {
         items = arrayListOf(
-            AHBottomNavigationItem("One", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800),
-            AHBottomNavigationItem("Main", R.drawable.abc_btn_check_material, R.color.material_blue_grey_800)
+            AHBottomNavigationItem("Главная", R.drawable.home),
+            AHBottomNavigationItem("Сеты", R.drawable.sets)/*,
+            AHBottomNavigationItem("Анонсы", R.drawable.anons),
+            AHBottomNavigationItem("Покупки", R.drawable.buy),
+            AHBottomNavigationItem("Профиль", R.drawable.profile)*/
         )
 
     }

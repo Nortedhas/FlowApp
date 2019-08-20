@@ -1,25 +1,30 @@
-package com.example.ageone.Application.Coordinator.Flow
+package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import android.graphics.Color
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Accaunt.AccauntView
 import com.example.ageone.Modules.Accaunt.AccauntViewModel
+import com.example.ageone.Modules.Meditation.MeditationView
+import com.example.ageone.Modules.Meditation.MeditationViewModel
 import timber.log.Timber
 
 fun FlowCoordinator.runFlowMain() {
 
-    var flow: FlowMain? = FlowMain()
+    var flow: FlowMain? =
+        FlowMain()
 
     flow?.let{ flow ->
-        flow.colorStatusBar = Color.CYAN
-        flow.isBottomNavigationVisible = true
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
-        
+        viewFlipperFlow
+
+        flow.isBottomNavigationVisible = true
         setBottomNavigationVisible(true)
-        setStatusBarColor(flow.colorStatusBar)
 
         flows.add(flow)
     }
@@ -30,13 +35,24 @@ fun FlowCoordinator.runFlowMain() {
         flow = null
     }
 
-    flow?.start()
+//    flow?.start()
 }
 
 class FlowMain: BaseFlow() {
 
-    fun start() {
-            runModuleAccaunt()
+    override fun start() {
+        isStarted = true
+        runModuleMeditation()
+    }
+
+    private fun runModuleMeditation() {
+        val module = MeditationView(InitModuleUI(colorToolbar = Color.TRANSPARENT))
+        module.emitEvent = { event ->
+            when(MeditationViewModel.EventType.valueOf(event)) {
+                MeditationViewModel.EventType.OnEnterPressed -> Timber.i("clicked photo")
+            }
+        }
+        push(module)
     }
 
     fun runModuleAccaunt() {

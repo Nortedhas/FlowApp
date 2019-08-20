@@ -4,18 +4,18 @@ import android.graphics.Color
 import android.view.View
 import com.example.ageone.Application.*
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowAuth
+import com.example.ageone.Application.Coordinator.Flow.Stack.runFlowMain
+import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
 import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.Models.User.user
-import timber.log.Timber
 import yummypets.com.stevia.*
 
 class FlowCoordinator {
-
-
     fun setLaunchScreen() {
 
         router.initialize()
@@ -39,10 +39,13 @@ class FlowCoordinator {
 
         when (LaunchInstructor.configure()) {
             LaunchInstructor.Main -> {
-                createStackFlows()
+                val startFlow = 0
+                createStackFlows(startFlow)
                 createBottomNavigation()
 
-                bottomNavigation.currentItem = 1
+                bottomNavigation.currentItem = startFlow
+                viewFlipperFlow.displayedChild = startFlow
+
                 setBottomNavigationVisible(true)
             }
             LaunchInstructor.Auth -> runFlowAuth()
@@ -91,7 +94,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = user.isAuthorized): LaunchInstructor {
+        fun configure(isAutorized: Boolean = true/*user.isAuthorized*/): LaunchInstructor {
             return when (isAutorized) {
                 true -> Main
                 false -> Auth

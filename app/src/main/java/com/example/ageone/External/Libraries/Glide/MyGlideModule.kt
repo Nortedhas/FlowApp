@@ -21,48 +21,36 @@ import yummypets.com.stevia.dp
 class MyGlideModule : AppGlideModule()
 
 fun addImageFromGlide(image: ImageView, uri: String) {
-    val circularProgressDrawable = CircularProgressDrawable(currentActivity as Context)
-    circularProgressDrawable.strokeWidth = 15f.dp
-    circularProgressDrawable.centerRadius = 100f.dp
-    circularProgressDrawable.start()
-
-    val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
-
-    val placeholder = LayerDrawable(
-        arrayOf(
-            placeholderImage,
-            circularProgressDrawable
-        )
-    )
+    val placeholder = createDownloadPlaceholder()
 
     GlideApp
         .with(image)
         .load(uri)
-        .transform(CenterCrop(), RoundedCorners(25F.dp.toInt()))
+        .transform(CenterCrop(), RoundedCorners(8.dp))
+        .placeholder(placeholder)
+        .into(image)
+
+}
+
+fun addImageFromGlide(image: ImageView, uri: Int) {
+    val placeholder = createDownloadPlaceholder()
+
+    GlideApp
+        .with(image)
+        .load(uri)
+        .transform(CenterCrop(), RoundedCorners(8.dp))
         .placeholder(placeholder)
         .into(image)
 
 }
 
 fun addImageFromGlideWithShadow(image: ShadowImageView, uri: String) {
-    val circularProgressDrawable = CircularProgressDrawable(currentActivity as Context)
-    circularProgressDrawable.strokeWidth = 15f.dp
-    circularProgressDrawable.centerRadius = 100f.dp
-    circularProgressDrawable.start()
-
-    val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
-
-    val placeholder = LayerDrawable(
-        arrayOf(
-            placeholderImage,
-            circularProgressDrawable
-        )
-    )
+    val placeholder = createDownloadPlaceholder()
 
     GlideApp
         .with(image)
         .load(uri)
-        .transform(CenterCrop(), RoundedCorners(25F.dp.toInt()))
+        .transform(CenterCrop(), RoundedCorners(8.dp))
         .placeholder(placeholder)
         .into(object : ViewTarget<ImageView, Drawable>(image) {
             override fun onLoadStarted(placeholder: Drawable?) {
@@ -85,4 +73,21 @@ fun addImageFromGlideWithShadow(image: ShadowImageView, uri: String) {
             }
         })
 
+}
+
+private fun createDownloadPlaceholder(): LayerDrawable {
+    val circularProgressDrawable = CircularProgressDrawable(currentActivity as Context)
+    circularProgressDrawable.strokeWidth = 15f.dp
+    circularProgressDrawable.centerRadius = 100f.dp
+    circularProgressDrawable.start()
+
+    val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
+
+    val placeholder = LayerDrawable(
+        arrayOf(
+            placeholderImage,
+            circularProgressDrawable
+        )
+    )
+    return placeholder
 }

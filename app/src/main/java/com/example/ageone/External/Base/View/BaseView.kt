@@ -5,38 +5,43 @@ import android.view.View
 import com.example.ageone.Application.currentActivity
 
 class BaseView: View(currentActivity) {
-    var shape = GradientDrawable()
-    var background: Int? = null
+    var gradientDrawable = GradientDrawable()
+
+    var cornerRadius: Int? = null
+    var backgroundColor: Int? = null
+
     var gradient: Int? = null
     var orientation: GradientDrawable.Orientation? = null
-    var cornerRadius: Int? = null
+
     var borderColor: Int? = null
     var borderWidth: Int? = null
 
     fun initialize() {
+
+        gradientDrawable.shape = GradientDrawable.RECTANGLE
+
         cornerRadius?.let { cornerRadius ->
-            shape.cornerRadius = cornerRadius.toFloat()
+            gradientDrawable.cornerRadius = cornerRadius.toFloat()
         }
+
         borderWidth?.let { borderWidth ->
             borderColor?.let { borderColor ->
-                shape.setStroke(borderWidth, borderColor)
+                gradientDrawable.setStroke(borderWidth, borderColor)
             }
         }
-        background?.let { background ->
-            shape.setColor(background)
+
+        backgroundColor?.let { backgroundColor ->
+            gradientDrawable.setColor(backgroundColor)
             gradient?.let { gradient ->
-                shape.setColors(intArrayOf(background, gradient))
+                gradientDrawable.colors = intArrayOf(backgroundColor, gradient)
             }
         }
+
         orientation?.let { orientation ->
-            shape.orientation = orientation
+            gradientDrawable.orientation = orientation
         }
-//    setBackground(shape)
 
-//        elevation = 5f
-//        translationZ = 5f
-//        z = 50f
-
+        background = gradientDrawable
     }
 }
 

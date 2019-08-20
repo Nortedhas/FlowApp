@@ -17,7 +17,10 @@ class PasswordView: BaseModule() {
             image
         )
         btn.text = "Back"
-        btn.constrainTopToBottomOf(toolBar, 8)
+        btn
+//            .constrainTopToBottomOf(toolBar, 8)
+            .constrainTopToTopOf(innerContent)
+
 
 
         btn.setOnClickListener {

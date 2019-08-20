@@ -6,6 +6,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.Models.User.user
 import timber.log.Timber
 import yummypets.com.stevia.constrainTopToBottomOf
+import yummypets.com.stevia.constrainTopToTopOf
 import yummypets.com.stevia.subviews
 
 class AuthView: BaseModule() {
@@ -22,7 +23,10 @@ class AuthView: BaseModule() {
         btn.text = "Some"
         btnNav.text = "Open nav"
 
-        btn.constrainTopToBottomOf(toolBar, 8)
+        btn
+//            .constrainTopToBottomOf(toolBar, 8)
+            .constrainTopToTopOf(innerContent)
+
         btnNav.constrainTopToBottomOf(btn, 8)
 
         btn.setOnClickListener {

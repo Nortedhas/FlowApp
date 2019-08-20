@@ -4,14 +4,11 @@ import android.graphics.Color
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
-import com.example.ageone.Modules.Accaunt.rows.ButtonViewHolder
-import com.example.ageone.Modules.Accaunt.rows.TextViewHolder
-import yummypets.com.stevia.constrainTopToBottomOf
-import yummypets.com.stevia.fillHorizontally
-import yummypets.com.stevia.fillVertically
-import yummypets.com.stevia.subviews
+import com.example.ageone.Modules.Accaunt.rows.*
+import yummypets.com.stevia.*
 
 
 class AccauntView: BaseModule() {
@@ -33,7 +30,8 @@ class AccauntView: BaseModule() {
         bodyTable
             .fillVertically()
             .fillHorizontally()
-            .constrainTopToBottomOf(toolBar)
+            .constrainTopToTopOf(innerContent)
+//            .constrainTopToBottomOf(toolBar)
 
     }
 }
@@ -42,31 +40,42 @@ class AccauntView: BaseModule() {
 class MyAdapter: RecyclerView.Adapter<BaseViewHolder>() {
 
     companion object {
-        private const val ButtonType = 0
-        private const val TextType = 1
+        private const val EnterTitleType = 0
+        private const val EnterButtonType = 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
         val layout = ConstraintLayout(parent.context)
 
+        layout
+            .width(matchParent)
+            .height(wrapContent)
+
         val holder = when(viewType) {
-            0 -> {
-                ButtonViewHolder(layout)
+            EnterTitleType -> {
+                EnterTitleViewHolder(layout)
+            }
+            EnterButtonType -> {
+                EnterButtonViewHolder(layout)
             }
             else -> {
                 TextViewHolder(layout)
             }
         }
 
+//        (holder as EnterTitleViewHolder).imageViewPhoto?.setImageResource(R.drawable.logo)
+
         return holder
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return position % 2
+    override fun getItemViewType(position: Int):Int = when(position % 2) {
+        0 -> EnterTitleType
+        1 -> EnterButtonType
+        else -> -1
     }
 
-    override fun getItemCount() = 30
+    override fun getItemCount() = 20
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
 
@@ -77,15 +86,14 @@ class MyAdapter: RecyclerView.Adapter<BaseViewHolder>() {
 
                 }
             }
-            is TextViewHolder -> {
-                holder.text?.text = "Text $position"
+            is EnterTitleViewHolder -> {
+                holder.initialize("Добро пожаловать\nв Поток", "Познай себя и свои энергии", R.drawable.logo)
+            }
+            is EnterButtonViewHolder -> {
+                holder.initialize("Вход в приложение", "По номеру телефона")
             }
         }
 
     }
-
-
-
-
 
 }

@@ -10,7 +10,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import timber.log.Timber
 
-open class BaseFlow: View(currentActivity){
+abstract class BaseFlow: View(currentActivity){
 
     val stack = mutableSetOf<Int>()
 
@@ -20,12 +20,15 @@ open class BaseFlow: View(currentActivity){
     var colorStatusBar = Color.TRANSPARENT
     var isBottomNavigationVisible = false
 
+    var isStarted = false
+
     val viewFlipperModule by lazy {
         val viewFlipperModule = BaseViewFlipper()
         viewFlipperModule
     }
 
     init {
+
         onStart?.invoke()
         setBottomNavigationVisible(isBottomNavigationVisible)
     }
@@ -73,4 +76,6 @@ open class BaseFlow: View(currentActivity){
             }
         }
     }
+
+    abstract fun start()
 }

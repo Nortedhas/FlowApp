@@ -1,6 +1,5 @@
 package com.example.ageone.External.Base.Module
 
-import android.graphics.Color
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,27 +9,36 @@ import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
+import com.example.ageone.External.InitModuleUI
 import timber.log.Timber
 import yummypets.com.stevia.*
 
-open class BaseModule : ConstraintLayout(currentActivity) {
+open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
 
     val backgroundImage by lazy {
         val image = BaseImageView()
         image
     }
 
+    private val content by lazy {
+        val innerContent = BaseConstraintLayout()
+        innerContent.setPadding(0, utils.variable.statusBarHeight, 0, 0)
+        innerContent
+    }
+
     val innerContent by lazy {
         val innerContent = BaseConstraintLayout()
-        innerContent.fitsSystemWindows = true
-        innerContent.setPadding(0, utils.variable.statusBarHeight, 0, 0)
         innerContent
     }
 
     val toolBar by lazy {
         val toolBar = BaseToolbar()
         toolBar
-            .setBackgroundColor(Color.MAGENTA)
+            .setBackgroundColor(initModuleUI.colorToolbar)
+        if (initModuleUI.isHidden) {
+            toolBar.visibility = View.GONE
+        }
+
         toolBar
     }
 
@@ -56,24 +64,29 @@ open class BaseModule : ConstraintLayout(currentActivity) {
 
     fun saveArea() = utils.variable.statusBarHeight + toolBar.height
 
-    fun renderUI() {
+    open fun renderUI() {
 
         subviews(
             backgroundImage,
-            innerContent.subviews(
-                toolBar
+            content.subviews(
+                toolBar,
+                innerContent
             )
         )
+
+        content
+            .fillHorizontally()
+            .fillVertically()
+
+        toolBar
+            .constrainTopToTopOf(content, 0)
+            .fillHorizontally()
+            .height(utils.variable.actionBarHeight)
 
         innerContent
             .fillHorizontally()
             .fillVertically()
-
-
-        toolBar
-            .constrainTopToTopOf(innerContent, 0)
-            .fillHorizontally()
-            .height(56)
+            .constrainTopToBottomOf(toolBar)
 
         backgroundImage
             .fillHorizontally()
