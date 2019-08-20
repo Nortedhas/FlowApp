@@ -20,13 +20,13 @@ import yummypets.com.stevia.*
 
 class StartLoginView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
+    val viewAdapter by lazy {
+        val viewAdapter = Factory(this)
+        viewAdapter
+    }
+
     init {
         setBackgroundResource(R.drawable.first)
-
-        val viewAdapter by lazy {
-            val viewAdapter = Factory(this)
-            viewAdapter
-        }
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
@@ -106,6 +106,9 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
             }
             is EnterButtonViewHolder -> {
                 holder.initialize("Вход в приложение", "По номеру телефона")
+                holder.buttonEnterPhone.setOnClickListener {
+                    rootModule.emitEvent?.invoke(StartLoginViewModel.EventType.OnRegistrationPhonePressed.toString())
+                }
             }
             is EnterSocialViewHolder -> {
                 when (position % 2) {

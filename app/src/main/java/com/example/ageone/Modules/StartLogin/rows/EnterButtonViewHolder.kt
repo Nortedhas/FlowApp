@@ -2,6 +2,7 @@ package com.example.ageone.Modules.StartLogin.rows
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
@@ -49,10 +50,11 @@ class EnterButtonViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(
         button.textSize = 17F
         button.textColor = Color.WHITE
         button.typeface = Typeface.DEFAULT
-
-        button.backgroundColor = Color.parseColor("#8B91C7")
+        button.backgroundColor = Color.rgb(0xA8, 0xAC, 0xEB)
         button.cornerRadius = 60
-        button.imageIcon = R.drawable.phone//sizeIcon???
+        button.gradient = Color.rgb(0x8B, 0x91, 0xC7)
+        button.orientation = GradientDrawable.Orientation.TOP_BOTTOM
+        button.imageIcon = R.drawable.phone
 
         button.initialize()
         button

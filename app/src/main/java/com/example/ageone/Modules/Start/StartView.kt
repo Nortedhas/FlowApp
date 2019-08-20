@@ -3,6 +3,7 @@ package com.example.ageone.Modules.Start
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,9 @@ import yummypets.com.stevia.*
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.ageone.External.Base.RecyclerView.CirclePagerIndicatorDecoration
 import com.example.ageone.Models.User.user
+import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.concurrent.timer
 
 class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
@@ -51,8 +55,10 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         button.textSize = 17F
         button.textColor = Color.WHITE
         button.typeface = Typeface.DEFAULT
-        button.backgroundColor = Color.parseColor("#8B91C7")
+        button.backgroundColor = Color.rgb(0xA8, 0xAC, 0xEB)
         button.cornerRadius = 60
+        button.gradient = Color.rgb(0x8B, 0x91, 0xC7)
+        button.orientation = GradientDrawable.Orientation.TOP_BOTTOM
         button.text = "Вход в приложение"
         button.initialize()
         button
@@ -75,6 +81,10 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         }
 
         renderUIO()
+
+        /*Timer().schedule(0, 5000) {
+
+        }*/
     }
 
 }
@@ -145,8 +155,6 @@ class Factory: RecyclerView.Adapter<Factory.TextHolder>() {
             )
 
             textView
-                /*.constrainLeftToLeftOf(constraintLayout, 50)
-                .constrainRightToRightOf(constraintLayout, 50)*/
                 .constrainTopToTopOf(constraintLayout)
                 .centerHorizontally()
                 .width(320)

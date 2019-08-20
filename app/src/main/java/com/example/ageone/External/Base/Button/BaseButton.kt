@@ -15,6 +15,9 @@ import timber.log.Timber
 class BaseButton: Button(currentActivity) {
     val gradientDrawable = GradientDrawable()
 
+    var gradient: Int? = null
+    var orientation: GradientDrawable.Orientation? = null
+
     var cornerRadius: Int? = null
     var backgroundColor: Int? = null
 
@@ -41,7 +44,15 @@ class BaseButton: Button(currentActivity) {
 
         backgroundColor?.let { backgroundColor ->
             gradientDrawable.setColor(backgroundColor)
+            gradient?.let { gradient ->
+                gradientDrawable.colors = intArrayOf(backgroundColor, gradient)
+            }
         }
+
+        orientation?.let { orientation ->
+            gradientDrawable.orientation = orientation
+        }
+
 
         imageIcon?.let { imageIcon ->
             val drawable = currentActivity?.resources?.getDrawable(imageIcon)
