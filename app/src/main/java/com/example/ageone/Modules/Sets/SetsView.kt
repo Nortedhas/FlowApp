@@ -94,7 +94,7 @@ class Factory: RecyclerView.Adapter<BaseViewHolder>() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when(holder) {
             is SetsTestButtonViewHolder -> {
-                holder.initialize(R.drawable.test_button)
+                holder.initialize(R.drawable.button_test)
             }
 
             is SetViewHolder -> {
