@@ -85,7 +85,7 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
     override fun getItemViewType(position: Int):Int = when(position % 5) {
         0 -> EnterTitleType
         1 -> EnterButtonType
-        2,3 -> EnterSocialType
+        2, 3 -> EnterSocialType
         4 -> EnterLoginTextType
         else -> -1
     }
@@ -131,6 +131,9 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
             }
             is EnterLoginTextViewHolder -> {
                 holder.initialize("Уже зарегистрированы? Войти тут")
+                holder.textViewLogin.setOnClickListener {
+                    rootModule.emitEvent?.invoke(StartLoginViewModel.EventType.OnEntryPressed.toString())
+                }
             }
         }
 

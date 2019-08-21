@@ -12,7 +12,7 @@ import timber.log.Timber
 
 abstract class BaseFlow: View(currentActivity){
 
-    val stack = mutableSetOf<Int>()
+    val stack = mutableListOf<Int>()
 
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null
@@ -62,7 +62,7 @@ abstract class BaseFlow: View(currentActivity){
             
             if (viewFlipperModule.contains(module)) {
                 viewFlipperModule.removeView(module)
-                viewFlipperModule.displayedChild = stack.last()    
+                viewFlipperModule.displayedChild = stack.last()
             }
             module.onDeInit?.invoke()
             Timber.i("Module DeInit ${module.className()}")

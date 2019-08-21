@@ -1,4 +1,4 @@
-package com.example.ageone.Modules.RegistrationSMS.rows
+package com.example.ageone.UIComponents.ViewHolders
 
 import android.graphics.Color
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -6,12 +6,9 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.google.android.material.textfield.TextInputLayout
-import yummypets.com.stevia.constrainTopToTopOf
-import yummypets.com.stevia.fillHorizontally
-import yummypets.com.stevia.subviews
-import yummypets.com.stevia.textColor
+import yummypets.com.stevia.*
 
-class RegistrationSMSInputViewHolder(constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
+class InputViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val textInputL by lazy {
         val textInput = BaseTextInputLayout()
         textInput.boxStrokeColor = Color.parseColor("#707ABA")
@@ -34,7 +31,7 @@ class RegistrationSMSInputViewHolder(constraintLayout: ConstraintLayout) : BaseV
     }
 }
 
-fun RegistrationSMSInputViewHolder.initialize(hint: String, type: InputEditTextType) {
+fun InputViewHolder.initialize(hint: String, type: InputEditTextType) {
     textInputL.hint = hint
     textInputL.defineType(type)
 }

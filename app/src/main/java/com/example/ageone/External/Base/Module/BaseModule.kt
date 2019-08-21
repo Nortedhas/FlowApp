@@ -39,6 +39,12 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
         if (initModuleUI.isHidden) {
             toolBar.visibility = View.GONE
         }
+        initModuleUI.iconNavigation?.let{iconNavigation ->
+            toolBar.setNavigationIcon(iconNavigation)
+            initModuleUI.navigationListener?.let { navigationListener ->
+                toolBar.setNavigationOnClickListener(navigationListener)
+            }
+        }
         toolBar
     }
 

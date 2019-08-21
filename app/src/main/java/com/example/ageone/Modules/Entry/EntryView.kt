@@ -1,23 +1,25 @@
-package com.example.ageone.Modules.RegistrationSMS
+package com.example.ageone.Modules.Entry
 
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
-import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.RegistrationSMS.rows.RegistrationSMSTextViewHolder
-import com.example.ageone.Modules.RegistrationSMS.rows.initialize
+import com.example.ageone.Modules.Entry.rows.EntryTextViewHolder
+import com.example.ageone.Modules.Entry.rows.initialize
+import com.example.ageone.Modules.EntryViewModel
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
-class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
+class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
@@ -27,7 +29,7 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Смс-код"
+        toolBar.title = "Вход в Поток"
         toolBar.setTitleTextColor(Color.WHITE)
 
         bodyTable.adapter = viewAdapter
@@ -45,20 +47,20 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
     }
 }
 
-class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
+class Factory(val rootModule: BaseModule) : RecyclerView.Adapter<BaseViewHolder>() {
 
     companion object {
-        private const val RegistrationSMSInputType = 0
-        private const val RegistrationSMSTextType = 1
-        private const val RegistrationSMSButtonType = 2
+        private const val EntryInputType = 0
+        private const val EntryButtonType = 1
+        private const val EntryTextType = 2
     }
 
     override fun getItemCount(): Int = 3
 
     override fun getItemViewType(position: Int): Int = when (position) {
-        0 -> RegistrationSMSInputType
-        1 -> RegistrationSMSTextType
-        2 -> RegistrationSMSButtonType
+        0 -> EntryInputType
+        1 -> EntryButtonType
+        2 -> EntryTextType
         else -> -1
     }
 
@@ -70,14 +72,14 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
             .height(wrapContent)
 
         val holder = when (viewType) {
-            RegistrationSMSInputType -> {
+            EntryInputType -> {
                 InputViewHolder(layout)
             }
-            RegistrationSMSTextType -> {
-                RegistrationSMSTextViewHolder(layout)
-            }
-            RegistrationSMSButtonType -> {
+            EntryButtonType -> {
                 ButtonViewHolder(layout)
+            }
+            EntryTextType -> {
+                EntryTextViewHolder(layout)
             }
             else ->
                 BaseViewHolder(layout)
@@ -89,13 +91,18 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is InputViewHolder -> {
-                holder.initialize("Введите смс-код:", InputEditTextType.NUMERIC)
+                holder.initialize("Введите ваш номер телефона:", InputEditTextType.PHONE)
             }
-            is RegistrationSMSTextViewHolder -> {
-                holder.initialize("Если Вы не получили смс, запросить код повторно можно через ")
-            }
+
             is ButtonViewHolder -> {
-                holder.initialize("Подтверждаю")
+                holder.initialize("Войти в приложение")
+                holder.button.setOnClickListener {
+                    rootModule.emitEvent?.invoke(EntryViewModel.EventType.OnEnterPressed.toString())
+                }
+            }
+
+            is EntryTextViewHolder -> {
+                holder.initialize()
             }
         }
     }

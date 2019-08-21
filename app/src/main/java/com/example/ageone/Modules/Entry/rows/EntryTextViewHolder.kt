@@ -1,4 +1,4 @@
-package com.example.ageone.Modules.Registration.rows
+package com.example.ageone.Modules.Entry.rows
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -10,11 +10,10 @@ import android.view.Gravity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
-import com.example.ageone.External.Base.TextView.underline
+import com.example.ageone.Modules.Registration.rows.renderUI
 import yummypets.com.stevia.*
 
-class RegistrationTextHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
-
+class EntryTextViewHolder(constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
     val textView by lazy {
         val textViewLogin = BaseTextView()
         textViewLogin.textColor = Color.rgb(0x8A,0x8A,0x8F)
@@ -26,27 +25,22 @@ class RegistrationTextHolder(val constraintLayout: ConstraintLayout): BaseViewHo
     }
 
     init {
-        renderUI()
+        constraintLayout.setBackgroundColor(Color.WHITE)
+
+        constraintLayout.subviews(
+            textView
+        )
+
+        textView
+            .constrainTopToTopOf(constraintLayout, 40)
+            .constrainLeftToLeftOf(constraintLayout)
+            .constrainRightToRightOf(constraintLayout)
     }
 
 }
 
-fun RegistrationTextHolder.renderUI() {
-
-    constraintLayout.subviews(
-        textView
-    )
-
-    textView
-        .constrainTopToTopOf(constraintLayout, 40)
-        .constrainLeftToLeftOf(constraintLayout)
-        .constrainRightToRightOf(constraintLayout)
-
-
-}
-
-fun RegistrationTextHolder.initialize() {
-    val text = "Нажимая на кнопку “Зарегистрироваться”, я соглашаюсь с данным "
+fun EntryTextViewHolder.initialize() {
+    val text = "Нажимая на кнопку “Войти в приложение”, я соглашаюсь с данным "
     val declaration = "пользовательским соглашением"
 
     val spannableContent = SpannableString(text + declaration)

@@ -1,4 +1,4 @@
-package com.example.ageone.Modules.RegistrationSMS
+package com.example.ageone.Modules
 
 import android.graphics.Color
 import android.view.View
@@ -10,14 +10,14 @@ import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.RegistrationSMS.rows.RegistrationSMSTextViewHolder
-import com.example.ageone.Modules.RegistrationSMS.rows.initialize
+import com.example.ageone.Modules.EntrySMS.rows.EntrySMSTextViewHolder
+import com.example.ageone.Modules.EntrySMS.rows.initialize
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
-class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
+class EntrySMSView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
@@ -74,7 +74,7 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
                 InputViewHolder(layout)
             }
             RegistrationSMSTextType -> {
-                RegistrationSMSTextViewHolder(layout)
+                EntrySMSTextViewHolder(layout)
             }
             RegistrationSMSButtonType -> {
                 ButtonViewHolder(layout)
@@ -91,7 +91,7 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
             is InputViewHolder -> {
                 holder.initialize("Введите смс-код:", InputEditTextType.NUMERIC)
             }
-            is RegistrationSMSTextViewHolder -> {
+            is EntrySMSTextViewHolder -> {
                 holder.initialize("Если Вы не получили смс, запросить код повторно можно через ")
             }
             is ButtonViewHolder -> {
@@ -101,3 +101,4 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
     }
 
 }
+

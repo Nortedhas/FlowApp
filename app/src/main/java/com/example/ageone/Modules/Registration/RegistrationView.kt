@@ -10,11 +10,11 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.Registration.rows.RegistrationInputViewHolder
+import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.Modules.Registration.rows.RegistrationTextHolder
 import com.example.ageone.Modules.Registration.rows.initialize
-import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
+import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import yummypets.com.stevia.*
 
 class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
@@ -62,7 +62,7 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
 
         val holder = when(viewType) {
             RegistrationInputType -> {
-                RegistrationInputViewHolder(layout)
+                InputViewHolder(layout)
             }
             RegistrationButtonType -> {
                 ButtonViewHolder(layout)
@@ -81,7 +81,7 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when(holder) {
-            is RegistrationInputViewHolder -> {
+            is InputViewHolder -> {
                 when (position) {
                     0 -> holder.initialize("Введите ваше имя и фамилию:", InputEditTextType.TEXT)
                     1 -> holder.initialize("Введите ваш номер телефона:", InputEditTextType.PHONE)
@@ -91,6 +91,9 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
 
             is ButtonViewHolder -> {
                 holder.initialize("Зарегистрироваться")
+                holder.button.setOnClickListener {
+                    rootModule.emitEvent?.invoke(RegistrationViewModel.EventType.OnRegistrationPressed.toString())
+                }
             }
 
             is RegistrationTextHolder -> {
