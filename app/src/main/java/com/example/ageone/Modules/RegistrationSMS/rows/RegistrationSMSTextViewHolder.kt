@@ -14,7 +14,7 @@ import yummypets.com.stevia.fillHorizontally
 import yummypets.com.stevia.subviews
 import yummypets.com.stevia.textColor
 
-class RegistrationSMSTextViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class RegistrationSMSTextViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
 
     val textView by lazy {
         val textView = BaseTextView()
@@ -29,14 +29,19 @@ class RegistrationSMSTextViewHolder(constraintLayout: ConstraintLayout): BaseVie
 
     init {
 
-        constraintLayout.subviews(
-            textView
-        )
-
-        textView
-            .constrainTopToTopOf(constraintLayout, 16)
-            .fillHorizontally(16)
+        renderUI()
     }
+
+}
+
+fun RegistrationSMSTextViewHolder.renderUI() {
+    constraintLayout.subviews(
+        textView
+    )
+
+    textView
+        .constrainTopToTopOf(constraintLayout, 16)
+        .fillHorizontally(16)
 }
 
 fun RegistrationSMSTextViewHolder.initialize(text: String) {

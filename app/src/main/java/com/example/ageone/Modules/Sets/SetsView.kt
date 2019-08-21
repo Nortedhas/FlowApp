@@ -10,6 +10,7 @@ import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Sets.rows.SetsTestButtonViewHolder
@@ -20,7 +21,7 @@ import yummypets.com.stevia.*
 
 class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
     val viewAdapter by lazy {
-        val viewAdapter = Factory()
+        val viewAdapter = Factory(this)
         viewAdapter
     }
 
@@ -47,22 +48,34 @@ class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModu
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
-        innerContent.subviews(
-            bodyTable
-        )
-
-        bodyTable
-            .fillHorizontally()
-            .fillVertically()
-            .constrainTopToTopOf(innerContent)
+        renderUIO()
     }
+
 }
 
-class Factory: RecyclerView.Adapter<BaseViewHolder>() {
-    companion object {
+fun SetsView.renderUIO() {
+    innerContent.subviews(
+        bodyTable
+    )
 
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
+}
+
+class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
+
+    companion object {
         private const val SetsTestButtonType = 0
         private const val SetsCardType = 1
+    }
+
+    override fun getItemCount(): Int = 10
+
+    override fun getItemViewType(position: Int):Int = when(position) {
+        0 -> SetsTestButtonType
+        else -> SetsCardType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -83,13 +96,6 @@ class Factory: RecyclerView.Adapter<BaseViewHolder>() {
 
         return holder
     }
-
-    override fun getItemViewType(position: Int):Int = when(position) {
-        0 -> SetsTestButtonType
-        else -> SetsCardType
-    }
-
-    override fun getItemCount(): Int = 10
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when(holder) {

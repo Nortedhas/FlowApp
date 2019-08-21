@@ -13,7 +13,7 @@ import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.Modules.Registration.rows.renderUI
 import yummypets.com.stevia.*
 
-class EntryTextViewHolder(constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
+class EntryTextViewHolder(val constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
     val textView by lazy {
         val textViewLogin = BaseTextView()
         textViewLogin.textColor = Color.rgb(0x8A,0x8A,0x8F)
@@ -25,18 +25,22 @@ class EntryTextViewHolder(constraintLayout: ConstraintLayout) : BaseViewHolder(c
     }
 
     init {
-        constraintLayout.setBackgroundColor(Color.WHITE)
-
-        constraintLayout.subviews(
-            textView
-        )
-
-        textView
-            .constrainTopToTopOf(constraintLayout, 40)
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
+        renderUI()
     }
 
+}
+
+fun EntryTextViewHolder.renderUI() {
+    constraintLayout.setBackgroundColor(Color.WHITE)
+
+    constraintLayout.subviews(
+        textView
+    )
+
+    textView
+        .constrainTopToTopOf(constraintLayout, 40)
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
 }
 
 fun EntryTextViewHolder.initialize() {

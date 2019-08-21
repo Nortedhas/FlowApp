@@ -33,16 +33,23 @@ class EntrySMSView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(ini
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
-        innerContent.subviews(
-            bodyTable
-        )
-
-        bodyTable
-            .fillHorizontally()
-            .fillVertically()
-            .constrainTopToTopOf(innerContent)
+        renderUIO()
 
     }
+
+}
+
+fun EntrySMSView.renderUIO() {
+
+    innerContent.subviews(
+        bodyTable
+    )
+
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
+
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {

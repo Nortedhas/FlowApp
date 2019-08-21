@@ -8,7 +8,7 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import yummypets.com.stevia.*
 
-class MeditationTitleViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class MeditationTitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val textViewTitle by lazy {
         val textView = BaseTextView()
 
@@ -23,15 +23,19 @@ class MeditationTitleViewHolder(constraintLayout: ConstraintLayout): BaseViewHol
 
 
     init {
-
-        constraintLayout.subviews(
-            textViewTitle
-        )
-
-        textViewTitle
-            .constrainTopToTopOf(constraintLayout, 24)
-            .constrainLeftToLeftOf(constraintLayout, 16)
+        renderUI()
     }
+
+}
+
+fun MeditationTitleViewHolder.renderUI() {
+    constraintLayout.subviews(
+        textViewTitle
+    )
+
+    textViewTitle
+        .constrainTopToTopOf(constraintLayout, 24)
+        .constrainLeftToLeftOf(constraintLayout, 16)
 }
 
 fun MeditationTitleViewHolder.initialize(textPopular: String) {

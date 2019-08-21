@@ -7,7 +7,7 @@ import yummypets.com.stevia.constrainLeftToLeftOf
 import yummypets.com.stevia.constrainTopToTopOf
 import yummypets.com.stevia.subviews
 
-class MeditationSearchViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class MeditationSearchViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val imageViewSearch by lazy {
         val button = BaseImageView()
         button
@@ -15,14 +15,19 @@ class MeditationSearchViewHolder(constraintLayout: ConstraintLayout): BaseViewHo
 
     init {
 
-        constraintLayout.subviews(
-            imageViewSearch
-        )
-
-        imageViewSearch
-            .constrainTopToTopOf(constraintLayout, 24)
-            .constrainLeftToLeftOf(constraintLayout, 16)
+        renderUI()
     }
+
+}
+
+fun MeditationSearchViewHolder.renderUI() {
+    constraintLayout.subviews(
+        imageViewSearch
+    )
+
+    imageViewSearch
+        .constrainTopToTopOf(constraintLayout, 24)
+        .constrainLeftToLeftOf(constraintLayout, 16)
 }
 
 fun MeditationSearchViewHolder.initialize(imageRes: Int) {

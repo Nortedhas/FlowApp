@@ -74,54 +74,54 @@ class SetViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(cons
     }
 
     init {
-        constraintLayout.subviews(
-            imageViewPhoto,
-            imageLock,
-            imageViewCount,
-            textViewCount,
-            imageViewBottom,
-            textViewTitle,
-            textViewDescribe
-        )
+        renderUI()
+    }
 
-        renderPhoto()
-
-        textViewTitle
-            .constrainTopToBottomOf(imageViewBottom, 8)
-            .fillHorizontally(8)
-
+}
+fun SetViewHolder.renderUI() {
+    constraintLayout.subviews(
+        imageViewPhoto,
+        imageLock,
+        imageViewCount,
+        textViewCount,
+        imageViewBottom,
+        textViewTitle,
         textViewDescribe
-            .constrainTopToBottomOf(textViewTitle, 4)
-            .fillHorizontally(8)
-    }
+    )
 
-    private fun renderPhoto() {
-        imageViewPhoto
-            .constrainTopToTopOf(constraintLayout, 16)
-            .fillHorizontally(8)
+    imageViewPhoto
+        .constrainTopToTopOf(constraintLayout, 16)
+        .fillHorizontally(8)
 
-        imageLock
-            .constrainRightToRightOf(imageViewPhoto, 8)
-            .constrainTopToTopOf(imageViewPhoto, 8)
-            .width(23)
-            .height(23)
+    imageLock
+        .constrainRightToRightOf(imageViewPhoto, 8)
+        .constrainTopToTopOf(imageViewPhoto, 8)
+        .width(23)
+        .height(23)
 
-        imageViewCount
-            .constrainRightToRightOf(imageViewPhoto)
-            .constrainLeftToLeftOf(imageViewPhoto)
-            .constrainBottomToBottomOf(imageViewPhoto, 8)
-            .width(86)
-            .height(20)
+    imageViewCount
+        .constrainRightToRightOf(imageViewPhoto)
+        .constrainLeftToLeftOf(imageViewPhoto)
+        .constrainBottomToBottomOf(imageViewPhoto, 8)
+        .width(86)
+        .height(20)
 
-        textViewCount
-            .constrainRightToRightOf(imageViewCount)
-            .constrainLeftToLeftOf(imageViewCount)
-            .constrainTopToTopOf(imageViewCount)
-            .constrainBottomToBottomOf(imageViewCount)
+    textViewCount
+        .constrainRightToRightOf(imageViewCount)
+        .constrainLeftToLeftOf(imageViewCount)
+        .constrainTopToTopOf(imageViewCount)
+        .constrainBottomToBottomOf(imageViewCount)
 
-        imageViewBottom
-            .constrainTopToBottomOf(imageViewPhoto)
-    }
+    imageViewBottom
+        .constrainTopToBottomOf(imageViewPhoto)
+
+    textViewTitle
+        .constrainTopToBottomOf(imageViewBottom, 8)
+        .fillHorizontally(8)
+
+    textViewDescribe
+        .constrainTopToBottomOf(textViewTitle, 4)
+        .fillHorizontally(8)
 }
 
 fun SetViewHolder.initialize(width: Int, image: Int, title: String, describe: String, count: Int) {

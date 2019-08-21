@@ -7,8 +7,6 @@ import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisibl
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.Accaunt.AccauntView
-import com.example.ageone.Modules.Accaunt.AccauntViewModel
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
 import timber.log.Timber
@@ -50,16 +48,6 @@ class FlowMain: BaseFlow() {
         module.emitEvent = { event ->
             when(MeditationViewModel.EventType.valueOf(event)) {
                 MeditationViewModel.EventType.OnEnterPressed -> Timber.i("clicked photo")
-            }
-        }
-        push(module)
-    }
-
-    fun runModuleAccaunt() {
-        val module = AccauntView()
-        module.emitEvent = { event ->
-            when(AccauntViewModel.EventType.valueOf(event)) {
-                AccauntViewModel.EventType.OnPhotoClicked -> Timber.i("clicked photo")
             }
         }
         push(module)

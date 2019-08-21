@@ -43,24 +43,28 @@ class MeditationCardViewHolder(val constraintLayout: ConstraintLayout): BaseView
     }
 
     init {
-        constraintLayout.subviews(
-            imageViewPhoto,
-            textViewTitle,
-            textViewDescribe
-        )
-
-        imageViewPhoto
-            .constrainTopToTopOf(constraintLayout, 16)
-            .fillHorizontally(8)
-
-        textViewTitle
-            .constrainTopToBottomOf(imageViewPhoto, 8)
-            .fillHorizontally(8)
-
-        textViewDescribe
-            .constrainTopToBottomOf(textViewTitle, 4)
-            .fillHorizontally(8)
+        renderUI()
     }
+
+}
+fun MeditationCardViewHolder.renderUI() {
+    constraintLayout.subviews(
+        imageViewPhoto,
+        textViewTitle,
+        textViewDescribe
+    )
+
+    imageViewPhoto
+        .constrainTopToTopOf(constraintLayout, 16)
+        .fillHorizontally(8)
+
+    textViewTitle
+        .constrainTopToBottomOf(imageViewPhoto, 8)
+        .fillHorizontally(8)
+
+    textViewDescribe
+        .constrainTopToBottomOf(textViewTitle, 4)
+        .fillHorizontally(8)
 }
 
 fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, title: String, describe: String) {

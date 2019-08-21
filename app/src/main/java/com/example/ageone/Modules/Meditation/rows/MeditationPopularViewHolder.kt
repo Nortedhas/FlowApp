@@ -36,14 +36,19 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerViewHor)
 
-        constraintLayout.subviews(
-            recyclerViewHor
-        )
-
-        recyclerViewHor
-            .constrainTopToTopOf(constraintLayout, 8)
-            .fillHorizontally()
+        renderUI()
     }
+
+}
+
+fun MeditationPopularViewHolder.renderUI() {
+    constraintLayout.subviews(
+        recyclerViewHor
+    )
+
+    recyclerViewHor
+        .constrainTopToTopOf(constraintLayout, 8)
+        .fillHorizontally()
 }
 
 fun MeditationPopularViewHolder.initialize() {

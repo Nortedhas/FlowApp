@@ -7,8 +7,6 @@ import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.Auth.OneView
-import com.example.ageone.Modules.Auth.OneViewModel
 import com.example.ageone.Modules.Sets.SetsView
 import com.example.ageone.Modules.Sets.SetsViewModel
 import timber.log.Timber

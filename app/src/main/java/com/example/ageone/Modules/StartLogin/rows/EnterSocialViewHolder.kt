@@ -8,7 +8,7 @@ import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import yummypets.com.stevia.*
 
-class EnterSocialViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class EnterSocialViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val enterButton by lazy {
         val button = BaseButton()
 
@@ -24,17 +24,22 @@ class EnterSocialViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(
 
     init {
 
-        constraintLayout.subviews(
-            enterButton
-        )
-
-        constraintLayout.setBackgroundColor(Color.WHITE)
-        enterButton
-            .constrainTopToTopOf(constraintLayout, 24)
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
-            .fillHorizontally(56)
+        renderUI()
     }
+
+}
+
+fun EnterSocialViewHolder.renderUI() {
+    constraintLayout.subviews(
+        enterButton
+    )
+
+    constraintLayout.setBackgroundColor(Color.WHITE)
+    enterButton
+        .constrainTopToTopOf(constraintLayout, 24)
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
+        .fillHorizontally(56)
 }
 
 fun EnterSocialViewHolder.initialize(textEnter: String, imageRes: Int, color: Int, size: Pair<Float, Float>) {

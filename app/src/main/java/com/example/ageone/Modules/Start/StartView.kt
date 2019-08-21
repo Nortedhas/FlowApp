@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Button.BaseButton
@@ -20,11 +19,9 @@ import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.CirclePagerIndicatorDecoration
 import com.example.ageone.Models.User.user
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.concurrent.timer
 
 class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
@@ -65,9 +62,9 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
     }
 
     init {
-        setBackgroundResource(R.drawable.first)
+        setBackgroundColor(Color.TRANSPARENT)
 
-        bodyTable.adapter = Factory()
+        bodyTable.adapter = Factory(this)
         bodyTable.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.HORIZONTAL, false)
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
         bodyTable.addItemDecoration(CirclePagerIndicatorDecoration())
@@ -90,6 +87,7 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
 }
 
 fun StartView.renderUIO() {
+
     innerContent.subviews(
         imageView,
         textViewHello,
@@ -117,28 +115,31 @@ fun StartView.renderUIO() {
         .constrainRightToRightOf(innerContent)
 }
 
-class Factory: RecyclerView.Adapter<Factory.TextHolder>() {
+class Factory(val rootModule: BaseModule): BaseAdapter<Factory.TextViewHolder>() {
+
     private val list = listOf("Повседневная практика показывает, что новая модель организационной деятельности",
         "Повседневная практика показывает, что новая модель организационной деятельности",
         "Повседневная практика показывает, что новая модель организационной деятельности")
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextHolder {
+    override fun getItemCount() = list.size
+
+    override fun getItemViewType(position: Int): Int = 0
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextViewHolder {
         val layout = ConstraintLayout(parent.context)
 
         layout
             .width(matchParent)
-            .height(90)//CONST?
+            .height(90)
 
-        return TextHolder(layout)
+        return TextViewHolder(layout)
     }
 
-    override fun getItemCount() = list.size
-
-    override fun onBindViewHolder(holder: TextHolder, position: Int) {
-        holder.textView.text = list[position]
+    override fun onBindViewHolder(viewHolder: TextViewHolder, position: Int) {
+        viewHolder.textView.text = list[position]
     }
 
-    class TextHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+    class TextViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
         val textView by lazy {
             val textViewSmall = BaseTextView()
             textViewSmall.gravity = Gravity.CENTER

@@ -10,7 +10,7 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import yummypets.com.stevia.*
 
-class EnterTitleViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout){
+class EnterTitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout){
 
     val textViewHello by lazy {
         val textViewHello = BaseTextView()
@@ -41,28 +41,32 @@ class EnterTitleViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(c
     }
 
     init {
-        constraintLayout.subviews(
-            imageView,
-            textViewHello,
-            textViewSmall
-        )
-
-        imageView
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
-            .constrainTopToTopOf(constraintLayout, 56)
-
-        textViewHello
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
-            .constrainTopToBottomOf(imageView, 41)
-
-        textViewSmall
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
-            .constrainTopToBottomOf(textViewHello, 30)
+        renderUI()
     }
 
+}
+
+fun EnterTitleViewHolder.renderUI() {
+    constraintLayout.subviews(
+        imageView,
+        textViewHello,
+        textViewSmall
+    )
+
+    imageView
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
+        .constrainTopToTopOf(constraintLayout, 56)
+
+    textViewHello
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
+        .constrainTopToBottomOf(imageView, 41)
+
+    textViewSmall
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
+        .constrainTopToBottomOf(textViewHello, 30)
 }
 
 fun EnterTitleViewHolder.initialize(textHello: String, textSmall: String, image: Int) {

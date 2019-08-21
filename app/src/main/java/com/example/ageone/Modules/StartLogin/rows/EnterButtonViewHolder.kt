@@ -12,7 +12,7 @@ import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.Base.View.BaseView
 import yummypets.com.stevia.*
 
-class EnterButtonViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class EnterButtonViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val rectangleUp by lazy {
         val view = BaseView()
         view.backgroundColor = Color.WHITE
@@ -51,34 +51,38 @@ class EnterButtonViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(
     }
 
     init {
-        constraintLayout.subviews(
-            rectangleUp,
-            rectangleDown,
-            textViewEnter,
-            buttonEnterPhone
-        )
-
-        rectangleUp
-            .fillHorizontally()
-            .constrainTopToTopOf(constraintLayout, 48)
-            .height(90)
-
-        textViewEnter
-            .fillHorizontally()
-            .constrainTopToTopOf(rectangleUp, 16)
-
-        buttonEnterPhone
-            .constrainLeftToLeftOf(constraintLayout)
-            .constrainRightToRightOf(constraintLayout)
-            .constrainTopToBottomOf(textViewEnter, 24)
-            .fillHorizontally(40)
-
-        rectangleDown
-            .constrainBottomToBottomOf(buttonEnterPhone)
-            .fillHorizontally()
-            .height(60)
-
+        renderUI()
     }
+
+}
+
+fun EnterButtonViewHolder.renderUI() {
+    constraintLayout.subviews(
+        rectangleUp,
+        rectangleDown,
+        textViewEnter,
+        buttonEnterPhone
+    )
+
+    rectangleUp
+        .fillHorizontally()
+        .constrainTopToTopOf(constraintLayout, 48)
+        .height(90)
+
+    textViewEnter
+        .fillHorizontally()
+        .constrainTopToTopOf(rectangleUp, 16)
+
+    buttonEnterPhone
+        .constrainLeftToLeftOf(constraintLayout)
+        .constrainRightToRightOf(constraintLayout)
+        .constrainTopToBottomOf(textViewEnter, 24)
+        .fillHorizontally(40)
+
+    rectangleDown
+        .constrainBottomToBottomOf(buttonEnterPhone)
+        .fillHorizontally()
+        .height(60)
 }
 
 fun EnterButtonViewHolder.initialize(textEnter: String, textPhone: String) {

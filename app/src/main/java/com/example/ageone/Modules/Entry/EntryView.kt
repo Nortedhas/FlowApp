@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
@@ -35,19 +36,23 @@ class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
-        innerContent.subviews(
-            bodyTable
-        )
-
-        bodyTable
-            .fillHorizontally()
-            .fillVertically()
-            .constrainTopToTopOf(innerContent)
-
+        renderUIO()
     }
+
 }
 
-class Factory(val rootModule: BaseModule) : RecyclerView.Adapter<BaseViewHolder>() {
+fun EntryView.renderUIO() {
+    innerContent.subviews(
+        bodyTable
+    )
+
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
+}
+
+class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
 
     companion object {
         private const val EntryInputType = 0

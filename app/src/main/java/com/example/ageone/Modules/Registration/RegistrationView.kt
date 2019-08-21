@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
@@ -33,24 +34,38 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
-        innerContent.subviews(
-            bodyTable
-        )
-
-        bodyTable
-            .fillHorizontally()
-            .fillVertically()
-            .constrainTopToTopOf(innerContent)
+        renderUIO()
 
     }
+
 }
 
-class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>() {
+fun RegistrationView.renderUIO() {
+    innerContent.subviews(
+        bodyTable
+    )
+
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
+}
+
+class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
 
     companion object {
         private const val RegistrationInputType = 0
         private const val RegistrationButtonType = 1
         private const val RegistrationTextType = 2
+    }
+
+    override fun getItemCount(): Int = 5
+
+    override fun getItemViewType(position: Int):Int = when(position) {
+        in 0..2 -> RegistrationInputType
+        3 -> RegistrationButtonType
+        4 -> RegistrationTextType
+        else -> -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -77,8 +92,6 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
         return holder
     }
 
-    override fun getItemCount(): Int = 5
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when(holder) {
             is InputViewHolder -> {
@@ -100,13 +113,6 @@ class Factory(val rootModule: BaseModule): RecyclerView.Adapter<BaseViewHolder>(
                 holder.initialize()
             }
         }
-    }
-
-    override fun getItemViewType(position: Int):Int = when(position) {
-        in 0..2 -> RegistrationInputType
-        3 -> RegistrationButtonType
-        4 -> RegistrationTextType
-        else -> -1
     }
 
 }

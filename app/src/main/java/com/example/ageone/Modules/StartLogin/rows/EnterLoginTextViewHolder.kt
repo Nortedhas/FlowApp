@@ -25,14 +25,13 @@ class EnterLoginTextViewHolder(val constraintLayout: ConstraintLayout): BaseView
     }
 
     init {
-        constraintLayout.setBackgroundColor(Color.WHITE)
+//        constraintLayout.setBackgroundColor(Color.WHITE)
         renderUI()
     }
 
 }
 
 fun EnterLoginTextViewHolder.renderUI() {
-
     constraintLayout.subviews(
         textViewLogin
     )
@@ -42,7 +41,6 @@ fun EnterLoginTextViewHolder.renderUI() {
         .constrainLeftToLeftOf(constraintLayout)
         .constrainRightToRightOf(constraintLayout)
         .constrainBottomToBottomOf(constraintLayout, 24)
-
 }
 
 fun EnterLoginTextViewHolder.initialize(textLogin: String) {

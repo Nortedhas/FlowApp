@@ -41,8 +41,6 @@ fun RegistrationTextHolder.renderUI() {
         .constrainTopToTopOf(constraintLayout, 40)
         .constrainLeftToLeftOf(constraintLayout)
         .constrainRightToRightOf(constraintLayout)
-
-
 }
 
 fun RegistrationTextHolder.initialize() {

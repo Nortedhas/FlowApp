@@ -7,22 +7,26 @@ import yummypets.com.stevia.constrainLeftToLeftOf
 import yummypets.com.stevia.constrainTopToTopOf
 import yummypets.com.stevia.subviews
 
-class SetsTestButtonViewHolder(constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class SetsTestButtonViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val imageViewSearch by lazy {
         val button = BaseImageView()
         button
     }
 
     init {
-
-        constraintLayout.subviews(
-            imageViewSearch
-        )
-
-        imageViewSearch
-            .constrainTopToTopOf(constraintLayout, 24)
-            .constrainLeftToLeftOf(constraintLayout, 16)
+        renderUI()
     }
+
+}
+
+fun SetsTestButtonViewHolder.renderUI() {
+    constraintLayout.subviews(
+        imageViewSearch
+    )
+
+    imageViewSearch
+        .constrainTopToTopOf(constraintLayout, 24)
+        .constrainLeftToLeftOf(constraintLayout, 16)
 }
 
 fun SetsTestButtonViewHolder.initialize(imageRes: Int) {

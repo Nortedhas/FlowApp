@@ -10,6 +10,7 @@ import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
+import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 
@@ -24,7 +25,7 @@ import yummypets.com.stevia.*
 class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
     val viewAdapter by lazy {
-        val viewAdapter = Factory()
+        val viewAdapter = Factory(this)
         viewAdapter
     }
 
@@ -51,24 +52,39 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
-        innerContent.subviews(
-            bodyTable
-        )
+        renderUIO()
 
-        bodyTable
-            .fillHorizontally()
-            .fillVertically()
-            .constrainTopToTopOf(innerContent)
     }
+
 }
 
-class Factory: RecyclerView.Adapter<BaseViewHolder>() {
+fun MeditationView.renderUIO() {
+    innerContent.subviews(
+        bodyTable
+    )
+
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
+}
+
+class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
 
     companion object {
         private const val MeditationSearchType = 0
         private const val MeditationTitleType = 1
         private const val MeditationPopularType = 2
         private const val MeditationCardType = 3
+    }
+
+    override fun getItemCount() = 10
+
+    override fun getItemViewType(position: Int):Int = when(position) {
+        0 -> MeditationSearchType
+        1, 3 -> MeditationTitleType
+        2 -> MeditationPopularType
+        else -> MeditationCardType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -99,15 +115,6 @@ class Factory: RecyclerView.Adapter<BaseViewHolder>() {
 
         return holder
     }
-
-    override fun getItemViewType(position: Int):Int = when(position) {
-        0 -> MeditationSearchType
-        1, 3 -> MeditationTitleType
-        2 -> MeditationPopularType
-        else -> MeditationCardType
-    }
-
-    override fun getItemCount() = 10
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
 
