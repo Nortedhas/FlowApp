@@ -1,4 +1,4 @@
-package com.example.ageone.Modules.Meditation.rows
+package com.example.ageone.UIComponents.ViewHolders
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -8,14 +8,13 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import yummypets.com.stevia.*
 
-class MeditationTitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+class TitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val textViewTitle by lazy {
         val textView = BaseTextView()
 
-        textView.gravity = Gravity.CENTER
+        textView.gravity = Gravity.START
         textView.typeface = Typeface.DEFAULT_BOLD
         textView.textSize = 21F
-        textView.textColor = Color.parseColor("#707ABA")
         textView.setBackgroundColor(Color.TRANSPARENT)
 
         textView
@@ -28,7 +27,7 @@ class MeditationTitleViewHolder(val constraintLayout: ConstraintLayout): BaseVie
 
 }
 
-fun MeditationTitleViewHolder.renderUI() {
+fun TitleViewHolder.renderUI() {
     constraintLayout.subviews(
         textViewTitle
     )
@@ -38,7 +37,8 @@ fun MeditationTitleViewHolder.renderUI() {
         .constrainLeftToLeftOf(constraintLayout, 16)
 }
 
-fun MeditationTitleViewHolder.initialize(textPopular: String) {
+fun TitleViewHolder.initialize(textPopular: String, textColor: Int) {
     textViewTitle.text = textPopular
+    textViewTitle.textColor = textColor
 }
 

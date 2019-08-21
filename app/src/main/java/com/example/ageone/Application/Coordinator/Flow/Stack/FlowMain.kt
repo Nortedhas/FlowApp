@@ -5,10 +5,13 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
+import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
+import com.example.ageone.Modules.MeditationFilter.MeditationFilterView
+import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
 fun FlowCoordinator.runFlowMain() {
@@ -44,10 +47,31 @@ class FlowMain: BaseFlow() {
     }
 
     private fun runModuleMeditation() {
-        val module = MeditationView(InitModuleUI(colorToolbar = Color.TRANSPARENT))
+        val module = MeditationView()
         module.emitEvent = { event ->
             when(MeditationViewModel.EventType.valueOf(event)) {
-                MeditationViewModel.EventType.OnEnterPressed -> Timber.i("clicked photo")
+                MeditationViewModel.EventType.OnEnterPressed -> {
+                    Timber.i("clicked photo")
+                }
+                MeditationViewModel.EventType.OnSearchPressed -> {
+                    runModuleMeditationFilter()
+                }
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleMeditationFilter() {
+        val module = MeditationFilterView(InitModuleUI(
+            iconNavigation = R.drawable.ic_arrow_back,
+            navigationListener = {
+                pop()
+            }
+        ))
+
+        module.emitEvent = { event ->
+            when (MeditationFilterViewModel.EventType.valueOf(event)) {
+
             }
         }
         push(module)

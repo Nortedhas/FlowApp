@@ -5,7 +5,8 @@ import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class SetsViewModel: InterfaceViewModel {
     enum class EventType{
-        OnTestPressed;
+        OnTestPressed,
+        OnSetPressed;
     }
 }
 
