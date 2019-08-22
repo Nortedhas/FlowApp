@@ -1,6 +1,8 @@
 package com.example.ageone.Modules.MeditationFilter
 
 import android.graphics.Color
+import android.graphics.Typeface
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,11 +12,10 @@ import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Base.View.BaseView
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterButtonViewHolder
-import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterGoalViewHolder
-import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterTimeButtonViewHolder
-import com.example.ageone.Modules.MeditationFilter.rows.initialize
+import com.example.ageone.Modules.MeditationFilter.rows.*
 import com.example.ageone.Modules.MeditationFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -40,6 +41,32 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
         layoutManager
     }
 
+    val rectangleUp by lazy {
+        val view = BaseView()
+        view.backgroundColor = Color.rgb(0x98, 0x9E, 0xDD)
+        view.cornerRadius = 30.dp
+        view.initialize()
+        view
+    }
+
+    val rectangleDown by lazy {
+        val view = BaseView()
+        view.backgroundColor = Color.rgb(0x98, 0x9E, 0xDD)
+        view.initialize()
+        view
+    }
+
+    val textViewSearch by lazy {
+        val textView = BaseTextView()
+        textView.text = "Подобрать медитацию"
+        textView.gravity = Gravity.CENTER
+        textView.typeface = Typeface.DEFAULT_BOLD
+        textView.textSize = 21F
+        textView.textColor = Color.WHITE
+        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView
+    }
+
     init {
         setBackgroundResource(R.drawable.back_filter)
 
@@ -50,6 +77,11 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
+
+        rectangleUp.setOnClickListener {
+            emitEvent?.invoke(MeditationFilterViewModel.EventType.OnSearchPressed.toString())
+        }
+
         renderUIO()
 
     }
@@ -58,13 +90,31 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
 fun MeditationFilterView.renderUIO() {
 
     innerContent.subviews(
-        bodyTable
+        bodyTable,
+        rectangleUp,
+        rectangleDown,
+        textViewSearch
     )
 
     bodyTable
         .fillHorizontally()
         .fillVertically()
         .constrainTopToTopOf(innerContent)
+
+    rectangleUp
+        .fillHorizontally()
+        .constrainBottomToBottomOf(innerContent)
+        .height(80)
+
+    rectangleDown
+        .fillHorizontally()
+        .constrainTopToTopOf(rectangleUp, 40)
+        .height(40)
+
+    textViewSearch
+        .constrainCenterYToCenterYOf(rectangleUp)
+        .constrainLeftToLeftOf(rectangleUp)
+        .constrainRightToRightOf(rectangleUp)
 
 }
 
@@ -74,7 +124,7 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
         private const val MeditationFilterTitleType = 0
         private const val MeditationFilterTimeButtonType = 1
         private const val MeditationFilterGoalType = 2
-        private const val MeditationFilterButtonType = 3
+        private const val MeditationFilterEmptyType = 3
     }
 
     override fun getItemCount(): Int = 14
@@ -83,7 +133,7 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
         0, 2 -> MeditationFilterTitleType
         1 -> MeditationFilterTimeButtonType
         in 3..12 -> MeditationFilterGoalType
-        13 -> MeditationFilterButtonType
+        13 -> MeditationFilterEmptyType
         else -> -1
     }
 
@@ -104,8 +154,8 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             MeditationFilterGoalType -> {
                 MeditationFilterGoalViewHolder(layout)
             }
-            MeditationFilterButtonType -> {
-                MeditationFilterButtonViewHolder(layout)
+            MeditationFilterEmptyType -> {
+                MeditationFilterEmptyViewHolder(layout)
             }
             else ->
                 BaseViewHolder(layout)
@@ -127,11 +177,8 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
                 val text = if (position - 3 < goals.size) goals[position - 3] else ""
                 holder.initialize(text)
             }
-            is MeditationFilterButtonViewHolder -> {
-                holder.initialize("Подобрать медитацию")
-                holder.constraintLayout.setOnClickListener {
-                    rootModule.emitEvent?.invoke(MeditationFilterViewModel.EventType.OnSearchPressed.toString())
-                }
+            is MeditationFilterEmptyViewHolder -> {
+                holder.initialize()
             }
         }
     }
