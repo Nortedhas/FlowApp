@@ -23,9 +23,6 @@ class BaseButton: Button(currentActivity) {
 
     var imageIcon: Int? = null
 
-    /*var sizeIconWidth = 22F
-    var sizeIconHeight = 22F*/
-
     var sizeIcon = Pair(22F, 22F)
 
     var borderColor: Int? = null
