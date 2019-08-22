@@ -9,6 +9,10 @@ import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Sets.SetsView
 import com.example.ageone.Modules.Sets.SetsViewModel
+import com.example.ageone.Modules.SetsFilter.SetsFilterView
+import com.example.ageone.Modules.SetsFilterList.SetsFilterListView
+import com.example.ageone.Modules.SetsFilterListViewModel
+import com.example.ageone.Modules.SetsFilterViewModel
 import com.example.ageone.Modules.SetsIn.SetsInView
 import com.example.ageone.Modules.SetsInViewModel
 import timber.log.Timber
@@ -48,7 +52,7 @@ class FlowSets: BaseFlow() {
         module.emitEvent = { event ->
             when(SetsViewModel.EventType.valueOf(event)) {
                 SetsViewModel.EventType.OnTestPressed -> {
-                    Timber.i("Sets module button")
+                    runModuleSetsFilter()
 
                 }
                 SetsViewModel.EventType.OnSetPressed -> {
@@ -69,6 +73,40 @@ class FlowSets: BaseFlow() {
 
         module.emitEvent = { event ->
             when (SetsInViewModel.EventType.valueOf(event)) {
+
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleSetsFilter() {
+        val module = SetsFilterView(InitModuleUI(
+            iconNavigation = R.drawable.ic_arrow_back,
+            navigationListener = {
+                pop()
+            }
+        ))
+
+        module.emitEvent = { event ->
+            when (SetsFilterViewModel.EventType.valueOf(event)) {
+                SetsFilterViewModel.EventType.OnSearchPressed -> {
+                    runModuleSetsFilterList()
+                }
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleSetsFilterList() {
+        val module = SetsFilterListView(InitModuleUI(
+            iconNavigation = R.drawable.ic_arrow_back,
+            navigationListener = {
+                pop()
+            }
+        ))
+
+        module.emitEvent = { event ->
+            when (SetsFilterListViewModel.EventType.valueOf(event)) {
 
             }
         }

@@ -31,6 +31,7 @@ class MeditationFilterTimeButtonViewHolder(val constraintLayout: ConstraintLayou
         view.cornerRadius = 8F.dp
         view
     }
+
     val uncheckBack by lazy {
         val view = GradientDrawable()
         view.setColor(Color.rgb(0xD5,0xC9,0xF1))

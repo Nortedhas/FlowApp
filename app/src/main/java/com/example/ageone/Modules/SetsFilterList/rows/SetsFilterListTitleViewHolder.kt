@@ -1,0 +1,94 @@
+package com.example.ageone.Modules.SetsFilterList.rows
+
+import android.graphics.Color
+import android.graphics.Typeface
+import android.view.Gravity
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.ageone.External.Base.ImageView.BaseImageView
+import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Base.View.BaseView
+import yummypets.com.stevia.*
+
+class SetsFilterListTitleViewHolder(val constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
+
+    val back by lazy {
+        val view = BaseView()
+        view.backgroundColor = Color.WHITE
+        view.cornerRadius = 8.dp
+        view.initialize()
+        view.elevation = 4F.dp
+        view
+    }
+
+    val imageViewRune by lazy {
+        val imageView = BaseImageView()
+        imageView.elevation = 5F.dp
+        imageView
+    }
+
+    val textViewTitle by lazy {
+        val textView = BaseTextView()
+        textView.textColor = Color.rgb(0x70, 0x7A,0xBA)
+        textView.textSize = 15F
+        textView.gravity = Gravity.START
+        textView.typeface = Typeface.DEFAULT
+        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView.elevation = 5F.dp
+        textView
+    }
+
+    val textViewDescribe by lazy {
+        val textView = BaseTextView()
+        textView.textColor = Color.parseColor("#979797")
+        textView.textSize = 11F
+        textView.gravity = Gravity.START
+        textView.typeface = Typeface.DEFAULT
+        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView.elevation = 5F.dp
+        textView
+    }
+
+
+
+    init {
+
+        renderUI()
+    }
+}
+
+fun SetsFilterListTitleViewHolder.renderUI() {
+    constraintLayout.subviews(
+        back,
+        imageViewRune,
+        textViewTitle,
+        textViewDescribe
+    )
+
+    back
+        .constrainTopToTopOf(constraintLayout, 16)
+        .constrainBottomToBottomOf(constraintLayout, 8)
+        .fillHorizontally(16)
+        .height(100)
+
+    imageViewRune
+        .constrainCenterYToCenterYOf(back)
+        .constrainLeftToLeftOf(back, 16)
+        .height(60)
+
+    textViewTitle
+        .constrainTopToTopOf(back, 16)
+        .constrainLeftToLeftOf(back, 80)
+        .constrainRightToRightOf(back, 8)
+
+    textViewDescribe
+        .constrainTopToBottomOf(textViewTitle, 2)
+        .constrainLeftToLeftOf(back, 80)
+        .constrainRightToRightOf(back, 8)
+}
+
+fun SetsFilterListTitleViewHolder.initialize(rune: Int, title: String, describe: String) {
+    imageViewRune.setBackgroundResource(rune)
+    textViewTitle.text = title
+    textViewDescribe.text = describe
+}

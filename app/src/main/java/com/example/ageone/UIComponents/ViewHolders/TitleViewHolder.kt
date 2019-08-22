@@ -14,7 +14,6 @@ class TitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(co
 
         textView.gravity = Gravity.START
         textView.typeface = Typeface.DEFAULT_BOLD
-        textView.textSize = 21F
         textView.setBackgroundColor(Color.TRANSPARENT)
 
         textView
@@ -34,11 +33,12 @@ fun TitleViewHolder.renderUI() {
 
     textViewTitle
         .constrainTopToTopOf(constraintLayout, 24)
-        .constrainLeftToLeftOf(constraintLayout, 16)
+        .fillHorizontally(16)
 }
 
-fun TitleViewHolder.initialize(textPopular: String, textColor: Int) {
-    textViewTitle.text = textPopular
+fun TitleViewHolder.initialize(text: String, textColor: Int, textSize: Float = 21F) {
+    textViewTitle.text = text
     textViewTitle.textColor = textColor
+    textViewTitle.textSize = textSize
 }
 

@@ -1,11 +1,10 @@
-package com.example.ageone.Modules.Sets
+package com.example.ageone.Modules.SetsFilterList
 
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
@@ -13,35 +12,36 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.Sets.rows.SetsTestButtonViewHolder
-import com.example.ageone.Modules.Sets.rows.initialize
+import com.example.ageone.Modules.SetsFilterList.rows.SetsFilterListTitleViewHolder
+import com.example.ageone.Modules.SetsFilterList.rows.initialize
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
-class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
+class SetsFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter
     }
 
     val layoutManager by lazy {
-        val layoutManager = GridLayoutManager(currentActivity, 2)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (position) {
-                    0 -> 2
-                    else -> 1
+            val layoutManager = GridLayoutManager(currentActivity, 2)
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (position) {
+                        0 -> 2
+                        else -> 1
+                    }
                 }
             }
+            layoutManager
         }
-        layoutManager
-    }
 
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Сеты медитаций"
+        toolBar.title = "Ваши сеты"
         toolBar.setTitleTextColor(Color.WHITE)
 
         bodyTable.layoutManager = layoutManager
@@ -49,11 +49,12 @@ class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModu
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
-    }
 
+    }
 }
 
-fun SetsView.renderUIO() {
+fun SetsFilterListView.renderUIO() {
+
     innerContent.subviews(
         bodyTable
     )
@@ -62,20 +63,21 @@ fun SetsView.renderUIO() {
         .fillHorizontally()
         .fillVertically()
         .constrainTopToTopOf(innerContent)
+
 }
 
-class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
+class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
 
     companion object {
-        private const val SetsTestButtonType = 0
-        private const val SetsCardType = 1
+        private const val SetsFilterListTitleType = 0
+        private const val SetsFilterListSetType = 1
     }
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = 5
 
-    override fun getItemViewType(position: Int):Int = when(position) {
-        0 -> SetsTestButtonType
-        else -> SetsCardType
+    override fun getItemViewType(position: Int): Int = when (position) {
+        0 -> SetsFilterListTitleType
+        else -> SetsFilterListSetType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -85,11 +87,13 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
             .width(matchParent)
             .height(wrapContent)
 
-        val holder = when(viewType) {
-            SetsTestButtonType ->
-                SetsTestButtonViewHolder(layout)
-            SetsCardType ->
+        val holder = when (viewType) {
+            SetsFilterListTitleType -> {
+                SetsFilterListTitleViewHolder(layout)
+            }
+            SetsFilterListSetType -> {
                 SetViewHolder(layout)
+            }
             else ->
                 BaseViewHolder(layout)
         }
@@ -98,22 +102,19 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when(holder) {
-            is SetsTestButtonViewHolder -> {
-                holder.initialize(R.drawable.button_test)
-                holder.imageViewSearch.setOnClickListener {
-                    rootModule.emitEvent?.invoke(SetsViewModel.EventType.OnTestPressed.toString())
-                }
+        when (holder) {
+            is SetsFilterListTitleViewHolder -> {
+                holder.initialize(R.drawable.ic_rune2, "Вы выбрали - Уруз",
+                    "Руна Уруз символ того ,что все рано или поздно приходит к завершению, " +
+                            "а что-то начинается. Толкование значения руны Уруз недвусмысленно: " +
+                            "конец всегда есть началом нового. ")
             }
-
             is SetViewHolder -> {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
                     "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position)
-                holder.constraintLayout.setOnClickListener {
-                    rootModule.emitEvent?.invoke(SetsViewModel.EventType.OnSetPressed.toString())
-                }
             }
         }
     }
+
 }

@@ -1,6 +1,5 @@
 package com.example.ageone.Application.Coordinator.Flow.Regular
 
-import android.graphics.Color
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.R
