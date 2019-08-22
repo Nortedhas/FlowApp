@@ -1,4 +1,4 @@
-package com.example.ageone.Modules
+package com.example.ageone.Modules.EntrySMS
 
 import android.graphics.Color
 import android.view.View

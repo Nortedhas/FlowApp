@@ -15,6 +15,7 @@ import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterButtonVi
 import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterGoalViewHolder
 import com.example.ageone.Modules.MeditationFilter.rows.MeditationFilterTimeButtonViewHolder
 import com.example.ageone.Modules.MeditationFilter.rows.initialize
+import com.example.ageone.Modules.MeditationFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
@@ -128,6 +129,9 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             }
             is MeditationFilterButtonViewHolder -> {
                 holder.initialize("Подобрать медитацию")
+                holder.constraintLayout.setOnClickListener {
+                    rootModule.emitEvent?.invoke(MeditationFilterViewModel.EventType.OnSearchPressed.toString())
+                }
             }
         }
     }

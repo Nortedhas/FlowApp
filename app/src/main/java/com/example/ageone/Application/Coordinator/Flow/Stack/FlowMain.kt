@@ -11,6 +11,8 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.MeditationFilter.MeditationFilterView
+import com.example.ageone.Modules.MeditationFilterList.MeditationFilterListView
+import com.example.ageone.Modules.MeditationFilterListViewModel
 import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
@@ -71,6 +73,24 @@ class FlowMain: BaseFlow() {
 
         module.emitEvent = { event ->
             when (MeditationFilterViewModel.EventType.valueOf(event)) {
+                MeditationFilterViewModel.EventType.OnSearchPressed -> {
+                    runModuleMeditationFilterList()
+                }
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleMeditationFilterList() {
+        val module = MeditationFilterListView(InitModuleUI(
+            iconNavigation = R.drawable.ic_arrow_back,
+            navigationListener = {
+                pop()
+            }
+        ))
+
+        module.emitEvent = { event ->
+            when (MeditationFilterListViewModel.EventType.valueOf(event)) {
 
             }
         }

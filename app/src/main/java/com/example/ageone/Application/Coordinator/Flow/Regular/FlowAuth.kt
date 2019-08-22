@@ -8,7 +8,7 @@ import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Entry.EntryView
-import com.example.ageone.Modules.EntrySMSView
+import com.example.ageone.Modules.EntrySMS.EntrySMSView
 import com.example.ageone.Modules.EntrySMSViewModel
 import com.example.ageone.Modules.EntryViewModel
 import com.example.ageone.Modules.Registration.RegistrationView
