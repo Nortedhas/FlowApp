@@ -26,7 +26,7 @@ fun FlowCoordinator.runFlowMain() {
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
         viewFlipperFlow
 
-        flow.isBottomNavigationVisible = true
+//        flow.isBottomNavigationVisible = true
         setBottomNavigationVisible(true)
 
         flows.add(flow)

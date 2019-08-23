@@ -16,6 +16,8 @@ import yummypets.com.stevia.*
 
 open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
 
+    var isBottomNavigationVisible = true
+
     val backgroundImage by lazy {
         val image = BaseImageView()
         image
@@ -64,6 +66,7 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
 
     init {
         id = View.generateViewId()
+        isBottomNavigationVisible = initModuleUI.isBottomNavigationVisible
         renderUI()
         Timber.i("${this.className()} Init ")
     }

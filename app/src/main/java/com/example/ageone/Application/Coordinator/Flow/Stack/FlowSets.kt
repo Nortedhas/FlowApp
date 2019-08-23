@@ -23,7 +23,7 @@ fun FlowCoordinator.runFlowSets() {
         FlowSets()
 
     flow?.let{ flow ->
-        flow.isBottomNavigationVisible = true
+//        flow.isBottomNavigationVisible = true
 
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
@@ -81,6 +81,7 @@ class FlowSets: BaseFlow() {
 
     fun runModuleSetsFilter() {
         val module = SetsFilterView(InitModuleUI(
+            isBottomNavigationVisible = false,
             iconNavigation = R.drawable.ic_arrow_back,
             navigationListener = {
                 pop()
@@ -99,6 +100,7 @@ class FlowSets: BaseFlow() {
 
     fun runModuleSetsFilterList() {
         val module = SetsFilterListView(InitModuleUI(
+            isBottomNavigationVisible = false,
             iconNavigation = R.drawable.ic_arrow_back,
             navigationListener = {
                 pop()

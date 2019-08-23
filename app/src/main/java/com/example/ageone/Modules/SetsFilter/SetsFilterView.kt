@@ -21,6 +21,7 @@ import com.example.ageone.Modules.SetsFilter.rows.initialize
 import com.example.ageone.Modules.SetsFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 class SetsFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
@@ -168,6 +169,12 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             is SetsFilterRuneViewHolder -> {
                 val rune = if (position - 1 < runes.size) runes[position - 1] else 0
                 holder.initialize(rune)
+                holder.constraintLayout.setOnClickListener {
+                    Timber.i("rune")
+                    //notifyDataSetChanged()
+                    holder.back.backgroundColor = Color.WHITE
+                    holder.isChecked = true
+                }
             }
             is SetsFilterEmptyViewHolder -> {
                 holder.initialize()

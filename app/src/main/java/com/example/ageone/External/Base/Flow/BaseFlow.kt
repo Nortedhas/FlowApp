@@ -18,7 +18,7 @@ abstract class BaseFlow: View(currentActivity){
     var onFinish: (() -> Unit)? = null
 
     var colorStatusBar = Color.TRANSPARENT
-    var isBottomNavigationVisible = false
+//    var isBottomNavigationVisible = false
 
     var isStarted = false
 
@@ -30,7 +30,7 @@ abstract class BaseFlow: View(currentActivity){
     init {
 
         onStart?.invoke()
-        setBottomNavigationVisible(isBottomNavigationVisible)
+//        setBottomNavigationVisible(isBottomNavigationVisible)
 
     }
 
@@ -38,6 +38,7 @@ abstract class BaseFlow: View(currentActivity){
         module?.let { module ->
             includeModule(module)
             viewFlipperModule.displayedChild = stack.indexOf(module.id)
+            setBottomNavigationVisible(module.isBottomNavigationVisible)
         }
     }
 
@@ -45,7 +46,8 @@ abstract class BaseFlow: View(currentActivity){
         if (stack.size > 1) {
             val currentModule = viewFlipperModule.currentView as BaseModule
             deInitModule(currentModule)
-            
+
+            setBottomNavigationVisible((viewFlipperModule.currentView as BaseModule).isBottomNavigationVisible)
         }
     }
 
@@ -62,7 +64,8 @@ abstract class BaseFlow: View(currentActivity){
             
             if (viewFlipperModule.contains(module)) {
                 viewFlipperModule.removeView(module)
-                viewFlipperModule.displayedChild = stack.last()
+                viewFlipperModule.displayedChild = stack.size - 1//.last()
+
             }
             module.onDeInit?.invoke()
             Timber.i("Module DeInit ${module.className()}")

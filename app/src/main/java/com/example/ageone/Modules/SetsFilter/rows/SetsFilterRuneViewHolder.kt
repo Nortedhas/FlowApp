@@ -30,7 +30,7 @@ class SetsFilterRuneViewHolder(val constraintLayout: ConstraintLayout) : BaseVie
     }
 
     init {
-        constraintLayout.setOnClickListener {
+        /*constraintLayout.setOnClickListener {
             if (isChecked) {
                 back.backgroundColor = uncheckColor
             } else {
@@ -38,7 +38,7 @@ class SetsFilterRuneViewHolder(val constraintLayout: ConstraintLayout) : BaseVie
             }
             back.initialize()
             isChecked = !isChecked
-        }
+        }*/
         renderUI()
     }
 }

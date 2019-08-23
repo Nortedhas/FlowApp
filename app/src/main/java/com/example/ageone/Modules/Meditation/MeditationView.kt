@@ -62,7 +62,7 @@ fun MeditationView.renderUIO() {
     )
 
     bodyTable
-        .fillHorizontally()
+        .fillHorizontally(8)
         .fillVertically()
         .constrainTopToTopOf(innerContent)
 }

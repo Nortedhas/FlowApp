@@ -16,6 +16,8 @@ import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 
+var isBottomNavigationExist = true
+
 class FlowCoordinator {
     fun setLaunchScreen() {
 
