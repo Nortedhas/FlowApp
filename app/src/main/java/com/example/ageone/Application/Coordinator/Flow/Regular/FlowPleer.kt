@@ -5,7 +5,6 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
-import com.example.ageone.Application.R
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
@@ -14,9 +13,9 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Pleer.PleerView
 import com.example.ageone.Modules.PleerViewModel
 
-fun FlowCoordinator.runFlowPleer(settingsFlow: DataFlow) {
+fun FlowCoordinator.runFlowPleer(settingsLastFlow: DataFlow) {
 
-    var flow: FlowPleer? = FlowPleer(settingsFlow)
+    var flow: FlowPleer? = FlowPleer(settingsLastFlow)
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -35,7 +34,7 @@ fun FlowCoordinator.runFlowPleer(settingsFlow: DataFlow) {
     flow?.start()
 }
 
-class FlowPleer(val settingsFlow: DataFlow): BaseFlow() {
+class FlowPleer(val settingsLastFlow: DataFlow): BaseFlow() {
 
     override fun start() {
         onStarted()
@@ -47,12 +46,12 @@ class FlowPleer(val settingsFlow: DataFlow): BaseFlow() {
         val module = PleerView(InitModuleUI(
             isBottomNavigationVisible = false,
             backListener = {
-                coordinator.pop(settingsFlow)
+                coordinator.pop(settingsLastFlow)
             }
         ))
 
         onBack = {
-            coordinator.pop(settingsFlow)
+            coordinator.pop(settingsLastFlow)
         }
         settingsCurrentFlow.isBottomBarVisible = false
 

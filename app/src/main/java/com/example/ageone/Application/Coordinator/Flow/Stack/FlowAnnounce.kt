@@ -5,17 +5,15 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipp
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
-import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.AnnounceView
 import com.example.ageone.Modules.AnnounceViewModel
 
-fun FlowCoordinator.runFlowAnnounce(settingsFlow: DataFlow) {
+fun FlowCoordinator.runFlowAnnounce(settingsLastFlow: DataFlow) {
 
-    var flow: FlowAnnounce? = FlowAnnounce(settingsFlow)
+    var flow: FlowAnnounce? = FlowAnnounce(settingsLastFlow)
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -35,7 +33,7 @@ fun FlowCoordinator.runFlowAnnounce(settingsFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowAnnounce(val settingsFlow: DataFlow): BaseFlow() {
+class FlowAnnounce(val settingsLastFlow: DataFlow): BaseFlow() {
 
     override fun start() {
         onStarted()
