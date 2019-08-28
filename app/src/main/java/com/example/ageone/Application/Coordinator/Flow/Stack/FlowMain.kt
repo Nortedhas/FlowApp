@@ -54,8 +54,8 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
         val module = MeditationView()
 
         onBack = {
-            coordinator.pop(settingsLastFlow)
         }
+        settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when(MeditationViewModel.EventType.valueOf(event)) {
@@ -66,7 +66,6 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                     runModuleMeditationFilter()
                 }
                 MeditationViewModel.EventType.OnMeditationPressed -> {
-                    settingsCurrentFlow?.isBottomBarVisible = true
                     coordinator.runFlowPleer(settingsCurrentFlow)
                 }
             }
@@ -81,6 +80,10 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (MeditationFilterViewModel.EventType.valueOf(event)) {
@@ -99,6 +102,10 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (MeditationFilterListViewModel.EventType.valueOf(event)) {

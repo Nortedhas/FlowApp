@@ -2,6 +2,7 @@ package com.example.ageone.Application.Coordinator.Flow.Regular
 
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.R
@@ -38,7 +39,7 @@ class FlowPleer(val settingsFlow: DataFlow): BaseFlow() {
 
     override fun start() {
         onStarted()
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        currentFlow = this
         runModulePleer()
     }
 
@@ -53,6 +54,7 @@ class FlowPleer(val settingsFlow: DataFlow): BaseFlow() {
         onBack = {
             coordinator.pop(settingsFlow)
         }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (PleerViewModel.EventType.valueOf(event)) {

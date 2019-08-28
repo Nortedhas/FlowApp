@@ -52,9 +52,8 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
         val module = SetsView()
 
         onBack = {
-            coordinator.pop(settingsLastFlow)
-        }
 
+        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
@@ -79,6 +78,9 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
             }
         ))
 
+        onBack = {
+            pop()
+        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -98,7 +100,9 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-
+        onBack = {
+            pop()
+        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->

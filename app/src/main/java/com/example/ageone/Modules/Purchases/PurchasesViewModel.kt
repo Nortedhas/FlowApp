@@ -5,7 +5,7 @@ import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class PurchasesViewModel : InterfaceViewModel {
     enum class EventType {
-
+        OnSetPressed
     }
 }
 

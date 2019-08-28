@@ -31,7 +31,7 @@ class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActiv
 
     private val viewExit by lazy {
         val view = BaseImageView()
-        view.setImageResource(R.drawable.ic_close)
+        view.setImageResource(R.drawable.ic_exit)
         view.visibility = View.GONE
         view
     }
@@ -108,8 +108,8 @@ class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActiv
 
         viewExit
             .fillVertically()
-            .width(15)
-            .height(15)
+            .width(20)
+            .height(20)
             .constrainRightToRightOf(this, 16)
     }
 }

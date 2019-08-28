@@ -52,7 +52,14 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
     }
 
     fun runModuleStart() {
-        val module = StartView(InitModuleUI(isToolbarHidden = true))
+        val module = StartView(InitModuleUI(
+            isBottomNavigationVisible = false,
+            isToolbarHidden = true
+        ))
+
+        onBack = {
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when(StartViewModel.EventType.valueOf(event)) {
@@ -66,7 +73,15 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
     }
 
     fun runModuleStartLogin() {
-        val module = StartLoginView(InitModuleUI(isToolbarHidden = true))
+        val module = StartLoginView(InitModuleUI(
+            isBottomNavigationVisible = false,
+            isToolbarHidden = true
+        ))
+
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when(StartLoginViewModel.EventType.valueOf(event)) {
@@ -87,7 +102,14 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
     }
 
     fun runModuleRegistration() {
-        val module = RegistrationView()
+        val module = RegistrationView(InitModuleUI(
+            isBottomNavigationVisible = false
+        ))
+
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when(RegistrationViewModel.EventType.valueOf(event)) {
@@ -101,20 +123,36 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
 
     fun runModuleRegistrationSMS() {
         val module = RegistrationSMSView(InitModuleUI(
+            isBottomNavigationVisible = false,
             backListener = {
                 pop()
             }
         ))
+
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
+
         module.emitEvent = { event ->
             when (RegistrationSMSViewModel.EventType.valueOf(event)) {
-
+                RegistrationSMSViewModel.EventType.OnAcceptPressed -> {
+                    coordinator.start()
+                }
             }
         }
         push(module)
     }
 
     fun runModuleEntry() {
-        val module = EntryView()
+        val module = EntryView(InitModuleUI(
+            isBottomNavigationVisible = false
+        ))
+
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (EntryViewModel.EventType.valueOf(event)) {
@@ -128,10 +166,15 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
 
     fun runModuleEntrySMS() {
         val module = EntrySMSView(InitModuleUI(
+            isBottomNavigationVisible = false,
             backListener = {
                 pop()
             }
         ))
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (EntrySMSViewModel.EventType.valueOf(event)) {

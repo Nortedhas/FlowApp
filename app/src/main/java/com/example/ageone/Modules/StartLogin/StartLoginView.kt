@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updatePadding
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
@@ -27,7 +28,6 @@ class StartLoginView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
-        //TODO: смена позиции каждые 5 сек
 
         renderUIO()
     }
@@ -36,11 +36,18 @@ class StartLoginView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 
 fun StartLoginView.renderUIO() {
 
-    renderBodyTable()
+    innerContent.subviews(
+        bodyTable
+    )
+
+    bodyTable
+        .fillHorizontally()
+        .fillVertically()
+        .constrainTopToTopOf(innerContent)
 }
 
 
-class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {//TODO отнаследовать от BaseRecycler
+class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
 
     companion object {
         private const val EnterTitleType = 0

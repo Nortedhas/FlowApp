@@ -5,6 +5,7 @@ import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class SetsInViewModel : InterfaceViewModel {
     enum class EventType {
+        OnMeditationPressed
     }
 }
 

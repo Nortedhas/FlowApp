@@ -10,6 +10,8 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.Meditation.MeditationViewModel
+import com.example.ageone.Modules.SetsInViewModel
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
@@ -81,6 +83,9 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
                     "Спокойствие", "Медитация для тех кто проснулся и уже встал.")
+                holder.constraintLayout.setOnClickListener {
+                    rootModule.emitEvent?.invoke(SetsInViewModel.EventType.OnMeditationPressed.toString())
+                }
             }
         }
     }

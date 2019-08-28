@@ -16,6 +16,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import yummypets.com.stevia.*
 
 var isBottomNavigationExist = true
@@ -102,7 +103,7 @@ private enum class LaunchInstructor {
 
     companion object {
 
-        fun configure(isAutorized: Boolean = true/*user.isAuthorized*/): LaunchInstructor {
+        fun configure(isAutorized: Boolean = user.isAuthorized): LaunchInstructor {
             return when (isAutorized) {
                 true -> Main
                 false -> Auth

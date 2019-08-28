@@ -5,7 +5,7 @@ import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class RegistrationSMSViewModel : InterfaceViewModel {
     enum class EventType {
-
+        OnAcceptPressed
     }
 }
 

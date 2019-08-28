@@ -3,6 +3,7 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowSet
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.coordinator
@@ -47,12 +48,15 @@ class FlowPurchases(val settingsLastFlow: DataFlow): BaseFlow() {
         val module = PurchasesView(InitModuleUI())
 
         onBack = {
-            coordinator.pop(settingsLastFlow)
+
         }
+        settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (PurchasesViewModel.EventType.valueOf(event)) {
-
+                PurchasesViewModel.EventType.OnSetPressed -> {
+                    coordinator.runFlowSet(settingsCurrentFlow)
+                }
             }
         }
         push(module)

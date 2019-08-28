@@ -48,8 +48,8 @@ class FlowAnnounce(val settingsFlow: DataFlow): BaseFlow() {
         val module = AnnounceView(InitModuleUI())
 
         onBack = {
-            coordinator.pop(settingsFlow)
         }
+        settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (AnnounceViewModel.EventType.valueOf(event)) {

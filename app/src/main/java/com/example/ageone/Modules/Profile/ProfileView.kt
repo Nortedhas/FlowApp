@@ -1,31 +1,25 @@
 package com.example.ageone.Modules.Profile
 
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
-import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Profile.rows.*
 import com.example.ageone.Modules.ProfileViewModel
-import yummypets.com.stevia.*
+import yummypets.com.stevia.height
+import yummypets.com.stevia.matchParent
+import yummypets.com.stevia.width
+import yummypets.com.stevia.wrapContent
 
 class ProfileView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter
-    }
-
-    val viewExit by lazy {
-        val view = BaseImageView()
-        view.setBackgroundResource(R.drawable.ic_exit)
-        view
     }
 
     init {

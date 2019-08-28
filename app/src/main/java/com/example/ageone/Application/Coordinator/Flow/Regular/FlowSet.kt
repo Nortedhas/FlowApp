@@ -2,6 +2,7 @@ package com.example.ageone.Application.Coordinator.Flow.Regular
 
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.coordinator
@@ -39,7 +40,7 @@ class FlowSet(val settingsLastFlow: DataFlow): BaseFlow() {
 
     override fun start() {
         onStarted()
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        currentFlow = this
         runModuleSetsIn()
     }
 
@@ -53,10 +54,13 @@ class FlowSet(val settingsLastFlow: DataFlow): BaseFlow() {
         onBack = {
             coordinator.pop(settingsLastFlow)
         }
+        settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (SetsInViewModel.EventType.valueOf(event)) {
-
+                SetsInViewModel.EventType.OnMeditationPressed -> {
+                    coordinator.runFlowPleer(settingsCurrentFlow)
+                }
             }
         }
         push(module)

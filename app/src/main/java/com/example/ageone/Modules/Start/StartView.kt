@@ -78,10 +78,6 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         }
 
         renderUIO()
-
-        /*Timer().schedule(0, 5000) {
-
-        }*/
     }
 
 }
@@ -117,7 +113,8 @@ fun StartView.renderUIO() {
 
 class Factory(val rootModule: BaseModule): BaseAdapter<Factory.TextViewHolder>() {
 
-    private val list = listOf("Повседневная практика показывает, что новая модель организационной деятельности",
+    private val list = listOf(
+        "Повседневная практика показывает, что новая модель организационной деятельности",
         "Повседневная практика показывает, что новая модель организационной деятельности",
         "Повседневная практика показывает, что новая модель организационной деятельности")
 

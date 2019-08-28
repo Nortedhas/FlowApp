@@ -15,7 +15,7 @@ abstract class BaseFlow: View(currentActivity){
 
     val stack = mutableListOf<Int>()
 
-    lateinit var settingsCurrentFlow: DataFlow
+    var settingsCurrentFlow: DataFlow = DataFlow()
 
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null

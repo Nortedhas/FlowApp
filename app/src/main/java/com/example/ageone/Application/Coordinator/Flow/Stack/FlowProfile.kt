@@ -10,6 +10,7 @@ import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.Profile.ProfileView
 import com.example.ageone.Modules.ProfileViewModel
 import com.example.ageone.Modules.ProfileVip.ProfileVipView
@@ -46,11 +47,18 @@ class FlowProfile(val settingsLastFlow: DataFlow): BaseFlow() {
     }
 
     fun runModuleProfile() {
-        val module = ProfileView()
+        val module = ProfileView(
+            InitModuleUI(
+            exitListener = {
+                user.isAuthorized = false
+                coordinator.start()
+            }
+        ))
 
         onBack = {
-            coordinator.pop(settingsLastFlow)
+
         }
+        settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (ProfileViewModel.EventType.valueOf(event)) {
@@ -69,6 +77,11 @@ class FlowProfile(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
+
+        onBack = {
+            pop()
+        }
+        settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
             when (ProfileVipViewModel.EventType.valueOf(event)) {

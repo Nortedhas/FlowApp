@@ -9,8 +9,10 @@ import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.RegistrationSMS.rows.RegistrationSMSTextViewHolder
 import com.example.ageone.Modules.RegistrationSMS.rows.initialize
+import com.example.ageone.Modules.RegistrationSMSViewModel
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -94,6 +96,10 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
             }
             is ButtonViewHolder -> {
                 holder.initialize("Подтверждаю")
+                holder.button.setOnClickListener {
+                    user.isAuthorized = true
+                    rootModule.emitEvent?.invoke(RegistrationSMSViewModel.EventType.OnAcceptPressed.toString())
+                }
             }
         }
     }
