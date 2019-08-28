@@ -1,12 +1,9 @@
 package com.example.ageone.Modules.Entry
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
@@ -30,8 +27,8 @@ class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Вход в Поток"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Вход в Поток"
+        renderToolbar()
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
@@ -42,14 +39,8 @@ class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 }
 
 fun EntryView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {

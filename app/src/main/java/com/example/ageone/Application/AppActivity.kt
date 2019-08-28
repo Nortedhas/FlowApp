@@ -4,7 +4,9 @@ import android.graphics.Point
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.External.Base.Activity.BaseActivity
+import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.Network.HTTP.Methods
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -13,7 +15,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import yummypets.com.stevia.dp
+import android.util.DisplayMetrics
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 
 
 class AppActivity: BaseActivity()  {
@@ -88,20 +91,23 @@ class AppActivity: BaseActivity()  {
             })
     }
 
-    private fun setDisplaySize(){
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        utils.variable.displayWidth = size.x / 3
-        utils.variable.displayHeight = size.y / 3
+    private fun setDisplaySize() {
+        val displayMetrics = resources.displayMetrics
+        utils.variable.displayWidth = (displayMetrics.widthPixels / displayMetrics.density).toInt()
+        utils.variable.displayHeight = (displayMetrics.heightPixels / displayMetrics.density).toInt()
+
+        Timber.i("width = ${utils.variable.displayWidth}")
 
         // Calculate ActionBar height
         val tv = TypedValue()
         if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             utils.variable.actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, resources.displayMetrics) / 3
         }
+    }
 
-        Timber.i("height: ${utils.variable.actionBarHeight}")
+    override fun onBackPressed() {
+        Timber.i("back")
+        currentFlow?.onBack?.invoke()
     }
 }
 

@@ -2,6 +2,7 @@ package com.example.ageone.External.Base.Module
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
@@ -14,7 +15,7 @@ import timber.log.Timber
 import yummypets.com.stevia.*
 
 
-open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
+open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
 
     var isBottomNavigationVisible = true
 
@@ -34,19 +35,16 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
         innerContent
     }
 
-    val toolBar by lazy {
-        val toolBar = BaseToolbar()
+    val toolbar by lazy {
+        val toolBar = BaseToolbar(initModuleUI)
+
         toolBar
             .setBackgroundColor(initModuleUI.colorToolbar)
-        if (initModuleUI.isHidden) {
+
+        if (initModuleUI.isToolbarHidden) {
             toolBar.visibility = View.GONE
         }
-        initModuleUI.iconNavigation?.let{iconNavigation ->
-            toolBar.setNavigationIcon(iconNavigation)
-            initModuleUI.navigationListener?.let { navigationListener ->
-                toolBar.setNavigationOnClickListener(navigationListener)
-            }
-        }
+
         toolBar
     }
 
@@ -71,14 +69,14 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
         Timber.i("${this.className()} Init ")
     }
 
-    fun saveArea() = utils.variable.statusBarHeight + toolBar.height
+    fun saveArea() = utils.variable.statusBarHeight + toolbar.height
 
 
     fun renderUI() {
         subviews(
             backgroundImage,
             content.subviews(
-                toolBar,
+                toolbar,
                 innerContent
             )
         )
@@ -87,7 +85,7 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
             .fillHorizontally()
             .fillVertically()
 
-        toolBar
+        toolbar
             .constrainTopToTopOf(content, 0)
             .fillHorizontally()
             .height(utils.variable.actionBarHeight)
@@ -95,11 +93,31 @@ open class BaseModule(initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintL
         innerContent
             .fillHorizontally()
             .fillVertically()
-            .constrainTopToBottomOf(toolBar)
+            .constrainTopToBottomOf(toolbar)
 
         backgroundImage
             .fillHorizontally()
             .fillVertically()
+
+    }
+
+    fun renderToolbar() {
+        toolbar.initialize()
+    }
+
+    fun renderBodyTable() {
+        innerContent.subviews(
+            bodyTable
+        )
+
+        bodyTable
+            .fillHorizontally(8)
+            .fillVertically()
+            .constrainTopToTopOf(innerContent)
+            .updatePadding(bottom = 8)
+
+        bodyTable
+            .clipToPadding = false
 
     }
 

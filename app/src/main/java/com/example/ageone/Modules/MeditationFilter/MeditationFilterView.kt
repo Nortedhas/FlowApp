@@ -70,8 +70,8 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
     init {
         setBackgroundResource(R.drawable.back_filter)
 
-        toolBar.title = "Подбор медитации"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Подбор медитации"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
@@ -89,27 +89,23 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
 
 fun MeditationFilterView.renderUIO() {
 
+    renderBodyTable()
+
     innerContent.subviews(
-        bodyTable,
         rectangleUp,
         rectangleDown,
         textViewSearch
     )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
-
     rectangleUp
         .fillHorizontally()
         .constrainBottomToBottomOf(innerContent)
-        .height(80)
+        .height(60)
 
     rectangleDown
         .fillHorizontally()
-        .constrainTopToTopOf(rectangleUp, 40)
-        .height(40)
+        .constrainTopToTopOf(rectangleUp, 30)
+        .height(30)
 
     textViewSearch
         .constrainCenterYToCenterYOf(rectangleUp)

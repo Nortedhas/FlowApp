@@ -1,7 +1,5 @@
 package com.example.ageone.Modules.SetsFilterList
 
-import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -41,12 +39,12 @@ class SetsFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModu
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Ваши сеты"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Ваши сеты"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
-        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
+//        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
 
@@ -55,14 +53,7 @@ class SetsFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModu
 
 fun SetsFilterListView.renderUIO() {
 
-    innerContent.subviews(
-        bodyTable
-    )
-
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 
 }
 
@@ -104,10 +95,10 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is SetsFilterListTitleViewHolder -> {
-                holder.initialize(R.drawable.ic_rune2, "Вы выбрали - Уруз",
-                    "Руна Уруз символ того ,что все рано или поздно приходит к завершению, " +
-                            "а что-то начинается. Толкование значения руны Уруз недвусмысленно: " +
-                            "конец всегда есть началом нового. ")
+                holder.initialize(R.drawable.rune2, "Вы выбрали - Уруз",
+                    "ЖЖЖ ЖЖЖЖ ЖЖЖЖЖ ЖЖЖ ЖЖЖЖЖ ЖЖЖЖ ЖЖЖЖЖЖЖ" +
+                            "ЖЖЖЖ ЖЖЖЖ ЖЖЖЖЖЖ ЖЖЖЖ ЖЖЖЖЖЖЖЖ ЖЖЖЖЖЖ" +
+                            "ЖЖЖ ЖЖЖЖ ЖЖЖЖЖ ЖЖЖЖЖЖЖ ЖЖЖЖЖ ЖЖЖЖЖ")
             }
             is SetViewHolder -> {
                 holder.initialize(

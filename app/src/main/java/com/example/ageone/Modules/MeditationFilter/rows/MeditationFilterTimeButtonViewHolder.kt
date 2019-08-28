@@ -105,7 +105,7 @@ fun MeditationFilterTimeButtonViewHolder.renderUI() {
         utils.variable.displayWidth - 64,
         70.dp,
         1F)
-    buttonParams.setMargins(16.dp, 0, 0, 0)
+    buttonParams.setMargins(8.dp, 0, 8.dp, 0)
 
     radioButton1.layoutParams = buttonParams
     radioButton2.layoutParams = buttonParams
@@ -121,8 +121,7 @@ fun MeditationFilterTimeButtonViewHolder.renderUI() {
 
     radioGroup
         .constrainTopToTopOf(constraintLayout, 16)
-        .constrainLeftToLeftOf(constraintLayout)
-        .constrainRightToRightOf(constraintLayout, 16)
+        .fillHorizontally()
 }
 
 fun MeditationFilterTimeButtonViewHolder.initialize() {

@@ -1,10 +1,8 @@
 package com.example.ageone.Modules.Registration
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
@@ -28,8 +26,8 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Регистрация"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Регистрация"
+        renderToolbar()
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
@@ -41,14 +39,8 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
 }
 
 fun RegistrationView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {

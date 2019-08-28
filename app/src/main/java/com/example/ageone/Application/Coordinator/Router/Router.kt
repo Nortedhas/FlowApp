@@ -9,7 +9,7 @@ import timber.log.Timber
 import yummypets.com.stevia.style
 
 class Router {
-    val collection = arrayListOf<BaseModule>()
+    val collection = arrayListOf<BaseFlow>()
     lateinit var layout: ConstraintLayout
 
     init {

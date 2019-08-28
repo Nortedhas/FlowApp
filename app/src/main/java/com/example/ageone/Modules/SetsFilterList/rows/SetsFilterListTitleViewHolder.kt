@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Base.TextView.limitLength
 import com.example.ageone.External.Base.View.BaseView
 import yummypets.com.stevia.*
 
@@ -35,6 +37,7 @@ class SetsFilterListTitleViewHolder(val constraintLayout: ConstraintLayout) : Ba
         textView.typeface = Typeface.DEFAULT
         textView.setBackgroundColor(Color.TRANSPARENT)
         textView.elevation = 5F.dp
+        textView.text = "Вы выбрали - Уруз"
         textView
     }
 
@@ -52,38 +55,43 @@ class SetsFilterListTitleViewHolder(val constraintLayout: ConstraintLayout) : Ba
 
 
     init {
-
+        textViewDescribe.limitLength(90)
         renderUI()
     }
 }
 
 fun SetsFilterListTitleViewHolder.renderUI() {
     constraintLayout.subviews(
-        back,
-        imageViewRune,
-        textViewTitle,
-        textViewDescribe
+        back.subviews(
+            imageViewRune,
+            textViewTitle,
+            textViewDescribe
+        )
     )
 
     back
         .constrainTopToTopOf(constraintLayout, 16)
         .constrainBottomToBottomOf(constraintLayout, 8)
-        .fillHorizontally(16)
-        .height(100)
+        .fillHorizontally(8)
 
     imageViewRune
-        .constrainCenterYToCenterYOf(back)
-        .constrainLeftToLeftOf(back, 16)
-        .height(60)
+        .constrainTopToTopOf(back, 16)
+        .constrainLeftToLeftOf(back, 14)
+        .height(71)
+        .width(54)
+//        .constrainBottomToBottomOf(back, 8)
 
     textViewTitle
+        .fillHorizontally()
         .constrainTopToTopOf(back, 16)
-        .constrainLeftToLeftOf(back, 80)
+        .constrainLeftToRightOf(imageViewRune, 10)
         .constrainRightToRightOf(back, 8)
 
     textViewDescribe
         .constrainTopToBottomOf(textViewTitle, 2)
-        .constrainLeftToLeftOf(back, 80)
+        .constrainBottomToBottomOf(back, 16)
+        .fillHorizontally()
+        .constrainLeftToRightOf(imageViewRune, 10)
         .constrainRightToRightOf(back, 8)
 }
 

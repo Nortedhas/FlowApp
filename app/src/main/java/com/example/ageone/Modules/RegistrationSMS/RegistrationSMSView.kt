@@ -1,6 +1,5 @@
 package com.example.ageone.Modules.RegistrationSMS
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +26,8 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Смс-код"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Смс-код"
+        renderToolbar()
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
@@ -40,14 +39,8 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
 }
 
 fun RegistrationSMSView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {

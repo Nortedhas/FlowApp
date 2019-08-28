@@ -1,7 +1,5 @@
 package com.example.ageone.Modules.MeditationFilterList
 
-import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,12 +29,12 @@ class MeditationFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : Ba
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Ваши медитации"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Ваши медитации"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
-        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
+//        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
 
@@ -45,14 +43,7 @@ class MeditationFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : Ba
 
 fun MeditationFilterListView.renderUIO() {
 
-    innerContent.subviews(
-        bodyTable
-    )
-
-    bodyTable
-        .fillHorizontally(8)
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 
 }
 

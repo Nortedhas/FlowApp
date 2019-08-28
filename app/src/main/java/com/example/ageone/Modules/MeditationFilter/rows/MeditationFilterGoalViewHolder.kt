@@ -47,8 +47,9 @@ fun MeditationFilterGoalViewHolder.renderUI() {
     )
 
     buttonGoal
+        .fillHorizontally(8)
         .constrainTopToTopOf(constraintLayout, 16)
-        .constrainRightToRightOf(constraintLayout, 16)
+//        .constrainRightToRightOf(constraintLayout, 16)
         .width((utils.variable.displayWidth - 48) / 2)
 }
 

@@ -35,14 +35,8 @@ class StartLoginView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 }
 
 fun StartLoginView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillVertically()
-        .fillHorizontally()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 

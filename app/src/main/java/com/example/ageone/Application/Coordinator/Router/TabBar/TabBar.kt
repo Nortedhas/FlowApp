@@ -44,8 +44,8 @@ object TabBar {
         bottomNavigation.setTitleTextSize(30f,30f)
         bottomNavigation.defaultBackgroundColor = Color.parseColor("#FEFEFE")
         bottomNavigation.isBehaviorTranslationEnabled = true
-        bottomNavigation.accentColor = Color.RED
-        bottomNavigation.inactiveColor = Color.BLUE
+        bottomNavigation.accentColor = Color.rgb(0x70,0x7A,0xBA)
+        bottomNavigation.inactiveColor = Color.GRAY
         bottomNavigation.isForceTint = true
         bottomNavigation.isTranslucentNavigationEnabled = false
         bottomNavigation.titleState = AHBottomNavigation.TitleState.ALWAYS_SHOW
@@ -62,17 +62,15 @@ object TabBar {
             viewFlipperFlow.addView(flow)
         }
 
-//        flows[0].start()
-
     }
 
     private fun createStackItem() {
         items = arrayListOf(
             AHBottomNavigationItem("Главная", R.drawable.home),
-            AHBottomNavigationItem("Сеты", R.drawable.sets)/*,
+            AHBottomNavigationItem("Сеты", R.drawable.sets),
             AHBottomNavigationItem("Анонсы", R.drawable.anons),
             AHBottomNavigationItem("Покупки", R.drawable.buy),
-            AHBottomNavigationItem("Профиль", R.drawable.profile)*/
+            AHBottomNavigationItem("Профиль", R.drawable.profile)
         )
 
     }

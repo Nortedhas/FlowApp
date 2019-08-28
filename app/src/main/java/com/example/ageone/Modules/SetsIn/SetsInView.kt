@@ -1,7 +1,5 @@
 package com.example.ageone.Modules.SetsIn
 
-import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,12 +29,12 @@ class SetsInView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initM
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Осознаность"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Осознаность"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
-        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
+//        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
 
@@ -45,14 +43,7 @@ class SetsInView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initM
 
 fun SetsInView.renderUIO() {
 
-    innerContent.subviews(
-        bodyTable
-    )
-
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 
 }
 

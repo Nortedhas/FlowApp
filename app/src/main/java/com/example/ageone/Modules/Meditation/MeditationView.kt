@@ -1,7 +1,6 @@
 package com.example.ageone.Modules.Meditation
 
 import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,12 +42,13 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Здравствуйте!"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Здравствуйте!"
+
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
-        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
+//        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
 
@@ -57,14 +57,8 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 }
 
 fun MeditationView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillHorizontally(8)
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
@@ -133,6 +127,10 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
                     "Спокойствие", "Медитация для тех кто проснулся и уже встал.")
+
+                holder.constraintLayout.setOnClickListener {
+                    rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
+                }
             }
 
             is MeditationPopularViewHolder -> {

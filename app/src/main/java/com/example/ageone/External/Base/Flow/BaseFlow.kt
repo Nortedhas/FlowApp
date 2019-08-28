@@ -3,19 +3,26 @@ package com.example.ageone.External.Base.Flow
 import android.graphics.Color
 import android.view.View
 import androidx.core.view.contains
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
-import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import timber.log.Timber
 
 abstract class BaseFlow: View(currentActivity){
 
     val stack = mutableListOf<Int>()
 
+    lateinit var settingsCurrentFlow: DataFlow
+
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null
+
+    var onBack: (() -> Unit) = {
+        pop()
+    }
 
     var colorStatusBar = Color.TRANSPARENT
 //    var isBottomNavigationVisible = false
@@ -30,8 +37,12 @@ abstract class BaseFlow: View(currentActivity){
     init {
 
         onStart?.invoke()
-//        setBottomNavigationVisible(isBottomNavigationVisible)
 
+    }
+
+    fun onStarted(){
+        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
     }
 
     fun push(module: BaseModule?) {

@@ -1,11 +1,8 @@
 package com.example.ageone.Modules.Sets
 
-import android.graphics.Color
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
@@ -41,12 +38,12 @@ class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModu
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Сеты медитаций"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Сеты медитаций"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
-        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
+//        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
     }
@@ -54,14 +51,8 @@ class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModu
 }
 
 fun SetsView.renderUIO() {
-    innerContent.subviews(
-        bodyTable
-    )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 }
 
 class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {

@@ -19,8 +19,6 @@ import android.R.attr.x
 import android.graphics.Point
 import android.view.Display
 
-
-
 val router = Router()
 val coordinator = FlowCoordinator()
 

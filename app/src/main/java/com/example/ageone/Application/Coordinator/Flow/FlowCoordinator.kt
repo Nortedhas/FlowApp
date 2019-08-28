@@ -11,8 +11,10 @@ import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
 import com.example.ageone.Application.setStatusBarColor
+import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
+import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 
@@ -31,7 +33,7 @@ class FlowCoordinator {
             launch
         )
 
-        launch.toolBar
+        launch.toolbar
             .height(0)
 
     }
@@ -51,7 +53,7 @@ class FlowCoordinator {
 
                 setBottomNavigationVisible(true)
             }
-            LaunchInstructor.Auth -> runFlowAuth()
+            LaunchInstructor.Auth -> runFlowAuth(DataFlow())
         }
     }
 
@@ -71,10 +73,13 @@ class FlowCoordinator {
     }
 
     object ViewFlipperFlowObject{
+        var currentFlow: BaseFlow? = null
+
         val viewFlipperFlow by lazy {
             val flipper = BaseViewFlipper()
             flipper
         }
+
     }
 
 }

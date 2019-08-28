@@ -1,10 +1,11 @@
 package com.example.ageone.Application.Coordinator.Flow.Regular
 
+import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.R
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Entry.EntryView
 import com.example.ageone.Modules.EntrySMS.EntrySMSView
@@ -19,14 +20,16 @@ import com.example.ageone.Modules.Start.StartViewModel
 import com.example.ageone.Modules.StartLogin.StartLoginView
 import com.example.ageone.Modules.StartLogin.StartLoginViewModel
 
-fun FlowCoordinator.runFlowAuth() {
+fun FlowCoordinator.runFlowAuth(settingsLastFlow: DataFlow) {
 
-    var flow: FlowAuth? = FlowAuth()
+    var flow: FlowAuth? = FlowAuth(settingsLastFlow)
 
     flow?.let{ flow ->
 
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
+
+        flow.settingsCurrentFlow = DataFlow(viewFlipperFlow.size - 1)
 
     }
 
@@ -40,15 +43,16 @@ fun FlowCoordinator.runFlowAuth() {
 
 }
 
-class FlowAuth: BaseFlow() {
+class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
 
     override fun start() {
-        isStarted = true
+        onStarted()
+        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
         runModuleStart()
     }
 
     fun runModuleStart() {
-        val module = StartView(InitModuleUI(isHidden = true))
+        val module = StartView(InitModuleUI(isToolbarHidden = true))
 
         module.emitEvent = { event ->
             when(StartViewModel.EventType.valueOf(event)) {
@@ -62,7 +66,7 @@ class FlowAuth: BaseFlow() {
     }
 
     fun runModuleStartLogin() {
-        val module = StartLoginView(InitModuleUI(isHidden = true))
+        val module = StartLoginView(InitModuleUI(isToolbarHidden = true))
 
         module.emitEvent = { event ->
             when(StartLoginViewModel.EventType.valueOf(event)) {
@@ -97,8 +101,7 @@ class FlowAuth: BaseFlow() {
 
     fun runModuleRegistrationSMS() {
         val module = RegistrationSMSView(InitModuleUI(
-            iconNavigation = R.drawable.ic_arrow_back,
-            navigationListener = {
+            backListener = {
                 pop()
             }
         ))
@@ -125,8 +128,7 @@ class FlowAuth: BaseFlow() {
 
     fun runModuleEntrySMS() {
         val module = EntrySMSView(InitModuleUI(
-            iconNavigation = R.drawable.ic_arrow_back,
-            navigationListener = {
+            backListener = {
                 pop()
             }
         ))

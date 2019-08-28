@@ -132,7 +132,7 @@ fun SetViewHolder.initialize(width: Int, image: Int, title: String, describe: St
         .width(width - 16)
         .height(utils.variable.displayWidth * .506F)
 
-    addImageFromGlide(imageViewPhoto, R.drawable.kitty)
+    addImageFromGlide(imageViewPhoto, R.drawable.image)
 
     imageViewBottom
         .width(width - 24)

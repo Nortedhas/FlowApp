@@ -1,12 +1,16 @@
 package com.example.ageone.Application.Coordinator.Flow.Stack
 
-import android.graphics.Color
+import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
-import com.example.ageone.Application.R
+import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
+import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
@@ -16,18 +20,15 @@ import com.example.ageone.Modules.MeditationFilterListViewModel
 import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
-fun FlowCoordinator.runFlowMain() {
+fun FlowCoordinator.runFlowMain(settingsLastFlow: DataFlow) {
 
-    var flow: FlowMain? =
-        FlowMain()
+    var flow: FlowMain? = FlowMain(settingsLastFlow)
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
-        viewFlipperFlow
 
-//        flow.isBottomNavigationVisible = true
-        setBottomNavigationVisible(true)
+        flow.settingsCurrentFlow = DataFlow(viewFlipperFlow.size - 1)
 
         flows.add(flow)
     }
@@ -41,15 +42,21 @@ fun FlowCoordinator.runFlowMain() {
 //    flow?.start()
 }
 
-class FlowMain: BaseFlow() {
+class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
 
     override fun start() {
-        isStarted = true
+        onStarted()
+        currentFlow = this
         runModuleMeditation()
     }
 
     private fun runModuleMeditation() {
         val module = MeditationView()
+
+        onBack = {
+            coordinator.pop(settingsLastFlow)
+        }
+
         module.emitEvent = { event ->
             when(MeditationViewModel.EventType.valueOf(event)) {
                 MeditationViewModel.EventType.OnEnterPressed -> {
@@ -58,6 +65,10 @@ class FlowMain: BaseFlow() {
                 MeditationViewModel.EventType.OnSearchPressed -> {
                     runModuleMeditationFilter()
                 }
+                MeditationViewModel.EventType.OnMeditationPressed -> {
+                    settingsCurrentFlow?.isBottomBarVisible = true
+                    coordinator.runFlowPleer(settingsCurrentFlow)
+                }
             }
         }
         push(module)
@@ -65,8 +76,8 @@ class FlowMain: BaseFlow() {
 
     fun runModuleMeditationFilter() {
         val module = MeditationFilterView(InitModuleUI(
-            iconNavigation = R.drawable.ic_arrow_back,
-            navigationListener = {
+            isBottomNavigationVisible = false,
+            backListener = {
                 pop()
             }
         ))
@@ -83,8 +94,8 @@ class FlowMain: BaseFlow() {
 
     fun runModuleMeditationFilterList() {
         val module = MeditationFilterListView(InitModuleUI(
-            iconNavigation = R.drawable.ic_arrow_back,
-            navigationListener = {
+            isBottomNavigationVisible = false,
+            backListener = {
                 pop()
             }
         ))

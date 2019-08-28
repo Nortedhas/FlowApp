@@ -9,6 +9,7 @@ import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
+import com.example.ageone.External.Libraries.Glide.addImageFromGlide
 import yummypets.com.stevia.*
 
 
@@ -69,7 +70,6 @@ fun MeditationCardViewHolder.renderUI() {
 }
 
 fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, title: String, describe: String) {
-//    imageViewPhoto.setImageResource(image)
 
     constraintLayout
         .width(width)
@@ -78,18 +78,19 @@ fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, tit
         .width(width - 20)
         .height(height)
 
+
+    addImageFromGlide(imageViewPhoto, R.drawable.image3)
+
     textViewTitle.text = title
     textViewDescribe.text = describe
 }
 
 fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String) {
-//    imageViewPhoto.setImageResource(image)
 
-    constraintLayout
-        .width(width)
+    addImageFromGlide(imageViewPhoto, R.drawable.image1)
 
     imageViewPhoto
-        .width(width - 16)
+        .width((utils.variable.displayWidth - 48) / 2 )
         .height(utils.variable.displayWidth * .28F)
 
     textViewTitle.text = title

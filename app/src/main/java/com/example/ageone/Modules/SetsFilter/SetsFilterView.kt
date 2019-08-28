@@ -73,8 +73,8 @@ class SetsFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(i
     init {
         setBackgroundResource(R.drawable.back_filter)
 
-        toolBar.title = "Подбор сета"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Подбор сета"
+        renderToolbar()
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
@@ -90,28 +90,23 @@ class SetsFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(i
 }
 
 fun SetsFilterView.renderUIO() {
+    renderBodyTable()
 
     innerContent.subviews(
-        bodyTable,
         rectangleUp,
         rectangleDown,
         textViewSearch
     )
 
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
-
     rectangleUp
         .fillHorizontally()
         .constrainBottomToBottomOf(innerContent)
-        .height(80)
+        .height(60)
 
     rectangleDown
         .fillHorizontally()
-        .constrainTopToTopOf(rectangleUp, 40)
-        .height(40)
+        .constrainTopToTopOf(rectangleUp, 30)
+        .height(30)
 
     textViewSearch
         .constrainCenterYToCenterYOf(rectangleUp)
@@ -168,12 +163,11 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             }
             is SetsFilterRuneViewHolder -> {
                 val rune = if (position - 1 < runes.size) runes[position - 1] else 0
-                holder.initialize(rune)
+                holder.initialize(rune, position == selectedRune)
                 holder.constraintLayout.setOnClickListener {
                     Timber.i("rune")
-                    //notifyDataSetChanged()
-                    holder.back.backgroundColor = Color.WHITE
-                    holder.isChecked = true
+                    selectedRune = position
+                    notifyDataSetChanged()
                 }
             }
             is SetsFilterEmptyViewHolder -> {
@@ -182,18 +176,20 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
         }
     }
 
+    private var selectedRune = -1
+
     private val runes = arrayListOf(
-        R.drawable.ic_rune1,
-        R.drawable.ic_rune2,
-        R.drawable.ic_rune3,
-        R.drawable.ic_rune4,
-        R.drawable.ic_rune5,
-        R.drawable.ic_rune6,
-        R.drawable.ic_rune7,
-        R.drawable.ic_rune8,
-        R.drawable.ic_rune9,
-        R.drawable.ic_rune10,
-        R.drawable.ic_rune11,
-        R.drawable.ic_rune12
+        R.drawable.rune1,
+        R.drawable.rune2,
+        R.drawable.rune3,
+        R.drawable.rune4,
+        R.drawable.rune5,
+        R.drawable.rune6,
+        R.drawable.rune7,
+        R.drawable.rune8,
+        R.drawable.rune9,
+        R.drawable.rune10,
+        R.drawable.rune11,
+        R.drawable.rune12
         )
 }

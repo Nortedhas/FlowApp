@@ -33,7 +33,7 @@ fun TitleViewHolder.renderUI() {
 
     textViewTitle
         .constrainTopToTopOf(constraintLayout, 24)
-        .fillHorizontally(16)
+        .fillHorizontally(8)
 }
 
 fun TitleViewHolder.initialize(text: String, textColor: Int, textSize: Float = 21F) {

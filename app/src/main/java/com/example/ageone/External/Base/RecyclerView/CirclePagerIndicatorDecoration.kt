@@ -63,7 +63,7 @@ class CirclePagerIndicatorDecoration : RecyclerView.ItemDecoration() {
 
             drawInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
 
-            // find active page (which should be highlighted)
+            // find active pages (which should be highlighted)
             parent.layoutManager?.let { layoutManager ->
                 if (layoutManager is LinearLayoutManager) {
                     val activePosition = layoutManager.findFirstVisibleItemPosition()
@@ -71,7 +71,7 @@ class CirclePagerIndicatorDecoration : RecyclerView.ItemDecoration() {
                         return
                     }
 
-                    // find offset of active page (if the user is scrolling)
+                    // find offset of active pages (if the user is scrolling)
                     layoutManager.findViewByPosition(activePosition)?.let { activeChild ->
                         val left = activeChild.left
                         val width = activeChild.width

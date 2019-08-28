@@ -7,8 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 data class InitModuleUI (
     var isBottomNavigationVisible: Boolean = isBottomNavigationExist,
-    var isHidden: Boolean = false,
+    var isToolbarHidden: Boolean = false,
     var colorToolbar: Int = Color.TRANSPARENT,
-    var iconNavigation: Int? = null,
-    var navigationListener: ((View)->(Unit))? = null
+    var backListener: ((View) -> Unit)? = null,
+    var exitListener: ((View) -> Unit)? = null,
+    var iconListener: ((View) -> Unit)? = null
 )

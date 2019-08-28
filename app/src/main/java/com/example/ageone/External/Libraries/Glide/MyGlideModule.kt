@@ -2,7 +2,9 @@ package com.example.ageone.External.Libraries.Glide
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -14,6 +16,7 @@ import com.bumptech.glide.request.target.ViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.External.Base.ImageView.BaseImageView
 import io.github.armcha.coloredshadow.ShadowImageView
 import yummypets.com.stevia.dp
 
@@ -81,7 +84,8 @@ private fun createDownloadPlaceholder(): LayerDrawable {
     circularProgressDrawable.centerRadius = 100f.dp
     circularProgressDrawable.start()
 
-    val placeholderImage = (currentActivity as Activity).resources.getDrawable(R.drawable.kitty)
+    val placeholderImage = GradientDrawable()
+    placeholderImage.setColor(Color.GRAY)
 
     val placeholder = LayerDrawable(
         arrayOf(

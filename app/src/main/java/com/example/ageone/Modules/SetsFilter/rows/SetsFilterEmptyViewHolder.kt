@@ -17,7 +17,7 @@ fun SetsFilterEmptyViewHolder.renderUI() {
 
     constraintLayout
         .fillHorizontally()
-        .height(100)
+        .height(70)
 }
 
 fun SetsFilterEmptyViewHolder.initialize() {

@@ -27,7 +27,7 @@ fun MeditationSearchViewHolder.renderUI() {
 
     imageViewSearch
         .constrainTopToTopOf(constraintLayout, 24)
-        .constrainLeftToLeftOf(constraintLayout, 16)
+        .constrainLeftToLeftOf(constraintLayout, 8)
 }
 
 fun MeditationSearchViewHolder.initialize(imageRes: Int) {

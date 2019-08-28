@@ -1,6 +1,5 @@
 package com.example.ageone.Modules.EntrySMS
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +26,8 @@ class EntrySMSView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(ini
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolBar.title = "Смс-код"
-        toolBar.setTitleTextColor(Color.WHITE)
+        toolbar.title = "Смс-код"
+        renderToolbar()
 
         bodyTable.adapter = viewAdapter
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
@@ -41,14 +40,7 @@ class EntrySMSView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(ini
 
 fun EntrySMSView.renderUIO() {
 
-    innerContent.subviews(
-        bodyTable
-    )
-
-    bodyTable
-        .fillHorizontally()
-        .fillVertically()
-        .constrainTopToTopOf(innerContent)
+    renderBodyTable()
 
 }
 
