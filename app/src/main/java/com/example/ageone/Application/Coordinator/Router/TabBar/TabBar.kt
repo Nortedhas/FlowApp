@@ -3,6 +3,7 @@ package com.example.ageone.Application.Coordinator.Router.TabBar
 import android.graphics.Color
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.isBottomNavigationExist
 import com.example.ageone.Application.Coordinator.Flow.setStatusBarColor
@@ -23,15 +24,16 @@ object TabBar {
         isBottomNavigationExist = true
 
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
-            if (!wasSelected) {
+            if (!wasSelected && position < flows.size) {
                 viewFlipperFlow.displayedChild = position
 
                 if (!flows[position].isStarted) {
                     flows[position].start()
                 }
-
+                currentFlow = flows[position]
                 setStatusBarColor(flows[position].colorStatusBar)
             }
+//            viewFlipperFlow.displayedChild = position
             true
         }
 

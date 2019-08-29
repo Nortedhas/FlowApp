@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.CirclePagerIndicatorDecoration
 import com.example.ageone.Models.User.user
+import timber.log.Timber
+import java.util.*
+import kotlin.concurrent.schedule
 
 class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
@@ -78,6 +81,15 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         }
 
         renderUIO()
+        /*Timer().schedule(0, 500){
+            bodyTable.smoothScrollToPosition(indexCurrentItem++ % 3)
+
+            Timber.i("timer")
+        }*/
+    }
+
+    companion object {
+        var indexCurrentItem: Int = 0
     }
 
 }

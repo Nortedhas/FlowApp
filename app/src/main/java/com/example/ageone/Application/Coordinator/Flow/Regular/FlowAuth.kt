@@ -20,9 +20,9 @@ import com.example.ageone.Modules.Start.StartViewModel
 import com.example.ageone.Modules.StartLogin.StartLoginView
 import com.example.ageone.Modules.StartLogin.StartLoginViewModel
 
-fun FlowCoordinator.runFlowAuth(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowAuth() {
 
-    var flow: FlowAuth? = FlowAuth(settingsLastFlow)
+    var flow: FlowAuth? = FlowAuth()
 
     flow?.let{ flow ->
 
@@ -43,11 +43,10 @@ fun FlowCoordinator.runFlowAuth(settingsLastFlow: DataFlow) {
 
 }
 
-class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowAuth: BaseFlow() {
 
     override fun start() {
         onStarted()
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
         runModuleStart()
     }
 
@@ -57,8 +56,6 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
             isToolbarHidden = true
         ))
 
-        onBack = {
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -78,9 +75,6 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
             isToolbarHidden = true
         ))
 
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -106,9 +100,6 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
             isBottomNavigationVisible = false
         ))
 
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -129,9 +120,6 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
             }
         ))
 
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -149,9 +137,6 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
             isBottomNavigationVisible = false
         ))
 
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -171,9 +156,7 @@ class FlowAuth(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-        onBack = {
-            pop()
-        }
+
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->

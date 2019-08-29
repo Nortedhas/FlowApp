@@ -107,7 +107,7 @@ class AppActivity: BaseActivity()  {
 
     override fun onBackPressed() {
         Timber.i("back")
-        currentFlow?.onBack?.invoke()
+        router.onBackPressed()
     }
 }
 

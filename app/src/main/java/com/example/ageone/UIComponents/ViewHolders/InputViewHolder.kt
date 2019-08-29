@@ -31,7 +31,7 @@ class InputViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(co
 
         textInput.editText?.let { editText ->
             editText.textColor = Color.parseColor("#333333")
-            editText.textSize = 14F
+            editText.textSize = 13F
         }
         textInput
     }

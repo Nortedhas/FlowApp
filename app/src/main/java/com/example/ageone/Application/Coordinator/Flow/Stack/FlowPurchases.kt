@@ -14,9 +14,9 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.PurchasesView
 import com.example.ageone.Modules.PurchasesViewModel
 
-fun FlowCoordinator.runFlowPurchases(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowPurchases() {
 
-    var flow: FlowPurchases? = FlowPurchases(settingsLastFlow)
+    var flow: FlowPurchases? = FlowPurchases()
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -36,26 +36,23 @@ fun FlowCoordinator.runFlowPurchases(settingsLastFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowPurchases(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowPurchases: BaseFlow() {
 
     override fun start() {
-        onStarted()
         FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
         runModulePurchases()
     }
 
     fun runModulePurchases() {
         val module = PurchasesView(InitModuleUI())
 
-        onBack = {
-
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (PurchasesViewModel.EventType.valueOf(event)) {
                 PurchasesViewModel.EventType.OnSetPressed -> {
-                    coordinator.runFlowSet(settingsCurrentFlow)
+                    coordinator.runFlowSet(this)
                 }
             }
         }

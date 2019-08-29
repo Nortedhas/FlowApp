@@ -16,9 +16,9 @@ import com.example.ageone.Modules.ProfileViewModel
 import com.example.ageone.Modules.ProfileVip.ProfileVipView
 import com.example.ageone.Modules.ProfileVipViewModel
 
-fun FlowCoordinator.runFlowProfile(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowProfile() {
 
-    var flow: FlowProfile? = FlowProfile(settingsLastFlow)
+    var flow: FlowProfile? = FlowProfile()
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -38,11 +38,11 @@ fun FlowCoordinator.runFlowProfile(settingsLastFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowProfile(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowProfile: BaseFlow() {
 
     override fun start() {
-        onStarted()
         FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
         runModuleProfile()
     }
 
@@ -55,9 +55,6 @@ class FlowProfile(val settingsLastFlow: DataFlow): BaseFlow() {
             }
         ))
 
-        onBack = {
-
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
@@ -78,9 +75,6 @@ class FlowProfile(val settingsLastFlow: DataFlow): BaseFlow() {
             }
         ))
 
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->

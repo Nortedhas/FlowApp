@@ -10,7 +10,8 @@ data class DataFlow(
     var isBottomBarVisible: Boolean = false
 )
 
-fun FlowCoordinator.pop(settingsLastFlow: DataFlow){
-    viewFlipperFlow.displayedChild = settingsLastFlow.indexOnFlipperFlow
-    setBottomNavigationVisible(settingsLastFlow.isBottomBarVisible)
+fun FlowCoordinator.pop(settingsLastFlow: BaseFlow?){
+//    viewFlipperFlow.displayedChild = settingsLastFlow.indexOnFlipperFlow
+//    setBottomNavigationVisible(settingsLastFlow.isBottomBarVisible)
+//    //TODO: change current flow
 }

@@ -11,9 +11,9 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.AnnounceView
 import com.example.ageone.Modules.AnnounceViewModel
 
-fun FlowCoordinator.runFlowAnnounce(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowAnnounce() {
 
-    var flow: FlowAnnounce? = FlowAnnounce(settingsLastFlow)
+    var flow: FlowAnnounce? = FlowAnnounce()
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -33,11 +33,11 @@ fun FlowCoordinator.runFlowAnnounce(settingsLastFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowAnnounce(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowAnnounce: BaseFlow() {
 
     override fun start() {
-        onStarted()
-        currentFlow = this
+        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
 
         runModuleAnnounce()
     }
@@ -45,8 +45,6 @@ class FlowAnnounce(val settingsLastFlow: DataFlow): BaseFlow() {
     fun runModuleAnnounce() {
         val module = AnnounceView(InitModuleUI())
 
-        onBack = {
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->

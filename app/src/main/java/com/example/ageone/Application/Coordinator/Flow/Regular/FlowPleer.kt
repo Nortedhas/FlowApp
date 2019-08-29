@@ -13,9 +13,9 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Pleer.PleerView
 import com.example.ageone.Modules.PleerViewModel
 
-fun FlowCoordinator.runFlowPleer(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowPleer(previousFlow: BaseFlow) {
 
-    var flow: FlowPleer? = FlowPleer(settingsLastFlow)
+    var flow: FlowPleer? = FlowPleer(previousFlow)
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -34,7 +34,11 @@ fun FlowCoordinator.runFlowPleer(settingsLastFlow: DataFlow) {
     flow?.start()
 }
 
-class FlowPleer(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
+
+    init {
+        this.previousFlow = previousFlow
+    }
 
     override fun start() {
         onStarted()
@@ -46,13 +50,10 @@ class FlowPleer(val settingsLastFlow: DataFlow): BaseFlow() {
         val module = PleerView(InitModuleUI(
             isBottomNavigationVisible = false,
             backListener = {
-                coordinator.pop(settingsLastFlow)
+                coordinator.pop(previousFlow)
             }
         ))
 
-        onBack = {
-            coordinator.pop(settingsLastFlow)
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->

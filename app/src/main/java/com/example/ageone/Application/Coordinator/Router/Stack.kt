@@ -6,11 +6,11 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 
 fun FlowCoordinator.createStackFlows(startFlow: Int) {
-    runFlowMain(DataFlow(isBottomBarVisible = true))
-    runFlowSets(DataFlow(isBottomBarVisible = true))
-    runFlowAnnounce(DataFlow(isBottomBarVisible = true))
-    runFlowPurchases(DataFlow(isBottomBarVisible = true))
-    runFlowProfile(DataFlow(isBottomBarVisible = true))
+    runFlowMain()
+    runFlowSets()
+    runFlowAnnounce()
+    runFlowPurchases()
+    runFlowProfile()
 
     Stack.flows[startFlow].start()
 }

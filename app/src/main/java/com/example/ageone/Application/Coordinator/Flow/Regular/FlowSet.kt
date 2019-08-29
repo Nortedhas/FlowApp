@@ -13,9 +13,9 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.SetsIn.SetsInView
 import com.example.ageone.Modules.SetsInViewModel
 
-fun FlowCoordinator.runFlowSet(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowSet(previousFlow: BaseFlow) {
 
-    var flow: FlowSet? = FlowSet(settingsLastFlow)
+    var flow: FlowSet? = FlowSet(previousFlow)
 
     flow?.let{ flow ->
 
@@ -36,7 +36,11 @@ fun FlowCoordinator.runFlowSet(settingsLastFlow: DataFlow) {
     flow?.start()
 }
 
-class FlowSet(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowSet(previousFlow: BaseFlow? = null): BaseFlow() {
+
+    init {
+        this.previousFlow = previousFlow
+    }
 
     override fun start() {
         onStarted()
@@ -47,19 +51,16 @@ class FlowSet(val settingsLastFlow: DataFlow): BaseFlow() {
     fun runModuleSetsIn() {
         val module = SetsInView(InitModuleUI(
             backListener = {
-                coordinator.pop(settingsLastFlow)
+                coordinator.pop(previousFlow)
             }
         ))
 
-        onBack = {
-            coordinator.pop(settingsLastFlow)
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
             when (SetsInViewModel.EventType.valueOf(event)) {
                 SetsInViewModel.EventType.OnMeditationPressed -> {
-                    coordinator.runFlowPleer(settingsCurrentFlow)
+                    coordinator.runFlowPleer(this)
                 }
             }
         }

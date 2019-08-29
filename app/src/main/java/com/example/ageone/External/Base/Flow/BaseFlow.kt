@@ -16,16 +16,12 @@ abstract class BaseFlow: View(currentActivity){
     val stack = mutableListOf<Int>()
 
     var settingsCurrentFlow: DataFlow = DataFlow()
+    var previousFlow: BaseFlow? = null
 
     var onStart: (() -> Unit)? = null
     var onFinish: (() -> Unit)? = null
 
-    var onBack: (() -> Unit) = {
-        pop()
-    }
-
     var colorStatusBar = Color.TRANSPARENT
-//    var isBottomNavigationVisible = false
 
     var isStarted = false
 

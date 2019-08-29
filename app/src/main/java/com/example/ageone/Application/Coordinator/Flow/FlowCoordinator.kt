@@ -54,7 +54,7 @@ class FlowCoordinator {
 
                 setBottomNavigationVisible(true)
             }
-            LaunchInstructor.Auth -> runFlowAuth(DataFlow())
+            LaunchInstructor.Auth -> runFlowAuth()
         }
     }
 

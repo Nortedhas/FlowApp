@@ -20,9 +20,9 @@ import com.example.ageone.Modules.MeditationFilterListViewModel
 import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
-fun FlowCoordinator.runFlowMain(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowMain() {
 
-    var flow: FlowMain? = FlowMain(settingsLastFlow)
+    var flow: FlowMain? = FlowMain()
 
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
@@ -42,19 +42,17 @@ fun FlowCoordinator.runFlowMain(settingsLastFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowMain: BaseFlow() {
 
     override fun start() {
-        onStarted()
-        currentFlow = this
+        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
         runModuleMeditation()
     }
 
     private fun runModuleMeditation() {
         val module = MeditationView()
 
-        onBack = {
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
@@ -66,7 +64,7 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                     runModuleMeditationFilter()
                 }
                 MeditationViewModel.EventType.OnMeditationPressed -> {
-                    coordinator.runFlowPleer(settingsCurrentFlow)
+                    coordinator.runFlowPleer(this)
                 }
             }
         }
@@ -80,9 +78,7 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-        onBack = {
-            pop()
-        }
+
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -102,9 +98,7 @@ class FlowMain(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-        onBack = {
-            pop()
-        }
+
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->

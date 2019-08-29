@@ -8,7 +8,6 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Sets.SetsView
 import com.example.ageone.Modules.Sets.SetsViewModel
@@ -17,9 +16,9 @@ import com.example.ageone.Modules.SetsFilterList.SetsFilterListView
 import com.example.ageone.Modules.SetsFilterListViewModel
 import com.example.ageone.Modules.SetsFilterViewModel
 
-fun FlowCoordinator.runFlowSets(settingsLastFlow: DataFlow) {
+fun FlowCoordinator.runFlowSets() {
 
-    var flow: FlowSets? = FlowSets(settingsLastFlow)
+    var flow: FlowSets? = FlowSets()
 
     flow?.let{ flow ->
 
@@ -40,20 +39,17 @@ fun FlowCoordinator.runFlowSets(settingsLastFlow: DataFlow) {
 //    flow?.start()
 }
 
-class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
+class FlowSets: BaseFlow() {
 
     override fun start() {
-        onStarted()
         FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        isStarted = true
         runModuleSets()
     }
 
     fun runModuleSets() {
         val module = SetsView()
 
-        onBack = {
-
-        }
         settingsCurrentFlow.isBottomBarVisible = true
 
         module.emitEvent = { event ->
@@ -63,7 +59,7 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
 
                 }
                 SetsViewModel.EventType.OnSetPressed -> {
-                    coordinator.runFlowSet(settingsCurrentFlow)
+                    coordinator.runFlowSet(this)
                 }
             }
         }
@@ -77,10 +73,6 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
@@ -100,9 +92,6 @@ class FlowSets(val settingsLastFlow: DataFlow): BaseFlow() {
                 pop()
             }
         ))
-        onBack = {
-            pop()
-        }
         settingsCurrentFlow.isBottomBarVisible = false
 
         module.emitEvent = { event ->
