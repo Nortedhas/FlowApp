@@ -3,12 +3,10 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.Profile.ProfileView
@@ -41,8 +39,7 @@ fun FlowCoordinator.runFlowProfile() {
 class FlowProfile: BaseFlow() {
 
     override fun start() {
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
-        isStarted = true
+        onStarted()
         runModuleProfile()
     }
 
@@ -55,7 +52,7 @@ class FlowProfile: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = true
+        settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
             when (ProfileViewModel.EventType.valueOf(event)) {
@@ -75,7 +72,7 @@ class FlowProfile: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (ProfileVipViewModel.EventType.valueOf(event)) {

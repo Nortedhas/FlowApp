@@ -1,12 +1,13 @@
 package com.example.ageone.Application.Coordinator.Flow.Stack
 
+import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.AnnounceView
 import com.example.ageone.Modules.AnnounceViewModel
@@ -18,6 +19,8 @@ fun FlowCoordinator.runFlowAnnounce() {
     flow?.let{ flow ->
         viewFlipperFlow.addView(flow.viewFlipperModule)
         viewFlipperFlow.displayedChild = viewFlipperFlow.indexOfChild(flow.viewFlipperModule)
+
+        flow.settingsCurrentFlow = DataFlow(viewFlipperFlow.size - 1)
 
         setBottomNavigationVisible(true)
 
@@ -36,16 +39,14 @@ fun FlowCoordinator.runFlowAnnounce() {
 class FlowAnnounce: BaseFlow() {
 
     override fun start() {
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
-        isStarted = true
-
+        onStarted()
         runModuleAnnounce()
     }
 
     fun runModuleAnnounce() {
         val module = AnnounceView(InitModuleUI())
 
-        settingsCurrentFlow.isBottomBarVisible = true
+        settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
             when (AnnounceViewModel.EventType.valueOf(event)) {

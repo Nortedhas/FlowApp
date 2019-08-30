@@ -5,12 +5,10 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
-import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
@@ -45,15 +43,14 @@ fun FlowCoordinator.runFlowMain() {
 class FlowMain: BaseFlow() {
 
     override fun start() {
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
-        isStarted = true
+        onStarted()
         runModuleMeditation()
     }
 
     private fun runModuleMeditation() {
         val module = MeditationView()
 
-        settingsCurrentFlow.isBottomBarVisible = true
+        settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
             when(MeditationViewModel.EventType.valueOf(event)) {
@@ -79,7 +76,7 @@ class FlowMain: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (MeditationFilterViewModel.EventType.valueOf(event)) {
@@ -99,7 +96,7 @@ class FlowMain: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (MeditationFilterListViewModel.EventType.valueOf(event)) {

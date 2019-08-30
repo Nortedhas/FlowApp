@@ -27,13 +27,15 @@ object TabBar {
             if (!wasSelected && position < flows.size) {
                 viewFlipperFlow.displayedChild = position
 
+                //if flow starts in the first time
                 if (!flows[position].isStarted) {
                     flows[position].start()
                 }
+
+                //correct image current module
                 currentFlow = flows[position]
                 setStatusBarColor(flows[position].colorStatusBar)
             }
-//            viewFlipperFlow.displayedChild = position
             true
         }
 

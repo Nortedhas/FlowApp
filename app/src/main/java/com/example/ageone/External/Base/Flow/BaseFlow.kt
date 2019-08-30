@@ -3,18 +3,19 @@ package com.example.ageone.External.Base.Flow
 import android.graphics.Color
 import android.view.View
 import androidx.core.view.contains
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import timber.log.Timber
 
 abstract class BaseFlow: View(currentActivity){
-
+    //modules in flow
     val stack = mutableListOf<Int>()
 
+    //data for correct routing
     var settingsCurrentFlow: DataFlow = DataFlow()
     var previousFlow: BaseFlow? = null
 
@@ -23,6 +24,7 @@ abstract class BaseFlow: View(currentActivity){
 
     var colorStatusBar = Color.TRANSPARENT
 
+    //value for running the first module in flow (for navigation flows)
     var isStarted = false
 
     val viewFlipperModule by lazy {
@@ -37,15 +39,16 @@ abstract class BaseFlow: View(currentActivity){
     }
 
     fun onStarted(){
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
+        currentFlow = this
         isStarted = true
     }
 
     fun push(module: BaseModule?) {
         module?.let { module ->
             includeModule(module)
+            //correct image module
             viewFlipperModule.displayedChild = stack.indexOf(module.id)
-            setBottomNavigationVisible(module.isBottomNavigationVisible)
+            setBottomNavigationVisible(module.initModuleUI.isBottomNavigationVisible)
         }
     }
 
@@ -54,7 +57,7 @@ abstract class BaseFlow: View(currentActivity){
             val currentModule = viewFlipperModule.currentView as BaseModule
             deInitModule(currentModule)
 
-            setBottomNavigationVisible((viewFlipperModule.currentView as BaseModule).isBottomNavigationVisible)
+            setBottomNavigationVisible((viewFlipperModule.currentView as BaseModule).initModuleUI.isBottomNavigationVisible)
         }
     }
 
@@ -71,6 +74,7 @@ abstract class BaseFlow: View(currentActivity){
             
             if (viewFlipperModule.contains(module)) {
                 viewFlipperModule.removeView(module)
+                //image previous module
                 viewFlipperModule.displayedChild = stack.size - 1//.last()
 
             }

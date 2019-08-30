@@ -4,11 +4,10 @@ import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
-import com.example.ageone.Application.coordinator
+import com.example.ageone.Application.router
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Pleer.PleerView
 import com.example.ageone.Modules.PleerViewModel
@@ -42,7 +41,6 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
 
     override fun start() {
         onStarted()
-        currentFlow = this
         runModulePleer()
     }
 
@@ -50,11 +48,11 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
         val module = PleerView(InitModuleUI(
             isBottomNavigationVisible = false,
             backListener = {
-                coordinator.pop(previousFlow)
+                router.onBackPressed()
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (PleerViewModel.EventType.valueOf(event)) {

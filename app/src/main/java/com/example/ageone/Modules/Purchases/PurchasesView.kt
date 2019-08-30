@@ -119,7 +119,6 @@ var isMeditationActive = true
 
 fun PurchasesView.renderUIO() {
 
-//    renderBodyTable()
     innerContent.subviews(
         buttonMed,
         buttonSet,

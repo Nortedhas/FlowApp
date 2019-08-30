@@ -16,7 +16,7 @@ import yummypets.com.stevia.*
 class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActivity) {
     var title: String? = null
     var titleTextColor: Int = Color.WHITE
-    var titleTextSize: Float = 20F
+    var titleTextSize: Float = 18F
 
     var viewIconRes: Int? = null
     var viewIconSize: Int = 20
@@ -24,7 +24,7 @@ class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActiv
     private val textViewTitle by lazy {
         val textView = BaseTextView()
         textView.gravity = Gravity.CENTER
-        textView.typeface = Typeface.DEFAULT
+        textView.typeface = Typeface.DEFAULT_BOLD
         textView.setBackgroundColor(Color.TRANSPARENT)
         textView
     }

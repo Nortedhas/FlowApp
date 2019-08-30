@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.view.View
 import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowAuth
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
 import com.example.ageone.Application.Coordinator.Router.createStackFlows
@@ -14,7 +13,6 @@ import com.example.ageone.Application.setStatusBarColor
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
 import yummypets.com.stevia.*

@@ -1,27 +1,23 @@
 package com.example.ageone.Application
 
-import android.graphics.Point
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.External.Base.Activity.BaseActivity
-import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.Network.HTTP.Methods
+import com.example.ageone.External.HTTP.API.handshake
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
-import android.util.DisplayMetrics
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 
 
 class AppActivity: BaseActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        //only vertical mode
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // for launchScreen
         setTheme(R.style.AppTheme)
@@ -48,35 +44,12 @@ class AppActivity: BaseActivity()  {
             }
 
         }.then {
-            Methods.handshake()
+            handshake()
         }.then {
             coordinator.start()
         }
 
         setContentView(router.layout)
-
-        val getDb = Apifactory.curApi.getDb(
-            DbBody(
-                "fetch",
-                "Tariff",
-                ""
-            )
-        )
-
-        getDb.enqueue(object : Callback<DbResponse>{
-            override fun onFailure(call: Call<DbResponse>, t: Throwable) {
-                Timber.i("Fail")
-            }
-
-            override fun onResponse(call: Call<DbResponse>, response: Response<DbResponse>) {
-                Timber.i("${response.body()}")
-
-                if (response.isSuccessful) {
-                    Timber.i("ok")
-                }
-            }
-
-        })
 
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->

@@ -12,6 +12,8 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.SetsFilterList.rows.SetsFilterListTitleViewHolder
 import com.example.ageone.Modules.SetsFilterList.rows.initialize
+import com.example.ageone.Modules.SetsFilterListViewModel
+import com.example.ageone.Modules.SetsFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
@@ -104,6 +106,9 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
                     "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position)
+                holder.constraintLayout.setOnClickListener {
+                    rootModule.emitEvent?.invoke(SetsFilterListViewModel.EventType.OnSetPressed.toString())
+                }
             }
         }
     }

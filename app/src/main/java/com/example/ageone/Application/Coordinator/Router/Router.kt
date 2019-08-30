@@ -6,20 +6,12 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipp
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
-import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Extensions.Function.guard
 import timber.log.Timber
 import yummypets.com.stevia.style
 
 class Router {
-    val collection = arrayListOf<BaseFlow>()
     lateinit var layout: ConstraintLayout
-
-    init {
-
-    }
-
 
     fun onBackPressed() {
 
@@ -30,16 +22,16 @@ class Router {
 
         if (current!!.stack.size > 1) {
 
-            // MARK: in flow
+            // MARK: in flow - pop module from flow
             Timber.i("pop module")
 
             current.pop()
 
         } else {
 
-            // MARK: back last flow
-
+            // MARK: pop flow - change current flow to previous if it exists
             Timber.i("pop flow")
+
             val previousFlow = current.previousFlow.guard {
                 Timber.e("Previous flow is null")
                 return
@@ -47,18 +39,15 @@ class Router {
 
             currentFlow = previousFlow
             viewFlipperFlow.displayedChild = previousFlow!!.settingsCurrentFlow.indexOnFlipperFlow
-            setBottomNavigationVisible(previousFlow!!.settingsCurrentFlow.isBottomBarVisible)
-
+            setBottomNavigationVisible(previousFlow!!.settingsCurrentFlow.isBottomNavigationVisible)
 
         }
-
 
     }
 
 
-
     fun initialize() {
-
+        // MARK: app's root layout
         layout = ConstraintLayout(currentActivity)
 
         router.layout.style {
@@ -68,20 +57,11 @@ class Router {
         }
 
     }
-
-    fun addModule(module: BaseModule) {
-
-        Timber.i("Add module to Router")
-
-    }
-
-    fun pop() {
-
-        Timber.i("Delete module")
-
-    }
-
-    fun setCurrentFLow(baseFlow: BaseFlow) {
-
-    }
 }
+
+// MARK: settings for correcting routing (pop function)
+
+data class DataFlow(
+    val indexOnFlipperFlow: Int = 0,
+    var isBottomNavigationVisible: Boolean = false
+)

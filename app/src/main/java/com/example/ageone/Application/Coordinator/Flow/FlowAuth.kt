@@ -1,11 +1,10 @@
-package com.example.ageone.Application.Coordinator.Flow.Regular
+package com.example.ageone.Application.Coordinator.Flow
 
 import androidx.core.view.size
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Entry.EntryView
 import com.example.ageone.Modules.EntrySMS.EntrySMSView
@@ -22,7 +21,8 @@ import com.example.ageone.Modules.StartLogin.StartLoginViewModel
 
 fun FlowCoordinator.runFlowAuth() {
 
-    var flow: FlowAuth? = FlowAuth()
+    var flow: FlowAuth? =
+        FlowAuth()
 
     flow?.let{ flow ->
 
@@ -56,7 +56,7 @@ class FlowAuth: BaseFlow() {
             isToolbarHidden = true
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when(StartViewModel.EventType.valueOf(event)) {
@@ -75,7 +75,7 @@ class FlowAuth: BaseFlow() {
             isToolbarHidden = true
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when(StartLoginViewModel.EventType.valueOf(event)) {
@@ -100,7 +100,7 @@ class FlowAuth: BaseFlow() {
             isBottomNavigationVisible = false
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when(RegistrationViewModel.EventType.valueOf(event)) {
@@ -120,7 +120,7 @@ class FlowAuth: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (RegistrationSMSViewModel.EventType.valueOf(event)) {
@@ -137,7 +137,7 @@ class FlowAuth: BaseFlow() {
             isBottomNavigationVisible = false
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (EntryViewModel.EventType.valueOf(event)) {
@@ -157,7 +157,7 @@ class FlowAuth: BaseFlow() {
             }
         ))
 
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (EntrySMSViewModel.EventType.valueOf(event)) {

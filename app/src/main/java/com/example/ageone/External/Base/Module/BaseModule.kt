@@ -14,10 +14,7 @@ import com.example.ageone.External.InitModuleUI
 import timber.log.Timber
 import yummypets.com.stevia.*
 
-
 open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
-
-    var isBottomNavigationVisible = true
 
     val backgroundImage by lazy {
         val image = BaseImageView()
@@ -64,13 +61,9 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
 
     init {
         id = View.generateViewId()
-        isBottomNavigationVisible = initModuleUI.isBottomNavigationVisible
         renderUI()
         Timber.i("${this.className()} Init ")
     }
-
-    fun saveArea() = utils.variable.statusBarHeight + toolbar.height
-
 
     fun renderUI() {
         subviews(

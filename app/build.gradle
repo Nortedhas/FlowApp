@@ -69,12 +69,9 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'                    // logger
     implementation 'net.alexandroid.utils:shpref:1.6'                       // shared preference
 
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'                  //retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'         //HTTP
-    implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
-    implementation "com.squareup.moshi:moshi:1.6.0"
-    implementation "com.squareup.moshi:moshi-kotlin:1.6.0"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.6.0"
+    implementation "com.squareup.moshi:moshi:1.8.0"                         //moshi
+    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
 
     implementation 'com.android.support:recyclerview-v7:28.0.0'             //RecyclerView
 
@@ -98,7 +95,12 @@ dependencies {
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'         //Crashlythics
 
+    //core
+    implementation 'com.github.kittinunf.fuel:fuel:2.2.0'
 
-    implementation 'com.ogaclejapan.smarttablayout:library:1.7.0@aar'
 
+}
+
+kapt {
+    correctErrorTypes true
 }

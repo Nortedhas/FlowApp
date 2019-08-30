@@ -3,11 +3,11 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowSet
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Sets.SetsView
 import com.example.ageone.Modules.Sets.SetsViewModel
@@ -15,6 +15,8 @@ import com.example.ageone.Modules.SetsFilter.SetsFilterView
 import com.example.ageone.Modules.SetsFilterList.SetsFilterListView
 import com.example.ageone.Modules.SetsFilterListViewModel
 import com.example.ageone.Modules.SetsFilterViewModel
+import com.example.ageone.Modules.SetsIn.SetsInView
+import com.example.ageone.Modules.SetsInViewModel
 
 fun FlowCoordinator.runFlowSets() {
 
@@ -33,6 +35,7 @@ fun FlowCoordinator.runFlowSets() {
     flow?.onFinish = {
         viewFlipperFlow.removeView(flow?.viewFlipperModule)
         flow?.viewFlipperModule?.removeAllViews()
+        flow?.previousFlow = null
         flow = null
     }
 
@@ -42,15 +45,14 @@ fun FlowCoordinator.runFlowSets() {
 class FlowSets: BaseFlow() {
 
     override fun start() {
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
-        isStarted = true
+        onStarted()
         runModuleSets()
     }
 
     fun runModuleSets() {
         val module = SetsView()
 
-        settingsCurrentFlow.isBottomBarVisible = true
+        settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
             when(SetsViewModel.EventType.valueOf(event)) {
@@ -59,7 +61,27 @@ class FlowSets: BaseFlow() {
 
                 }
                 SetsViewModel.EventType.OnSetPressed -> {
-                    coordinator.runFlowSet(this)
+                    runModuleSetsIn()
+                }
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleSetsIn() {
+        val module = SetsInView(InitModuleUI(
+            isBottomNavigationVisible = false,
+            backListener = {
+                pop()
+            }
+        ))
+
+        settingsCurrentFlow.isBottomNavigationVisible = false
+
+        module.emitEvent = { event ->
+            when (SetsInViewModel.EventType.valueOf(event)) {
+                SetsInViewModel.EventType.OnMeditationPressed -> {
+                    coordinator.runFlowPleer(this)
                 }
             }
         }
@@ -73,7 +95,7 @@ class FlowSets: BaseFlow() {
                 pop()
             }
         ))
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (SetsFilterViewModel.EventType.valueOf(event)) {
@@ -92,11 +114,13 @@ class FlowSets: BaseFlow() {
                 pop()
             }
         ))
-        settingsCurrentFlow.isBottomBarVisible = false
+        settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when (SetsFilterListViewModel.EventType.valueOf(event)) {
-
+                SetsFilterListViewModel.EventType.OnSetPressed -> {
+                    runModuleSetsIn()
+                }
             }
         }
         push(module)

@@ -3,16 +3,16 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
-import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowSet
-import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
+import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
+import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.DataFlow
-import com.example.ageone.External.Extensions.FlowCoordinator.pop
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.PurchasesView
 import com.example.ageone.Modules.PurchasesViewModel
+import com.example.ageone.Modules.SetsIn.SetsInView
+import com.example.ageone.Modules.SetsInViewModel
 
 fun FlowCoordinator.runFlowPurchases() {
 
@@ -39,20 +39,39 @@ fun FlowCoordinator.runFlowPurchases() {
 class FlowPurchases: BaseFlow() {
 
     override fun start() {
-        FlowCoordinator.ViewFlipperFlowObject.currentFlow = this
-        isStarted = true
+        onStarted()
         runModulePurchases()
     }
 
     fun runModulePurchases() {
         val module = PurchasesView(InitModuleUI())
 
-        settingsCurrentFlow.isBottomBarVisible = true
+        settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
             when (PurchasesViewModel.EventType.valueOf(event)) {
                 PurchasesViewModel.EventType.OnSetPressed -> {
-                    coordinator.runFlowSet(this)
+                    runModuleSetsIn()
+                }
+            }
+        }
+        push(module)
+    }
+
+    fun runModuleSetsIn() {
+        val module = SetsInView(InitModuleUI(
+            isBottomNavigationVisible = false,
+            backListener = {
+                pop()
+            }
+        ))
+
+        settingsCurrentFlow.isBottomNavigationVisible = false
+
+        module.emitEvent = { event ->
+            when (SetsInViewModel.EventType.valueOf(event)) {
+                SetsInViewModel.EventType.OnMeditationPressed -> {
+                    coordinator.runFlowPleer(this)
                 }
             }
         }
