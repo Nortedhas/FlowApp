@@ -1,5 +1,6 @@
 package com.example.ageone.Models.User
 
+import com.example.ageone.SCAG.UserData
 import net.alexandroid.shpref.ShPref
 
 //object?
@@ -13,15 +14,9 @@ object user {
         get() = ShPref.getString("userFcmToken", "")
         set(value) = ShPref.put("userFcmToken", value)
 
-    var phone: String
-        get() = ShPref.getString("userPhone", "")
-        set(value) = ShPref.put("userPhone", value)
-
-    var fullName: String
-        get() = ShPref.getString("userFullName", "")
-        set(value) = ShPref.put("userFullName", value)
-
     var isAuthorized: Boolean
         get() = ShPref.getBoolean("userIsAuthorized", false)
         set(value) = ShPref.put("userIsAuthorized", value)
+
+    var data = UserData
 }

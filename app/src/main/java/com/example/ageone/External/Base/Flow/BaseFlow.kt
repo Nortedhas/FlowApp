@@ -15,7 +15,7 @@ abstract class BaseFlow: View(currentActivity){
     //modules in flow
     val stack = mutableListOf<Int>()
 
-    //data for correct routing
+    //UserData for correct routing
     var settingsCurrentFlow: DataFlow = DataFlow()
     var previousFlow: BaseFlow? = null
 

@@ -18,6 +18,7 @@ import android.R.attr.y
 import android.R.attr.x
 import android.graphics.Point
 import android.view.Display
+import io.realm.Realm
 
 val router = Router()
 val coordinator = FlowCoordinator()
@@ -63,6 +64,8 @@ class App: Application()  {
 //                    Timber.i("Internet are allowed")
                     utils.isNetworkReachable = isConnectedToInternet
             }
+
+        Realm.init(this)
 
         registerActivityLifecycleCallbacks(mFTActivityLifecycleCallbacks)
     }

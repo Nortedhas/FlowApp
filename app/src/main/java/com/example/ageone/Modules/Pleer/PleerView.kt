@@ -1,7 +1,9 @@
 package com.example.ageone.Modules.Pleer
 
+import android.R.attr.*
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import com.example.ageone.Application.R
 import com.example.ageone.Application.utils
@@ -11,6 +13,7 @@ import com.example.ageone.External.Base.SeekBar.BaseSeekBar
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
+
 
 class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
@@ -49,6 +52,7 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         val imageView = BaseImageView()
         imageView.cornerRadius = utils.variable.displayWidth * 46 / 375.dp
         imageView.setImageResource(R.drawable.pic_music2)
+        imageView.setPadding(2.dp,2.dp,2.dp,2.dp)
         imageView.initialize()
         imageView
     }
@@ -68,6 +72,7 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         val imageView = BaseImageView()
         imageView.cornerRadius = utils.variable.displayWidth * 46 / 375.dp
         imageView.setImageResource(R.drawable.pic_music3)
+        imageView.setPadding(2.dp,2.dp,2.dp,2.dp)
         imageView.initialize()
         imageView
     }
@@ -87,6 +92,7 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         val imageView = BaseImageView()
         imageView.cornerRadius = utils.variable.displayWidth * 46 / 375.dp
         imageView.setImageResource(R.drawable.pic_music4)
+        imageView.setPadding(2.dp,2.dp,2.dp,2.dp)
         imageView.initialize()
         imageView
     }
@@ -172,16 +178,19 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         toolbar.title = "Прослушивание"
         renderToolbar()
 
-
         var isSelected = true
 
         imageView1.setOnClickListener {
-            if (isSelected) {
-                imageView1.borderWidth = 2.dp
-                imageView1.borderColor = Color.parseColor("#8863E6")
-                imageView1.initialize()
-            }
-
+            OnClickImage(0)
+        }
+        imageView2.setOnClickListener {
+            OnClickImage(1)
+        }
+        imageView3.setOnClickListener {
+            OnClickImage(2)
+        }
+        imageView4.setOnClickListener {
+            OnClickImage(3)
         }
 
         viewButton.setOnClickListener {
@@ -196,9 +205,22 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     }
 
-    fun OnClickImage(i: Int) {
+    fun OnClickImage(selected: Int) {
         val imageViews = arrayOf(imageView1, imageView2, imageView3, imageView4)
-        val images = arrayOf(R.drawable.pic_music1, R.drawable.pic_music2, R.drawable.pic_music3, R.drawable.pic_music4)
+
+        val selectedColor = Color.parseColor("#8863E6")
+
+        val gD = GradientDrawable()
+        gD.setColor(selectedColor)
+        gD.shape = GradientDrawable.OVAL
+
+        for (i in imageViews.indices) {
+            if (selected == i) {
+                imageViews[i].background = gD
+            } else {
+                imageViews[i].background = null
+            }
+        }
 
     }
 }

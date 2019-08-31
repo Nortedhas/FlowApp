@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 /*interface ApiService {
 
     @POST("handshake")
-    fun handshake(@hr body: DbBody): Call<DbResponse>
+    fun handshake(@body body: DbBody): Call<DbResponse>
 
     *//**
      * Companion object to create the ApiService
@@ -43,7 +43,7 @@ import okhttp3.OkHttpClient
 
         val newRequest = chain.request()
             .newBuilder()
-//            .header("x-access-token", token)
+//            .header("x-access-UserHandshake", UserHandshake)
             .url(newUrl)
             .build()
 
@@ -76,7 +76,7 @@ import okhttp3.OkHttpClient
 interface CurApi {
 
     @GET("/handshake/")
-    fun handshake(@hr deviceId: DbBody): Call<DbResponse>
+    fun handshake(@body token: DbBody): Call<DbResponse>
 }*/
 
 data class DbResponse(

@@ -17,4 +17,5 @@ object Variable {
     var displayWidth = 0
     var displayHeight = 0
     var actionBarHeight = 0
+    var token = ""
 }

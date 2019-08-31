@@ -15,9 +15,9 @@ fun connect() {
 
         transport.on(Transport.EVENT_REQUEST_HEADERS) { args ->
             val headers = args[0] as MutableMap<String, List<String>>
-            Timber.i("set access token")
+            Timber.i("set access UserHandshake")
             // modify request headers
-            headers["x-access-token"] = listOf(
+            headers["x-access-UserHandshake"] = listOf(
                 "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiOGNjYmQ1LWR" +
                         "mMjktNGU2My05ZmM4LTdlZGZjM2VmNjJmMiIsImRldmljZUlkIjoicXdlcnR5Iiwi" +
                         "aXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU2NDY2ODY2MCwiZXhwIjoxNTY0NjkwMjYwfQ.m7" +

@@ -6,6 +6,8 @@ import android.util.TypedValue
 import android.view.View
 import com.example.ageone.External.Base.Activity.BaseActivity
 import com.example.ageone.External.HTTP.API.handshake
+import com.example.ageone.Internal.Utilities.Enums
+import com.example.ageone.Models.User.user
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
@@ -49,6 +51,8 @@ class AppActivity: BaseActivity()  {
             coordinator.start()
         }
 
+        user
+
         setContentView(router.layout)
 
         FirebaseInstanceId.getInstance().instanceId
@@ -58,9 +62,9 @@ class AppActivity: BaseActivity()  {
                     return@OnCompleteListener
                 }
 
-                // Get new Instance ID token
+                // Get new Instance ID UserHandshake
                 val token = task.result?.token
-//                Timber.i("$token")
+//                Timber.i("$UserHandshake")
             })
     }
 
