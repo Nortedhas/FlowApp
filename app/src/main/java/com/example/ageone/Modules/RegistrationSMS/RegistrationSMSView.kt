@@ -3,7 +3,9 @@ package com.example.ageone.Modules.RegistrationSMS
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.R
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
@@ -26,6 +28,9 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
     }
 
     init {
+
+//        (currentActivity as AppActivity).hideKeyboard()
+
         setBackgroundResource(R.drawable.base_background)
 
         toolbar.title = "Смс-код"

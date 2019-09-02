@@ -5,6 +5,7 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipp
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.setBottomNavigationVisible
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.hideKeyboard
 import com.example.ageone.Application.router
 import com.example.ageone.External.Extensions.Function.guard
 import timber.log.Timber
@@ -40,6 +41,7 @@ class Router {
             currentFlow = previousFlow
             viewFlipperFlow.displayedChild = previousFlow!!.settingsCurrentFlow.indexOnFlipperFlow
             setBottomNavigationVisible(previousFlow!!.settingsCurrentFlow.isBottomNavigationVisible)
+            currentActivity?.hideKeyboard()
 
         }
 

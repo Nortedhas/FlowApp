@@ -1,6 +1,5 @@
 package com.example.ageone.Modules.Pleer
 
-import android.R.attr.*
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
@@ -205,18 +204,18 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     }
 
+    //add stroke to selected image (background sound)
     fun OnClickImage(selected: Int) {
         val imageViews = arrayOf(imageView1, imageView2, imageView3, imageView4)
 
         val selectedColor = Color.parseColor("#8863E6")
-
-        val gD = GradientDrawable()
-        gD.setColor(selectedColor)
-        gD.shape = GradientDrawable.OVAL
+        val selectedStroke = GradientDrawable()
+        selectedStroke.setColor(selectedColor)
+        selectedStroke.shape = GradientDrawable.OVAL
 
         for (i in imageViews.indices) {
             if (selected == i) {
-                imageViews[i].background = gD
+                imageViews[i].background = selectedStroke
             } else {
                 imageViews[i].background = null
             }

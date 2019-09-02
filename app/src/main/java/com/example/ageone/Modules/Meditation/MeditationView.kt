@@ -48,6 +48,7 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 
         bodyTable.layoutManager = layoutManager
         bodyTable.adapter = viewAdapter
+        bodyTable.setBackgroundColor(Color.BLACK)
 //        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
@@ -95,9 +96,11 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
                 TitleViewHolder(layout)
             }
             MeditationPopularType -> {
+                layout.setBackgroundColor(Color.GREEN)
                 MeditationPopularViewHolder(layout)
             }
             MeditationCardType -> {
+                layout.setBackgroundColor(Color.RED)
                 MeditationCardViewHolder(layout)
             }
             else -> {

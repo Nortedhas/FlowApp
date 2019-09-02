@@ -50,7 +50,6 @@ class FlowCoordinator {
                 bottomNavigation.currentItem = startFlow
                 viewFlipperFlow.displayedChild = startFlow
 
-                setBottomNavigationVisible(true)
             }
             LaunchInstructor.Auth -> runFlowAuth()
         }
@@ -58,6 +57,7 @@ class FlowCoordinator {
 
     private fun renderUI() {
 
+        router.layout.removeAllViews()
         router.layout.subviews(
             viewFlipperFlow,
             bottomNavigation

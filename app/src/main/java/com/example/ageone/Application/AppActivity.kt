@@ -12,6 +12,13 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
 import timber.log.Timber
+import android.app.Activity
+import android.content.Context
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.inputmethod.InputMethodManager
 
 
 class AppActivity: BaseActivity()  {
@@ -86,9 +93,18 @@ class AppActivity: BaseActivity()  {
         Timber.i("back")
         router.onBackPressed()
     }
+
 }
 
-
+fun Activity.hideKeyboard() {
+    // Check if no view has focus:
+    val view = currentFocus
+    view?.let { v ->
+        //hide keyboard
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+}
 
 fun AppActivity.setStatusBarColor(color: Int) {
     window.statusBarColor = color

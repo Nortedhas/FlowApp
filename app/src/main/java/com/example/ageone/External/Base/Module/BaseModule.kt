@@ -4,7 +4,9 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.hideKeyboard
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.ImageView.BaseImageView
@@ -13,6 +15,7 @@ import com.example.ageone.External.Base.Toolbar.BaseToolbar
 import com.example.ageone.External.InitModuleUI
 import timber.log.Timber
 import yummypets.com.stevia.*
+
 
 open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
 
@@ -62,6 +65,8 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
     init {
         id = View.generateViewId()
         renderUI()
+
+        currentActivity?.hideKeyboard()
         Timber.i("${this.className()} Init ")
     }
 
@@ -107,10 +112,15 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
             .fillHorizontally(8)
             .fillVertically()
             .constrainTopToTopOf(innerContent)
-            .updatePadding(bottom = 8)
+            .updatePadding(bottom = 24.dp)
 
         bodyTable
             .clipToPadding = false
+
+//        val marginLayoutParams = bodyTable.layoutParams as ViewGroup.MarginLayoutParams
+//        marginLayoutParams.setMargins(8.dp, 0, 8.dp, 0)
+//        bodyTable.layoutParams = marginLayoutParams
+//        bodyTable.requestLayout()
 
     }
 
