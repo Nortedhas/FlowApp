@@ -2,6 +2,7 @@ package com.example.ageone.External.Base.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import timber.log.Timber
 
 open class BaseActivity: AppCompatActivity {

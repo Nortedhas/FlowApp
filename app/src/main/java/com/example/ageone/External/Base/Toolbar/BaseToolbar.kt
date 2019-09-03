@@ -19,7 +19,7 @@ class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActiv
     var titleTextSize: Float = 18F
 
     var viewIconRes: Int? = null
-    var viewIconSize: Int = 20
+    var viewIconSize: Int = 30
 
     private val textViewTitle by lazy {
         val textView = BaseTextView()
@@ -78,7 +78,7 @@ class BaseToolbar(val initModuleUI: InitModuleUI): ConstraintLayout(currentActiv
             }
         }
 
-        viewArrow.setPadding(8)
+        viewArrow.setPadding(16)
 
         renderUI()
 

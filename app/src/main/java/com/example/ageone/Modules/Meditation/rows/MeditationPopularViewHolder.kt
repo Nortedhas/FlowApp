@@ -27,6 +27,7 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
         viewAdapter
     }
 
+    var onTap: ((Int) -> (Unit))? = null
 
     init {
         recyclerViewHor.adapter = viewAdapter
@@ -37,6 +38,28 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
         snapHelper.attachToRecyclerView(recyclerViewHor)
 
         renderUI()
+    }
+
+    inner class Factory: RecyclerView.Adapter<MeditationCardViewHolder>() {
+
+        override fun getItemCount(): Int = 3
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeditationCardViewHolder {
+            val layout = ConstraintLayout(parent.context)
+            layout
+                .width(matchParent)
+                .height(wrapContent)
+
+            return MeditationCardViewHolder(layout)
+        }
+
+        override fun onBindViewHolder(holder: MeditationCardViewHolder, position: Int) {
+            holder.initialize(223 + 20, 135, R.drawable.kitty,
+                "Дыхание природы", "Задача организации, в особенности же консультация.")
+            holder.constraintLayout.setOnClickListener {
+                onTap?.invoke(position)
+            }
+        }
     }
 
 }
@@ -53,24 +76,4 @@ fun MeditationPopularViewHolder.renderUI() {
 
 fun MeditationPopularViewHolder.initialize() {
 
-}
-
-
-class Factory: RecyclerView.Adapter<MeditationCardViewHolder>() {
-
-    override fun getItemCount(): Int = 3
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeditationCardViewHolder {
-        val layout = ConstraintLayout(parent.context)
-        layout
-            .width(matchParent)
-            .height(wrapContent)
-
-        return MeditationCardViewHolder(layout)
-    }
-
-    override fun onBindViewHolder(holder: MeditationCardViewHolder, position: Int) {
-        holder.initialize(223 + 20, 135, R.drawable.kitty,
-            "Дыхание природы", "Задача организации, в особенности же консультация.")
-    }
 }

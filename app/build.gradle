@@ -85,6 +85,8 @@ dependencies {
     implementation 'com.github.swarmnyc.promisekt:promisekt:1.0.5'          //PromiseKt
     implementation 'com.github.swarmnyc.promisekt:promisekt-android:1.0.5'
 
+    compile 'nl.komponents.kovenant:kovenant:3.3.0'                         //Kovenant ()
+
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'         //ReactiveNetwork
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'               //AHBottomNavigation

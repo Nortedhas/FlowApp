@@ -15,7 +15,10 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
+import timber.log.Timber
 import yummypets.com.stevia.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 var isBottomNavigationExist = true
 
@@ -38,7 +41,9 @@ class FlowCoordinator {
     }
 
     fun start() {
-
+        val sdf = SimpleDateFormat("hh:mm:ss")
+        val currentDate = sdf.format(Date())
+        Timber.i("iii: start $currentDate")
         viewFlipperFlow.removeAllViews()
 
         when (LaunchInstructor.configure()) {

@@ -18,15 +18,18 @@ import android.R.attr.y
 import android.R.attr.x
 import android.graphics.Point
 import android.view.Display
+import com.example.ageone.External.Base.Activity.BaseActivity
+import com.example.ageone.External.HTTP.API.API
 import io.realm.Realm
 
 val router = Router()
 val coordinator = FlowCoordinator()
 
 val utils = Utils()
+val api = API()
 
-val currentActivity: Activity?
-    get() = App.instance?.mFTActivityLifecycleCallbacks?.currentActivity
+val currentActivity: BaseActivity?
+    get() = App.instance?.mFTActivityLifecycleCallbacks?.currentActivity as BaseActivity
 
 class App: Application()  {
 

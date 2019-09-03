@@ -116,7 +116,7 @@ fun SetViewHolder.renderUI() {
         .constrainTopToBottomOf(imageViewPhoto)
 
     textViewTitle
-        .constrainTopToBottomOf(imageViewBottom, 8)
+        .constrainTopToBottomOf(imageViewBottom, 0)
         .fillHorizontally(8)
 
     textViewDescribe

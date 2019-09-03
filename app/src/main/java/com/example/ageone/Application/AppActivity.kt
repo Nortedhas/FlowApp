@@ -1,27 +1,21 @@
 package com.example.ageone.Application
 
+import android.app.Activity
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.example.ageone.External.Base.Activity.BaseActivity
-import com.example.ageone.External.HTTP.API.handshake
-import com.example.ageone.Internal.Utilities.Enums
-import com.example.ageone.Models.User.user
+import com.example.ageone.External.HTTP.API.API
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
 import timber.log.Timber
-import android.app.Activity
-import android.content.Context
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.inputmethod.InputMethodManager
 
 
-class AppActivity: BaseActivity()  {
+class AppActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -53,12 +47,20 @@ class AppActivity: BaseActivity()  {
             }
 
         }.then {
-            handshake()
+            API().handshake().then {
+                    API().requestMainLoad()
+            }
         }.then {
             coordinator.start()
         }
+        /*.then {
+            API().handshake()
 
-        user
+        }.then {
+            coordinator.start()
+        }.done {
+            API().requestMainLoad()
+        }*/
 
         setContentView(router.layout)
 
