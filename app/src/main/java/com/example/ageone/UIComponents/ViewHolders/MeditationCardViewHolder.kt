@@ -11,6 +11,7 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.Libraries.Glide.addImageFromGlide
 import yummypets.com.stevia.*
+import java.text.FieldPosition
 
 
 class MeditationCardViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
@@ -78,7 +79,6 @@ fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, tit
         .width(width - 20)
         .height(height)
 
-
     addImageFromGlide(imageViewPhoto, R.drawable.image3)
 
     textViewTitle.text = title
@@ -95,4 +95,38 @@ fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, d
 
     textViewTitle.text = title
     textViewDescribe.text = describe
+}
+
+fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String, position: Int) {
+
+    addImageFromGlide(imageViewPhoto, R.drawable.image1)
+
+    imageViewPhoto
+        .width((utils.variable.displayWidth - 48) / 2 )
+        .height(utils.variable.displayWidth * .28F)
+
+    textViewTitle.text = title
+    textViewDescribe.text = describe
+
+    if (position % 2 == 0) {
+        imageViewPhoto
+            .constrainLeftToLeftOf(constraintLayout, 16)
+            .constrainRightToRightOf(constraintLayout, 8)
+        textViewDescribe
+            .constrainLeftToLeftOf(constraintLayout, 16)
+            .constrainRightToRightOf(constraintLayout, 8)
+        textViewTitle
+            .constrainLeftToLeftOf(constraintLayout, 16)
+            .constrainRightToRightOf(constraintLayout, 8)
+    } else {
+        imageViewPhoto
+            .constrainLeftToLeftOf(constraintLayout, 8)
+            .constrainRightToRightOf(constraintLayout, 16)
+        textViewDescribe
+            .constrainLeftToLeftOf(constraintLayout, 8)
+            .constrainRightToRightOf(constraintLayout, 16)
+        textViewTitle
+            .constrainLeftToLeftOf(constraintLayout, 8)
+            .constrainRightToRightOf(constraintLayout, 16)
+    }
 }

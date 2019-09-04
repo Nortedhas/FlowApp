@@ -70,9 +70,9 @@ fun EnterTitleViewHolder.renderUI() {
 }
 
 fun EnterTitleViewHolder.initialize(textHello: String, textSmall: String, image: Int) {
-    imageView?.setImageResource(image)
-    imageView?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+    imageView.setImageResource(image)
+    imageView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
 
-    textViewHello?.text = textHello
-    textViewSmall?.text = textSmall
+    textViewHello.text = textHello
+    textViewSmall.text = textSmall
 }

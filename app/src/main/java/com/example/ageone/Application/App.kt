@@ -42,7 +42,6 @@ class App: Application()  {
     override fun onCreate() {
         super.onCreate()
 
-
         // MARK: SharePreferences
 
         ShPref.init(this, ShPref.APPLY)

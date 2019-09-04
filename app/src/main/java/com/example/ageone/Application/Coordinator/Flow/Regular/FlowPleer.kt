@@ -47,6 +47,7 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
     fun runModulePleer() {
         val module = PleerView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 router.onBackPressed()
             }

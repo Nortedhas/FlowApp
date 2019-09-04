@@ -44,7 +44,9 @@ class FlowCoordinator {
         val sdf = SimpleDateFormat("hh:mm:ss")
         val currentDate = sdf.format(Date())
         Timber.i("iii: start $currentDate")
-        viewFlipperFlow.removeAllViews()
+        while(viewFlipperFlow.childCount > 0) {
+            viewFlipperFlow.removeViewAt(0)
+        }
 
         when (LaunchInstructor.configure()) {
             LaunchInstructor.Main -> {

@@ -105,7 +105,7 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             is SetViewHolder -> {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position)
+                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position, position)
                 holder.constraintLayout.setOnClickListener {
                     rootModule.emitEvent?.invoke(SetsFilterListViewModel.EventType.OnSetPressed.toString())
                 }

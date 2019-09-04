@@ -59,6 +59,14 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
             holder.constraintLayout.setOnClickListener {
                 onTap?.invoke(position)
             }
+            if (position == 0) {
+                holder.imageViewPhoto
+                    .constrainLeftToLeftOf(holder.constraintLayout, 16)
+                holder.textViewDescribe
+                    .constrainLeftToLeftOf(holder.constraintLayout, 16)
+                holder.textViewTitle
+                    .constrainLeftToLeftOf(holder.constraintLayout, 16)
+            }
         }
     }
 
@@ -70,8 +78,8 @@ fun MeditationPopularViewHolder.renderUI() {
     )
 
     recyclerViewHor
-        .constrainTopToTopOf(constraintLayout, 8)
         .fillHorizontally()
+        .constrainTopToTopOf(constraintLayout, 8)
 }
 
 fun MeditationPopularViewHolder.initialize() {

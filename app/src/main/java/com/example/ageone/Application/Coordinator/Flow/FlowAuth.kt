@@ -115,6 +115,7 @@ class FlowAuth: BaseFlow() {
     fun runModuleRegistrationSMS() {
         val module = RegistrationSMSView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }
@@ -152,6 +153,7 @@ class FlowAuth: BaseFlow() {
     fun runModuleEntrySMS() {
         val module = EntrySMSView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }

@@ -1,6 +1,7 @@
 package com.example.ageone.Application.Coordinator.Router.TabBar
 
 import android.graphics.Color
+import androidx.core.view.contains
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
@@ -58,12 +59,9 @@ object TabBar {
 
     private fun setUpTabs() {
 
+        bottomNavigation.removeAllItems()
         for (item in items) {
             bottomNavigation.addItem(item)
-        }
-
-        for (flow in flows) {
-            viewFlipperFlow.addView(flow)
         }
 
     }

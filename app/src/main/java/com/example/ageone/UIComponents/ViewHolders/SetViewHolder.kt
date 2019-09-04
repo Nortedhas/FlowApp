@@ -124,7 +124,7 @@ fun SetViewHolder.renderUI() {
         .fillHorizontally(8)
 }
 
-fun SetViewHolder.initialize(width: Int, image: Int, title: String, describe: String, count: Int) {
+fun SetViewHolder.initialize(width: Int, image: Int, title: String, describe: String, count: Int, position: Int) {
     constraintLayout
         .width(width)
 

@@ -25,17 +25,16 @@ class AppActivity: BaseActivity() {
         // for launchScreen
         setTheme(R.style.AppTheme)
 
-        savedInstanceState?.let {
-            Timber.i("reload")
-        }
         super.onCreate(savedInstanceState)
 
+        //fullscreen flags
         window.decorView.systemUiVisibility =
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         setDisplaySize()
 
+        //TODO just do this
         coordinator.setLaunchScreen()
         Promise<Unit> { resolve, _ ->
 
@@ -53,14 +52,6 @@ class AppActivity: BaseActivity() {
         }.then {
             coordinator.start()
         }
-        /*.then {
-            API().handshake()
-
-        }.then {
-            coordinator.start()
-        }.done {
-            API().requestMainLoad()
-        }*/
 
         setContentView(router.layout)
 

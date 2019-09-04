@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 data class InitModuleUI (
     var isBottomNavigationVisible: Boolean = isBottomNavigationExist,
     var isToolbarHidden: Boolean = false,
+    var isBackPressed: Boolean = false,
     var colorToolbar: Int = Color.TRANSPARENT,
     var backListener: ((View) -> Unit)? = null,
     var exitListener: ((View) -> Unit)? = null,

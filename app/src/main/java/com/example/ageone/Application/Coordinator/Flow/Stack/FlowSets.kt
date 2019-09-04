@@ -71,6 +71,7 @@ class FlowSets: BaseFlow() {
     fun runModuleSetsIn() {
         val module = SetsInView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }
@@ -91,6 +92,7 @@ class FlowSets: BaseFlow() {
     fun runModuleSetsFilter() {
         val module = SetsFilterView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }
@@ -110,6 +112,7 @@ class FlowSets: BaseFlow() {
     fun runModuleSetsFilterList() {
         val module = SetsFilterListView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }

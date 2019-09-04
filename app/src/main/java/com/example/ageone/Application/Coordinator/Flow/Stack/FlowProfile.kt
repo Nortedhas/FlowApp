@@ -48,6 +48,7 @@ class FlowProfile: BaseFlow() {
             InitModuleUI(
             exitListener = {
                 user.isAuthorized = false
+//                viewFlipperFlow.removeAllViews()
                 coordinator.start()
             }
         ))
@@ -67,6 +68,7 @@ class FlowProfile: BaseFlow() {
     fun runModuleProfileVip() {
         val module = ProfileVipView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }

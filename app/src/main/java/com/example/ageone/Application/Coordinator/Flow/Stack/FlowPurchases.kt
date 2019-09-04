@@ -61,6 +61,7 @@ class FlowPurchases: BaseFlow() {
     fun runModuleSetsIn() {
         val module = SetsInView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }

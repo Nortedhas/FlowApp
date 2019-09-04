@@ -9,11 +9,11 @@ import okhttp3.OkHttpClient
     fun handshake(@body body: DbBody): Call<DbResponse>
 
     *//**
-     * Companion object to create the ApiService
+     * Companion object to parseToDataBase the ApiService
      *//*
     companion object Factory {
 
-        fun create(): ApiService {
+        fun parseToDataBase(): ApiService {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -21,12 +21,12 @@ import okhttp3.OkHttpClient
                 .addInterceptor(interceptor)
 
             val retrofit = Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.parseToDataBase())
                 .baseUrl("http://109.196.164.182/")
                 .client(client.build())
                 .build()
 
-            return retrofit.create(ApiService::class.java)
+            return retrofit.parseToDataBase(ApiService::class.java)
         }
     }
 }*/
@@ -63,12 +63,12 @@ import okhttp3.OkHttpClient
 
     fun retrofit() = Retrofit.Builder()
         .baseUrl("http://109.196.164.182")
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.parseToDataBase())
         .client(httpClient.build())
         .build()
 
     val curApi: CurApi
-        get() = retrofit().create(CurApi::class.java)
+        get() = retrofit().parseToDataBase(CurApi::class.java)
 
 }
 

@@ -36,7 +36,7 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
     }
 
     val toolbar by lazy {
-        val toolBar = BaseToolbar(initModuleUI)
+        val toolBar = BaseToolbar(initModuleUI, content)
 
         toolBar
             .setBackgroundColor(initModuleUI.colorToolbar)
@@ -122,6 +122,10 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
 //        bodyTable.layoutParams = marginLayoutParams
 //        bodyTable.requestLayout()
 
+    }
+
+    fun reload() {
+        bodyTable.adapter?.notifyDataSetChanged()
     }
 
     fun className(): String {

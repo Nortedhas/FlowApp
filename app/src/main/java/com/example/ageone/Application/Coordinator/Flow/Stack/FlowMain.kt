@@ -2,7 +2,6 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
 import com.example.ageone.Application.Coordinator.Router.DataFlow
@@ -10,6 +9,7 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.Meditation.MeditationModel
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.MeditationFilter.MeditationFilterView
@@ -42,17 +42,26 @@ fun FlowCoordinator.runFlowMain() {
 
 class FlowMain: BaseFlow() {
 
+    private var models = FlowMainModels()
+
     override fun start() {
         onStarted()
         runModuleMeditation()
     }
 
+    inner class FlowMainModels {
+        var modelMeditation = MeditationModel()
+    }
+
     private fun runModuleMeditation() {
         val module = MeditationView()
 
+        module.viewModel.initialize(models.modelMeditation) { module.reload() }
         settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
+            models.modelMeditation = module.viewModel.model
+
             when(MeditationViewModel.EventType.valueOf(event)) {
                 MeditationViewModel.EventType.OnEnterPressed -> {
                     Timber.i("clicked photo")
@@ -71,6 +80,7 @@ class FlowMain: BaseFlow() {
     fun runModuleMeditationFilter() {
         val module = MeditationFilterView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }
@@ -91,6 +101,7 @@ class FlowMain: BaseFlow() {
     fun runModuleMeditationFilterList() {
         val module = MeditationFilterListView(InitModuleUI(
             isBottomNavigationVisible = false,
+            isBackPressed = true,
             backListener = {
                 pop()
             }
@@ -100,7 +111,9 @@ class FlowMain: BaseFlow() {
 
         module.emitEvent = { event ->
             when (MeditationFilterListViewModel.EventType.valueOf(event)) {
-
+                MeditationFilterListViewModel.EventType.OnMeditationPressed -> {
+                    coordinator.runFlowPleer(this)
+                }
             }
         }
         push(module)
