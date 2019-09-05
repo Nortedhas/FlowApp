@@ -34,6 +34,9 @@ class RealmParser{
                 RealmObjects.DataBase.Purpose -> {
                     json.parsePurpose()
                 }
+                RealmObjects.DataBase.Config -> {
+                    json.parseConfig()
+                }
             }
 
             try {
@@ -62,6 +65,7 @@ class RealmParser{
 }
 
 class Parser {
+
     fun parseAnyObject(json: JSONObject, type: RealmObjects.DataBase) {
         json.optJSONArray(type.name)?.let{array ->
             val realmParser = RealmParser()
@@ -69,8 +73,6 @@ class Parser {
         }
     }
 }
-
-
 fun JSONObject.parseAnnounce(): Announce {
     val some = Announce()
     optJSONObject("image")?.let { image ->
@@ -87,6 +89,20 @@ fun JSONObject.parseAnnounce(): Announce {
     return some
 }
 
+
+private fun JSONObject.parseConfig(): Config {
+    val some = Config()
+    some.primaryKey = optString("hashId","")
+    optJSONObject("testStringArray")?.let { arrayString ->
+        for (i in 0 until arrayString.length()) {
+            some.strings.add(
+                arrayString.optString("$i", "")
+            )
+        }
+    }
+    return some
+}
+
 fun JSONObject.parseProduct(): Product {
     val some = Product()
     some.primaryKey = optString("hashId", "")
@@ -98,7 +114,9 @@ fun JSONObject.parseProduct(): Product {
     optJSONObject("purpose")?.let { purposes ->
         for (i in 0 until purposes.length()) {
             some.purpose.add(
-                purposes.getJSONObject("$i").parsePurpose()
+                purposes.optJSONObject("$i")?.let { purpose ->
+                    purpose.parsePurpose()
+                }
             )
         }
     }
@@ -169,7 +187,9 @@ fun JSONObject.parseProductSet(): ProductSet {
     optJSONObject("tracks")?.let { products ->
         for (i in 0 until products.length()) {
             some.tracks.add(
-                products.getJSONObject("$i").parseProduct()
+                products.optJSONObject("$i")?.let { product ->
+                    product.parseProduct()
+                }
             )
         }
     }

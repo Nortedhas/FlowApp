@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey
 
 class RealmObjects {
     enum class DataBase {
-        Product, Announce, ProductSet, Rune, Image, Audio, Purpose;
+        Product, Announce, ProductSet, Rune, Image, Audio, Purpose, Config;
 
         companion object DataObjects {
             var url: String = "http://45.141.102.83"
@@ -16,6 +16,11 @@ class RealmObjects {
     }
 }
 
+
+open class Config(
+    @PrimaryKey open var primaryKey: String = "",
+    open var strings: RealmList<String> = RealmList()
+): RealmObject()
 
 open class Announce(
     @PrimaryKey open var primaryKey: String = "",

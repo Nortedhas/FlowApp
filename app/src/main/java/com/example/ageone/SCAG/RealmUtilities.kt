@@ -13,7 +13,7 @@ class AnnounceUtiles {
     fun getObjectById(id: String): Announce? =
         try {
             Realm.getDefaultInstance()
-                .where(com.example.ageone.SCAG.Announce::class.java)
+                .where(Announce::class.java)
                 .equalTo("primaryKey", id)
                 .equalTo("isExist", true)
                 .findFirst()
@@ -25,13 +25,13 @@ class AnnounceUtiles {
     fun getAllObjects(): RealmResults<Announce> =
         try {
             Realm.getDefaultInstance()
-                .where(com.example.ageone.SCAG.Announce::class.java)
+                .where(Announce::class.java)
                 .equalTo("isExist", true)
                 .findAll()
         } catch (e: Exception) {
             Timber.e("$e")
             Realm.getDefaultInstance()
-                .where(com.example.ageone.SCAG.Announce::class.java)
+                .where(Announce::class.java)
                 .alwaysFalse()
                 .findAll()
         }

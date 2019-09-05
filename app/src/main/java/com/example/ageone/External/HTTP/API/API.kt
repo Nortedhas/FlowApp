@@ -2,7 +2,9 @@ package com.example.ageone.External.HTTP.API
 
 import com.example.ageone.Application.api
 import com.example.ageone.Application.utils
+import com.example.ageone.SCAG.Config
 import com.example.ageone.SCAG.Parser
+import com.example.ageone.SCAG.Product
 import com.example.ageone.SCAG.RealmObjects
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
@@ -13,6 +15,7 @@ import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.swarmnyc.promisekt.Promise
+import io.realm.Realm
 import net.alexandroid.shpref.ShPref
 import org.json.JSONObject
 import timber.log.Timber
@@ -83,7 +86,6 @@ class API {
         body.put("router", "mainLoad")
         body.put("cashTime", 0)
 
-
         return body
     }
 
@@ -92,6 +94,7 @@ class API {
 
     fun requestMainLoad(): Promise<Unit> {
         return Promise { resolve, _ ->
+            //TODO change cashtime
             api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) {jsonObject ->
                 Timber.i("Object: $jsonObject")
 
@@ -99,7 +102,12 @@ class API {
                     Parser().parseAnyObject(jsonObject, type)
                 }
 
+                Timber.i("${Realm.getDefaultInstance().where(Product::class.java).findAll()}")
+                Timber.i("${Realm.getDefaultInstance().where(Config::class.java).findAll()}")
             }
+
+
+
         }
     }
 }

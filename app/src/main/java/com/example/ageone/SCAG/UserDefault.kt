@@ -61,7 +61,8 @@ object UserData {
                     hashes.add(hash)
                 }
             }
-            ShPref.putList("userLikes", hashes)
+            ShPref.putList("userLikes", hashes
+            )
         }
     }
 
