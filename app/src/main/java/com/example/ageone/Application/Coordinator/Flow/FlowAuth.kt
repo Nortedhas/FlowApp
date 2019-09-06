@@ -6,16 +6,17 @@ import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.*
 import com.example.ageone.Modules.Entry.EntryView
 import com.example.ageone.Modules.EntrySMS.EntrySMSView
-import com.example.ageone.Modules.EntrySMSViewModel
-import com.example.ageone.Modules.EntryViewModel
+import com.example.ageone.Modules.Registration.RegistrationModel
 import com.example.ageone.Modules.Registration.RegistrationView
 import com.example.ageone.Modules.Registration.RegistrationViewModel
 import com.example.ageone.Modules.RegistrationSMS.RegistrationSMSView
-import com.example.ageone.Modules.RegistrationSMSViewModel
+import com.example.ageone.Modules.Start.StartModel
 import com.example.ageone.Modules.Start.StartView
 import com.example.ageone.Modules.Start.StartViewModel
+import com.example.ageone.Modules.StartLogin.StartLoginModel
 import com.example.ageone.Modules.StartLogin.StartLoginView
 import com.example.ageone.Modules.StartLogin.StartLoginViewModel
 
@@ -45,9 +46,20 @@ fun FlowCoordinator.runFlowAuth() {
 
 class FlowAuth: BaseFlow() {
 
+    private var models = FlowAuthModels()
+
     override fun start() {
         onStarted()
         runModuleStart()
+    }
+
+    inner class FlowAuthModels {
+        var modelStart = StartModel()
+        var modelStartLogin = StartLoginModel()
+        var modelRegistration = RegistrationModel()
+        var modelRegistrationSMS = RegistrationSMSModel()
+        var modelEntry = EntryModel()
+        var modelEntrySMS = EntrySMSModel()
     }
 
     fun runModuleStart() {
@@ -55,6 +67,7 @@ class FlowAuth: BaseFlow() {
             isBottomNavigationVisible = false,
             isToolbarHidden = true
         ))
+        module.viewModel.initialize(models.modelStart) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -74,6 +87,7 @@ class FlowAuth: BaseFlow() {
             isBottomNavigationVisible = false,
             isToolbarHidden = true
         ))
+        module.viewModel.initialize(models.modelStartLogin) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -99,12 +113,18 @@ class FlowAuth: BaseFlow() {
         val module = RegistrationView(InitModuleUI(
             isBottomNavigationVisible = false
         ))
+        module.viewModel.initialize(models.modelRegistration) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
             when(RegistrationViewModel.EventType.valueOf(event)) {
                 RegistrationViewModel.EventType.OnRegistrationPressed -> {
+
+                    models.modelRegistrationSMS.inputName = models.modelRegistration.inputName
+                    models.modelRegistrationSMS.inputPhone = models.modelRegistration.inputPhone
+                    models.modelRegistrationSMS.inputMail = models.modelRegistration.inputMail
+
                     runModuleRegistrationSMS()
                 }
             }
@@ -120,6 +140,7 @@ class FlowAuth: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelRegistrationSMS) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -137,6 +158,7 @@ class FlowAuth: BaseFlow() {
         val module = EntryView(InitModuleUI(
             isBottomNavigationVisible = false
         ))
+        module.viewModel.initialize(models.modelEntry) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -158,6 +180,7 @@ class FlowAuth: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelEntrySMS) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 

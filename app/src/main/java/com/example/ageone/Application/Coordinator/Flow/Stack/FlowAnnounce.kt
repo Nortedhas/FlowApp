@@ -10,7 +10,9 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.AnnounceView
+import com.example.ageone.Modules.AnnounceModel
 import com.example.ageone.Modules.AnnounceViewModel
+import com.example.ageone.Modules.Sets.SetsModel
 
 fun FlowCoordinator.runFlowAnnounce() {
 
@@ -38,13 +40,21 @@ fun FlowCoordinator.runFlowAnnounce() {
 
 class FlowAnnounce: BaseFlow() {
 
+    private var models = FlowAnnounceModels()
+
+
     override fun start() {
         onStarted()
         runModuleAnnounce()
     }
 
+    inner class FlowAnnounceModels {
+        var modelAnnounce = AnnounceModel()
+    }
+
     fun runModuleAnnounce() {
         val module = AnnounceView(InitModuleUI())
+        module.viewModel.initialize(models.modelAnnounce) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = true
 

@@ -18,6 +18,8 @@ import yummypets.com.stevia.*
 
 class SetsInView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
+    val viewModel = SetsInViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

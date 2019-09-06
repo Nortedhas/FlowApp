@@ -58,7 +58,10 @@ abstract class BaseFlow: View(currentActivity){
             val currentModule = viewFlipperModule.currentView as BaseModule
             deInitModule(currentModule)
 
-            setBottomNavigationVisible((viewFlipperModule.currentView as BaseModule).initModuleUI.isBottomNavigationVisible)
+            val isBottomBarVisible = (viewFlipperModule.currentView as BaseModule).initModuleUI.isBottomNavigationVisible
+            setBottomNavigationVisible(isBottomBarVisible)
+            settingsCurrentFlow.isBottomNavigationVisible = isBottomBarVisible
+
             currentActivity?.hideKeyboard()
         }
     }

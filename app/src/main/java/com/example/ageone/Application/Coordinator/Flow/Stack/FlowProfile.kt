@@ -9,10 +9,9 @@ import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
+import com.example.ageone.Modules.*
 import com.example.ageone.Modules.Profile.ProfileView
-import com.example.ageone.Modules.ProfileViewModel
 import com.example.ageone.Modules.ProfileVip.ProfileVipView
-import com.example.ageone.Modules.ProfileVipViewModel
 
 fun FlowCoordinator.runFlowProfile() {
 
@@ -38,9 +37,16 @@ fun FlowCoordinator.runFlowProfile() {
 
 class FlowProfile: BaseFlow() {
 
+    private var models = FlowProfileModels()
+
     override fun start() {
         onStarted()
         runModuleProfile()
+    }
+
+    inner class FlowProfileModels {
+        var modelProfile = ProfileModel()
+        var modelProfileVip = ProfileVipModel()
     }
 
     fun runModuleProfile() {
@@ -52,6 +58,7 @@ class FlowProfile: BaseFlow() {
                 coordinator.start()
             }
         ))
+        module.viewModel.initialize(models.modelProfile) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = true
 
@@ -73,6 +80,7 @@ class FlowProfile: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelProfileVip) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 

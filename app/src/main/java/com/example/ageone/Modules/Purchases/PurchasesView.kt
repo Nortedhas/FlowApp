@@ -26,6 +26,8 @@ import yummypets.com.stevia.*
 
 class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
+    val viewModel = PurchasesViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

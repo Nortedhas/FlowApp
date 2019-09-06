@@ -17,6 +17,9 @@ import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
 class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
+
+    val viewModel = SetsViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

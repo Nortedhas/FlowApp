@@ -2,10 +2,7 @@ package com.example.ageone.External.HTTP.API
 
 import com.example.ageone.Application.api
 import com.example.ageone.Application.utils
-import com.example.ageone.SCAG.Config
-import com.example.ageone.SCAG.Parser
-import com.example.ageone.SCAG.Product
-import com.example.ageone.SCAG.RealmObjects
+import com.example.ageone.SCAG.*
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.extensions.jsonBody
@@ -39,9 +36,7 @@ class API {
 
             val adapter: JsonAdapter<body> = moshi.adapter(body::class.java)
 
-            FuelManager.instance.basePath = "http://45.141.102.83"
-
-            Fuel.post("/handshake")
+            Fuel.post(Routes.handshake.path)
                 .jsonBody(adapter.toJson(body(deviceId = uuid)))
                 .responseString { request, response, result ->
                     val jsonObject: JSONObject = JSONObject(result.get())
@@ -55,12 +50,12 @@ class API {
 
     }
 
-    fun request(parametr: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
-        val body = createBody(mapOf("router" to "mainLoad", "cashTime" to 0))
+    fun request(params: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
+//        val body = createBody(mapOf("router" to "mainLoad", "cashTime" to 0))
 
-        Fuel.post("/api")
-            .jsonBody(body.toString())
-            .header(RealmObjects.DataBase.headers)
+        Fuel.post(Routes.api.path)
+            .jsonBody(createBody(params).toString())
+            .header(DataBase.headers)
             .responseString { request, response, result ->
                 result.fold({result ->
                     val jsonObject: JSONObject = JSONObject(result)
@@ -81,10 +76,13 @@ class API {
             }
     }
 
-    fun createBody(parametr: Map<String, Any>): JSONObject {
+    fun createBody(params: Map<String, Any>): JSONObject {
         val body = JSONObject()
-        body.put("router", "mainLoad")
-        body.put("cashTime", 0)
+        /*body.put("router", "mainLoad")
+        body.put("cashTime", 0)*/
+        params.forEach { (key, value) ->
+            body.put(key, value)
+        }
 
         return body
     }
@@ -98,15 +96,13 @@ class API {
             api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) {jsonObject ->
                 Timber.i("Object: $jsonObject")
 
-                for (type in RealmObjects.DataBase.values()) {
+                for (type in DataBase.values()) {
                     Parser().parseAnyObject(jsonObject, type)
                 }
-
-                Timber.i("${Realm.getDefaultInstance().where(Product::class.java).findAll()}")
-                Timber.i("${Realm.getDefaultInstance().where(Config::class.java).findAll()}")
             }
 
-
+            Timber.i("Products: ${utils.realm.product.getAllObjects()}")
+            Timber.i("Product sets: ${utils.realm.productSet.getAllObjects()}")
 
         }
     }

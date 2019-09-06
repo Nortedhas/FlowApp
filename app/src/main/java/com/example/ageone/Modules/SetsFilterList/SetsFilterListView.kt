@@ -20,6 +20,8 @@ import yummypets.com.stevia.*
 
 class SetsFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
+    val viewModel = SetsFilterListViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

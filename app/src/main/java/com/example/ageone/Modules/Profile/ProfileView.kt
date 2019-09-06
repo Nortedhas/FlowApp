@@ -17,6 +17,8 @@ import yummypets.com.stevia.wrapContent
 
 class ProfileView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
+    val viewModel = ProfileViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

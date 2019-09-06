@@ -23,6 +23,8 @@ import yummypets.com.stevia.*
 
 class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
 
+    val viewModel = MeditationFilterViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

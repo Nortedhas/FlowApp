@@ -1,26 +1,20 @@
 package com.example.ageone.Application
 
-import android.app.Activity
 import android.app.Application
 import android.util.Log
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
 import com.example.ageone.Application.Coordinator.Router.Router
+import com.example.ageone.External.Base.Activity.BaseActivity
 import com.example.ageone.External.Extensions.Application.FTActivityLifecycleCallbacks
-import com.example.ageone.External.Libraries.Loger.TimberTree
+import com.example.ageone.External.HTTP.API.API
 import com.example.ageone.Internal.Utilities.Utils
 import com.example.ageone.Models.User.user
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 import net.alexandroid.shpref.ShPref
 import timber.log.Timber
-import android.R.attr.y
-import android.R.attr.x
-import android.graphics.Point
-import android.view.Display
-import com.example.ageone.External.Base.Activity.BaseActivity
-import com.example.ageone.External.HTTP.API.API
-import io.realm.Realm
 
 val router = Router()
 val coordinator = FlowCoordinator()

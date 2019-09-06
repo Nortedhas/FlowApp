@@ -10,12 +10,15 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.MeditationFilterListViewModel
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
 class MeditationFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
+
+    val viewModel = MeditationViewModel()
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)

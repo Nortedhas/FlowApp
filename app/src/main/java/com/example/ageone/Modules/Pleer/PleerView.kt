@@ -11,10 +11,13 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.SeekBar.BaseSeekBar
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.PleerViewModel
 import yummypets.com.stevia.*
 
 
 class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
+
+    val viewModel = PleerViewModel()
 
     val textView by lazy {
         val textView = BaseTextView()

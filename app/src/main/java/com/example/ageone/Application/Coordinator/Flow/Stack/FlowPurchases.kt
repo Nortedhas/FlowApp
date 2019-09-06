@@ -10,8 +10,11 @@ import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.PurchasesView
+import com.example.ageone.Modules.PurchasesModel
 import com.example.ageone.Modules.PurchasesViewModel
+import com.example.ageone.Modules.Sets.SetsModel
 import com.example.ageone.Modules.SetsIn.SetsInView
+import com.example.ageone.Modules.SetsInModel
 import com.example.ageone.Modules.SetsInViewModel
 
 fun FlowCoordinator.runFlowPurchases() {
@@ -38,13 +41,21 @@ fun FlowCoordinator.runFlowPurchases() {
 
 class FlowPurchases: BaseFlow() {
 
+    private var models = FlowPurchasesModels()
+
     override fun start() {
         onStarted()
         runModulePurchases()
     }
 
+    inner class FlowPurchasesModels {
+        var modelPurchases = PurchasesModel()
+        var modelSetsIn = SetsInModel()
+    }
+
     fun runModulePurchases() {
         val module = PurchasesView(InitModuleUI())
+        module.viewModel.initialize(models.modelPurchases) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = true
 
@@ -66,6 +77,7 @@ class FlowPurchases: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelSetsIn) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 

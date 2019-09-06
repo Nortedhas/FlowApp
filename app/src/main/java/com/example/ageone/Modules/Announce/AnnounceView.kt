@@ -10,11 +10,14 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.rows.AnnounceViewHolder
 import com.example.ageone.Modules.Announce.rows.initialize
+import com.example.ageone.Modules.AnnounceViewModel
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 
 class AnnounceView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
+
+    val viewModel = AnnounceViewModel()
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)

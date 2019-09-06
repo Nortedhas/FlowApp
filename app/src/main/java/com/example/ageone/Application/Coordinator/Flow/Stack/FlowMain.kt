@@ -14,7 +14,9 @@ import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.MeditationFilter.MeditationFilterView
 import com.example.ageone.Modules.MeditationFilterList.MeditationFilterListView
+import com.example.ageone.Modules.MeditationFilterListModel
 import com.example.ageone.Modules.MeditationFilterListViewModel
+import com.example.ageone.Modules.MeditationFilterModel
 import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
@@ -51,12 +53,14 @@ class FlowMain: BaseFlow() {
 
     inner class FlowMainModels {
         var modelMeditation = MeditationModel()
+        var modelMeditationFilter = MeditationFilterModel()
+        var modelMeditationFilterList = MeditationFilterListModel()
     }
 
     private fun runModuleMeditation() {
         val module = MeditationView()
-
         module.viewModel.initialize(models.modelMeditation) { module.reload() }
+
         settingsCurrentFlow.isBottomNavigationVisible = true
 
         module.emitEvent = { event ->
@@ -85,6 +89,7 @@ class FlowMain: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelMeditationFilter) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -106,6 +111,7 @@ class FlowMain: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelMeditationFilterList) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 

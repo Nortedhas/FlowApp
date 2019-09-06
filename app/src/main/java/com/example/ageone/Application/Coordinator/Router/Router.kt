@@ -38,12 +38,19 @@ class Router {
                 return
             }
 
+            //change current flow
             val flowToDelete = currentFlow
             currentFlow = previousFlow
 
             flowToDelete?.onFinish?.invoke()
+
             viewFlipperFlow.displayedChild = previousFlow!!.settingsCurrentFlow.indexOnFlipperFlow
-            setBottomNavigationVisible(previousFlow!!.settingsCurrentFlow.isBottomNavigationVisible)
+
+            //correct visible bottom bar
+            val isBottomBarVisible = previousFlow!!.settingsCurrentFlow.isBottomNavigationVisible
+            setBottomNavigationVisible(isBottomBarVisible)
+            currentFlow?.settingsCurrentFlow?.isBottomNavigationVisible = isBottomBarVisible
+
             currentActivity?.hideKeyboard()
 
         }

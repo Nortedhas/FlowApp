@@ -9,14 +9,13 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Modules.*
+import com.example.ageone.Modules.Sets.SetsModel
 import com.example.ageone.Modules.Sets.SetsView
 import com.example.ageone.Modules.Sets.SetsViewModel
 import com.example.ageone.Modules.SetsFilter.SetsFilterView
 import com.example.ageone.Modules.SetsFilterList.SetsFilterListView
-import com.example.ageone.Modules.SetsFilterListViewModel
-import com.example.ageone.Modules.SetsFilterViewModel
 import com.example.ageone.Modules.SetsIn.SetsInView
-import com.example.ageone.Modules.SetsInViewModel
 
 fun FlowCoordinator.runFlowSets() {
 
@@ -44,13 +43,24 @@ fun FlowCoordinator.runFlowSets() {
 
 class FlowSets: BaseFlow() {
 
+    private var models = FlowSetsModels()
+
     override fun start() {
         onStarted()
         runModuleSets()
     }
 
+    inner class FlowSetsModels {
+        var modelSets = SetsModel()
+        var modelSetsIn = SetsInModel()
+        var modelSetsFilter = SetsFilterModel()
+        var modelSetsFilterList = SetsFilterListModel()
+
+    }
+
     fun runModuleSets() {
         val module = SetsView()
+        module.viewModel.initialize(models.modelSets) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = true
 
@@ -76,6 +86,7 @@ class FlowSets: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelSetsIn) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
@@ -97,6 +108,8 @@ class FlowSets: BaseFlow() {
                 pop()
             }
         ))
+        module.viewModel.initialize(models.modelSetsFilter) { module.reload() }
+
         settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
@@ -117,8 +130,9 @@ class FlowSets: BaseFlow() {
                 pop()
             }
         ))
-        settingsCurrentFlow.isBottomNavigationVisible = false
+        module.viewModel.initialize(models.modelSetsFilterList) { module.reload() }
 
+        settingsCurrentFlow.isBottomNavigationVisible = false
         module.emitEvent = { event ->
             when (SetsFilterListViewModel.EventType.valueOf(event)) {
                 SetsFilterListViewModel.EventType.OnSetPressed -> {

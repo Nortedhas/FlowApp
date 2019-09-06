@@ -4,6 +4,16 @@ import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class EntryViewModel : InterfaceViewModel {
+    var model = EntrySMSModel()
+
+    fun initialize(recievedModel: InterfaceModel, completion: ()->(Unit)) {
+        if (recievedModel is EntrySMSModel) {
+            model = recievedModel
+            completion.invoke()
+        }
+    }
+
+
     enum class EventType {
         OnEnterPressed
     }

@@ -14,9 +14,12 @@ import com.example.ageone.Modules.ProfileVip.rows.ProfileVip1yearViewHolder
 import com.example.ageone.Modules.ProfileVip.rows.ProfileVipCardViewHolder
 import com.example.ageone.Modules.ProfileVip.rows.ProfileVipTitleViewHolder
 import com.example.ageone.Modules.ProfileVip.rows.initialize
+import com.example.ageone.Modules.ProfileVipViewModel
 import yummypets.com.stevia.*
 
 class ProfileVipView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
+
+    val viewModel = ProfileVipViewModel()
 
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)

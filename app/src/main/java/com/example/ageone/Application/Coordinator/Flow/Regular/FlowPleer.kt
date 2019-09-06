@@ -10,7 +10,10 @@ import com.example.ageone.Application.router
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Pleer.PleerView
+import com.example.ageone.Modules.PleerModel
 import com.example.ageone.Modules.PleerViewModel
+import com.example.ageone.Modules.PurchasesModel
+import com.example.ageone.Modules.SetsInModel
 
 fun FlowCoordinator.runFlowPleer(previousFlow: BaseFlow) {
 
@@ -35,6 +38,8 @@ fun FlowCoordinator.runFlowPleer(previousFlow: BaseFlow) {
 
 class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
 
+    private var models = FlowPleerModels()
+
     init {
         this.previousFlow = previousFlow
     }
@@ -42,6 +47,10 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
     override fun start() {
         onStarted()
         runModulePleer()
+    }
+
+    inner class FlowPleerModels {
+        var modelPleer = PleerModel()
     }
 
     fun runModulePleer() {
@@ -52,6 +61,8 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
                 router.onBackPressed()
             }
         ))
+        module.viewModel.initialize(models.modelPleer) { module.reload() }
+
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 

@@ -9,10 +9,15 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.ageone.External.Base.Activity.BaseActivity
 import com.example.ageone.External.HTTP.API.API
+import com.github.kittinunf.fuel.core.FuelManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.swarmnyc.promisekt.Promise
 import timber.log.Timber
+
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+
 
 
 class AppActivity: BaseActivity() {
@@ -33,6 +38,8 @@ class AppActivity: BaseActivity() {
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         setDisplaySize()
+
+        FuelManager.instance.basePath = "http://45.141.102.83"
 
         //TODO just do this
         coordinator.setLaunchScreen()
@@ -90,7 +97,7 @@ class AppActivity: BaseActivity() {
 }
 
 fun Activity.hideKeyboard() {
-    // Check if no view has focus:
+    // Check if no view has
     val view = currentFocus
     view?.let { v ->
         //hide keyboard

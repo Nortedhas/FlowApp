@@ -18,6 +18,8 @@ import yummypets.com.stevia.*
 
 class StartLoginView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
+    val viewModel = StartLoginViewModel()
+
     val viewAdapter by lazy {
         val viewAdapter = Factory(this)
         viewAdapter

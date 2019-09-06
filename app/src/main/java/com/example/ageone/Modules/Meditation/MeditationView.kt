@@ -3,27 +3,21 @@ package com.example.ageone.Modules.Meditation
 import android.graphics.Color
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.ageone.Application.*
 import com.example.ageone.Application.R
-import com.example.ageone.Application.currentActivity
-import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Models.KartDao
-import com.example.ageone.Models.Meditation
-import com.example.ageone.Models.addMeditation
-import com.example.ageone.Models.getAllMeditation
+import com.example.ageone.External.RxBus.RxBus
+import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Modules.Meditation.rows.MeditationPopularViewHolder
 import com.example.ageone.Modules.Meditation.rows.MeditationSearchViewHolder
 import com.example.ageone.Modules.Meditation.rows.initialize
+import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
-import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
-import io.realm.Realm
 import timber.log.Timber
 import yummypets.com.stevia.*
 
@@ -62,6 +56,8 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 
         renderUIO()
 
+        viewModel.loadRealmData()
+
     }
 
     inner class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
@@ -72,7 +68,7 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         private val MeditationCardType = 3
 
 
-        override fun getItemCount() = viewModel.realmData.size + 4
+        override fun getItemCount() = viewModel.quickMeditation.size + 4
 
         override fun getItemViewType(position: Int):Int = when(position) {
             0 -> MeditationSearchType
@@ -128,13 +124,14 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
                 }
 
                 is MeditationCardViewHolder -> {
-                    val meditation = viewModel.realmData[position - 4]
+                    val meditation = viewModel.quickMeditation[position - 4]
                     Timber.i("$meditation")
                     holder.initialize(
                         utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                        "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position)
+                        meditation.name, meditation.txtInfo, position)
 
                     holder.constraintLayout.setOnClickListener {
+                        RxBus.publish(RxEvent.EventAddMeditation("meditations are loaded"))
                         rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
                     }
 
@@ -144,7 +141,6 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
                 is MeditationPopularViewHolder -> {
                     holder.initialize()
                     holder.onTap = { position ->
-                        Timber.i("Pos: $position")
                         rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
                     }
                 }
