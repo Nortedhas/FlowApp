@@ -2,8 +2,10 @@ package com.example.ageone.External.HTTP.API
 
 import com.example.ageone.Application.api
 import com.example.ageone.Application.utils
+import com.example.ageone.Models.User.user
 import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Parser
+import com.example.ageone.SCAG.userData
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.jsonBody
 import com.swarmnyc.promisekt.Promise
@@ -17,20 +19,24 @@ class API {
         get() = ShPref.getInt("ApiCashTime", 0)
         set(value) = ShPref.put("ApiCashTime", value)
 
+    val parser = Parser()
+
     fun handshake(): Promise<Unit> {
         return Promise{ resolve, _ ->
 
-            Fuel.post(Routes.handshake.path)
+            Fuel.post(Routes.Handshake.path)
                 .jsonBody(createBody(mapOf(
                     "deviceId" to uuid
                 )).toString())
                 .responseString { request, response, result ->
                     val jsonObject = JSONObject(result.get())
                     utils.variable.token = jsonObject.optString("Token")
+                    cashTime = Date().time.toInt()
+                    parser.userData(jsonObject)
+
                     Timber.i("${result.get()}")
                     Timber.i("Token: ${utils.variable.token}")
-                    cashTime = Date().time.toInt()
-                    resolve(Unit)
+                    resolve
                 }
         }
 
@@ -38,11 +44,11 @@ class API {
 
     fun request(params: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
 
-        Fuel.post(Routes.api.path)
+        Fuel.post(Routes.Api.path)
             .jsonBody(createBody(params).toString())
             .header(DataBase.headers)
             .responseString { request, response, result ->
-                result.fold({result ->
+                result.fold({ result ->
                     val jsonObject = JSONObject(result)
                     Timber.i("Request:\n $request Response:\n $response Result:\n $result")
 
@@ -53,7 +59,7 @@ class API {
                         completion.invoke(jsonObject)
                     }
 
-                },{error ->
+                },{ error ->
                     Timber.e("${error.response.responseMessage}")
                 })
 
@@ -75,12 +81,14 @@ class API {
     fun requestMainLoad(): Promise<Unit> {
         return Promise { resolve, _ ->
             //TODO change cashtime
-            api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) {jsonObject ->
+            api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) { jsonObject ->
                 Timber.i("Object: $jsonObject")
 
                 for (type in DataBase.values()) {
-                    Parser().parseAnyObject(jsonObject, type)
+                    parser.parseAnyObject(jsonObject, type)
                 }
+                Timber.i("Parsing end")
+                resolve
             }
 
         }
@@ -89,8 +97,9 @@ class API {
 
 
 enum class Routes(val path: String) {
-    handshake("/handshake"),
-    api("/api");
+    Handshake("/handshake"),
+    Database("/database"),
+    Api("/api");
 }
 
 val uuid = UUID.randomUUID().toString()

@@ -9,6 +9,7 @@ enum class DataBase {
 
 	companion object DataObjects {
 		var url: String = "http://45.141.102.83"
-		var headers = mutableMapOf("x-access-token" to utils.variable.token)
+		val headers
+			get() = mapOf("x-access-token" to utils.variable.token)
 	}
 }

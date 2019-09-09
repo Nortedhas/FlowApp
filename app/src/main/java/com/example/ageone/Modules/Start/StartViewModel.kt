@@ -15,7 +15,7 @@ class StartViewModel: InterfaceViewModel {
     }
 
     enum class EventType{
-        OnEnterPressed
+        OnLoaded
     }
 }
 

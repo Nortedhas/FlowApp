@@ -1,74 +1,29 @@
 package com.example.ageone.SCAG
-
 import io.realm.Realm
 import net.alexandroid.shpref.ShPref
 
+
 object UserData {
-    var phone: String
-        get() = ShPref.getString("userPhone", "")
-        set(value) = ShPref.put("userPhone", value)
 
-    var email: String
-        get() = ShPref.getString("userEmail", "")
-        set(value) = ShPref.put("userEmail", value)
+	var phone: String
+		get() = ShPref.getString("userDataPhone", "")
+		set(value) = ShPref.put("userDataPhone", value)
 
-    var fullName: String
-        get() = ShPref.getString("userFullName", "")
-        set(value) = ShPref.put("userFullName", value)
+	var role: String
+		get() = ShPref.getString("userDataRole", "")
+		set(value) = ShPref.put("userDataRole", value)
 
-    var fav: Announce?
-        get() {
-            val hash = ShPref.getString("userFav", "")
-            return if (hash == "")
-                null
-            else
-                Realm.getDefaultInstance().where(Announce::class.java).findFirst()
+	var vipAccessTo: Int
+		get() = ShPref.getInt("userDataVipAccessTo", 0)
+		set(value) = ShPref.put("userDataVipAccessTo", value)
 
-        }
-        set(value) {
-            value?.let { dog ->
-                val hash = dog.hashId
-                if (hash != "")
-                    ShPref.put("userFav", hash)
-            }
-        }
+	var name: String
+		get() = ShPref.getString("userDataName", "")
+		set(value) = ShPref.put("userDataName", value)
 
-    var likes: List<Announce>
-        get() {
-            val hashes = ShPref.getListOfStrings("userLikes")
-            return if (hashes.isNullOrEmpty()) {
-                emptyList()
-            } else {
-                val list = mutableListOf<Announce>()
-                hashes.forEach{ hash ->
-                    Realm.getDefaultInstance()
-                        .where(Announce::class.java)
-                        .equalTo("primaryKey", hash)
-                        .equalTo("isExist", true)
-                        .findFirst()?.let {announce ->
-                            list.add(announce)
-                        }
-                }
-                list
-            }
-        }
-        set(list) {
-            if (list.isNullOrEmpty()) {
-                ShPref.putList("userLikes", emptyList<String>())
-            } else {
-                val hashes = mutableListOf<String>()
-                for (announce in list) {
-                    val hash = announce.hashId
-                    if (hash != "") {
-                        hashes.add(hash)
-                    }
-                }
-                ShPref.putList("userLikes", hashes
-                )
-            }
-        }
+	var email: String
+		get() = ShPref.getString("userDataEmail", "")
+		set(value) = ShPref.put("userDataEmail", value)
 
-    var names: ArrayList<String>
-        get() = ShPref.getListOfStrings("userNames")
-        set(value) = ShPref.putList("userNames", value)
+
 }

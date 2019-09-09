@@ -50,15 +50,11 @@ class FlowCoordinator {
 
         when (LaunchInstructor.configure()) {
             LaunchInstructor.Main -> {
-                val startFlow = 0
-                createStackFlows(startFlow)
-                createBottomNavigation()
-
-                bottomNavigation.currentItem = startFlow
-                viewFlipperFlow.displayedChild = startFlow
-
+                runFlowLoading()
             }
-            LaunchInstructor.Auth -> runFlowAuth()
+            LaunchInstructor.Auth -> {
+                runFlowAuth()
+            }
         }
     }
 

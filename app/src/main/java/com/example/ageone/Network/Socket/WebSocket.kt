@@ -32,7 +32,7 @@ class WebSocket {
 
         socket.connect()
             .on(Socket.EVENT_CONNECT) {
-                println("connected")
+                Timber.i("connected")
                 Timber.i("set message")
                 socket.emit("registration", "hi")
             }

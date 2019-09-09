@@ -12,6 +12,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
+import com.example.ageone.External.HTTP.update
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.Meditation.MeditationViewModel
@@ -19,6 +20,8 @@ import com.example.ageone.Modules.RegistrationSMS.rows.RegistrationSMSTextViewHo
 import com.example.ageone.Modules.RegistrationSMS.rows.initialize
 import com.example.ageone.Modules.RegistrationSMSModel
 import com.example.ageone.Modules.RegistrationSMSViewModel
+import com.example.ageone.SCAG.DataBase
+import com.example.ageone.SCAG.User
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -106,8 +109,15 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                             "code" to viewModel.model.code
                         )) { json ->
                             Timber.i("JSON answer $json")
+                            DataBase.User.update(user.hashId,
+                                mapOf(
+                                    "phone" to user.data.phone,
+                                    "name" to user.data.name,
+                                    "email" to user.data.email
+                                ))
+                            user.isAuthorized = true
                         }
-                        user.isAuthorized = true
+
                         rootModule.emitEvent?.invoke(RegistrationSMSViewModel.EventType.OnAcceptPressed.toString())
                     }
                 }

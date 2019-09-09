@@ -10,6 +10,7 @@ import com.example.ageone.External.HTTP.API.API
 import com.example.ageone.Internal.Utilities.Utils
 import com.example.ageone.Models.User.user
 import com.example.ageone.Network.Socket.WebSocket
+import com.example.ageone.SCAG.DataBase
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,9 +23,9 @@ val coordinator = FlowCoordinator()
 
 val utils = Utils()
 val api = API()
+val database = DataBase
 
 val socket = WebSocket()
-val b = String()
 
 val currentActivity: BaseActivity?
     get() = App.instance?.mFTActivityLifecycleCallbacks?.currentActivity as BaseActivity

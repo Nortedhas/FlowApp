@@ -76,7 +76,7 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
 
         buttonEnter.setOnClickListener {
             user.isAuthorized = true
-            emitEvent?.invoke(StartViewModel.EventType.OnEnterPressed.toString())
+            emitEvent?.invoke(StartViewModel.EventType.OnLoaded.toString())
         }
 
         renderUIO()

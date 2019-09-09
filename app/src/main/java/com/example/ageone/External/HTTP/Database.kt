@@ -1,19 +1,47 @@
 package com.example.ageone.External.HTTP
 
 import com.example.ageone.Application.api
+import com.example.ageone.External.HTTP.API.Routes
 import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Parser
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.extensions.jsonBody
 import org.json.JSONObject
 import timber.log.Timber
 
+fun DataBase.request(params: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
+
+    Fuel.post(Routes.Database.path)
+        .jsonBody(api.createBody(params).toString())
+        .header(DataBase.headers)
+        .responseString { request, response, result ->
+            result.fold({ result ->
+                val jsonObject = JSONObject(result)
+                Timber.i("Update\nRequest:\n $request Response:\n $response Result:\n $result")
+
+                val error = jsonObject.optString("error", "")
+                if (error != "") {
+                    Timber.e("$error")
+                } else {
+                    completion.invoke(jsonObject)
+                }
+
+            },{ error ->
+                Timber.e("${error.response.responseMessage}")
+            })
+
+        }
+}
+
+
 //TODO: 3 func
 fun DataBase.update(objectID: String, objectStruct: Map<String, Any>) {
-    api.request(
+    request(
         mapOf(
             "router" to "update",
             "collectionName" to name,
             "elementId" to objectID,
-            "jsonValues" to objectStruct
+            "jsonValues" to api.createBody(objectStruct)
 
         )) { jsonObject ->
         Timber.i("Object: $jsonObject")
@@ -21,7 +49,7 @@ fun DataBase.update(objectID: String, objectStruct: Map<String, Any>) {
 }
 
 fun DataBase.delete(objectID: String) {
-    api.request(
+    request(
         mapOf(
             "router" to "delete",
             "collectionName" to name,
@@ -32,7 +60,7 @@ fun DataBase.delete(objectID: String) {
 }
 
 fun DataBase.fetch(filter: String, cashTime: Int = 0, completion: (JSONObject) -> (Unit)) {
-    api.request(
+    request(
         mapOf(
     "router" to "fetch",
     "collectionName" to name,

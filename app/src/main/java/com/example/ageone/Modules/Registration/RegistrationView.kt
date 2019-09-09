@@ -96,7 +96,7 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
                             holder.textInputL.editText?.doOnTextChanged { text, start, count, after ->
                                 viewModel.model.inputName = text.toString()
                             }
-                            holder.textInputL.editText?.setText(user.data.fullName)
+                            holder.textInputL.editText?.setText(user.data.name)
                         }
                         1 -> {
                             holder.initialize("Введите ваш номер телефона:", InputEditTextType.PHONE)

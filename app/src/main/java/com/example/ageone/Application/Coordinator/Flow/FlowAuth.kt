@@ -9,7 +9,6 @@ import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.*
 import com.example.ageone.Modules.Entry.EntryView
 import com.example.ageone.Modules.EntrySMS.EntrySMSView
@@ -79,7 +78,7 @@ class FlowAuth: BaseFlow() {
 
         module.emitEvent = { event ->
             when(StartViewModel.EventType.valueOf(event)) {
-                StartViewModel.EventType.OnEnterPressed -> {
+                StartViewModel.EventType.OnLoaded -> {
                     runModuleStartLogin()
                 }
 
@@ -153,7 +152,7 @@ class FlowAuth: BaseFlow() {
         module.emitEvent = { event ->
             when (RegistrationSMSViewModel.EventType.valueOf(event)) {
                 RegistrationSMSViewModel.EventType.OnAcceptPressed -> {
-                    module.startMainFlow()
+                    module.startLoadingFlow()
                 }
             }
         }
@@ -199,8 +198,8 @@ class FlowAuth: BaseFlow() {
         push(module)
     }
 
-    fun BaseModule.startMainFlow() {
+    fun BaseModule.startLoadingFlow() {
         coordinator.start()
-        onFinish?.invoke()
+        onDeInit?.invoke()
     }
 }

@@ -3,13 +3,17 @@ package com.example.ageone.Application.Coordinator.Flow
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.DataFlow
+import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar
+import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Modules.Start.StartModel
-import com.example.ageone.Modules.Start.StartView
+import com.example.ageone.Modules.LoadingModel
+import com.example.ageone.Modules.LoadingView
+import com.example.ageone.Modules.LoadingViewModel
 import com.example.ageone.Modules.Start.StartViewModel
+import timber.log.Timber
 
 fun FlowCoordinator.runFlowLoading() {
 
@@ -28,6 +32,15 @@ fun FlowCoordinator.runFlowLoading() {
     flow?.onFinish = {
         viewFlipperFlow.removeView(flow?.viewFlipperModule)
         flow?.viewFlipperModule?.removeAllViews()
+
+        // MARK: first appear flow in bottom bar
+
+        val startFlow = 0
+        createStackFlows(startFlow)
+        TabBar.createBottomNavigation()
+        TabBar.bottomNavigation.currentItem = startFlow
+        viewFlipperFlow.displayedChild = startFlow
+
         flow = null
     }
 
@@ -37,39 +50,40 @@ fun FlowCoordinator.runFlowLoading() {
 
 class FlowLoading: BaseFlow() {
 
-    private var models = FlowAuthModels()
+    private var models = FlowLoadingModels()
 
     override fun start() {
         onStarted()
-        runModuleStart()
+        runModuleLoading()
     }
 
-    inner class FlowAuthModels {
-        var modelStart = StartModel()
+    inner class FlowLoadingModels {
+        var modelLoading = LoadingModel()
     }
 
-    fun runModuleStart() {
-        val module = StartView(InitModuleUI(
+    //main load, parsing, socket
+
+    fun runModuleLoading() {
+        val module = LoadingView(InitModuleUI(
             isBottomNavigationVisible = false,
             isToolbarHidden = true
         ))
-        module.viewModel.initialize(models.modelStart) { module.reload() }
+        module.viewModel.initialize(models.modelLoading) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->
-            when(StartViewModel.EventType.valueOf(event)) {
-                StartViewModel.EventType.OnEnterPressed -> {
-
+            when(LoadingViewModel.EventType.valueOf(event)) {
+                LoadingViewModel.EventType.onFinish -> {
+                    module.startMainFlow()
                 }
-
             }
         }
         push(module)
     }
 
-
     fun BaseModule.startMainFlow() {
+        Timber.i("Start main load")
         coordinator.start()
         onFinish?.invoke()
     }

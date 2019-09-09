@@ -3,7 +3,6 @@ package com.example.ageone.Models.User
 import com.example.ageone.SCAG.UserData
 import net.alexandroid.shpref.ShPref
 
-//object?
 object user {
 
     var hashId: String
