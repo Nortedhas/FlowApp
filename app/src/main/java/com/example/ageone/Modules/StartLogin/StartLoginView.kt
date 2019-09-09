@@ -115,8 +115,8 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
                         holder.initialize("Вход через vk", R.drawable.vk,
                             Color.parseColor("#4A76A8"), Pair(26F, 15F))
                         holder.enterButton.setOnClickListener {
-                            user.isAuthorized = true
-                            Timber.i("${user.isAuthorized}")
+//                            user.isAuthorized = true
+//                            Timber.i("${user.isAuthorized}")
                             rootModule.emitEvent?.invoke(StartLoginViewModel.EventType.OnVkPressed.toString())
                         }
                     }

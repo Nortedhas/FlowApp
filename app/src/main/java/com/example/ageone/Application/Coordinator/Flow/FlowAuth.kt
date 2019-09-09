@@ -1,11 +1,15 @@
 package com.example.ageone.Application.Coordinator.Flow
 
+import android.app.Activity
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.coordinator
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Flow.BaseFlow
+import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.*
 import com.example.ageone.Modules.Entry.EntryView
 import com.example.ageone.Modules.EntrySMS.EntrySMSView
@@ -19,6 +23,8 @@ import com.example.ageone.Modules.Start.StartViewModel
 import com.example.ageone.Modules.StartLogin.StartLoginModel
 import com.example.ageone.Modules.StartLogin.StartLoginView
 import com.example.ageone.Modules.StartLogin.StartLoginViewModel
+import com.vk.api.sdk.VK
+import com.vk.api.sdk.auth.VKScope
 
 fun FlowCoordinator.runFlowAuth() {
 
@@ -94,8 +100,7 @@ class FlowAuth: BaseFlow() {
         module.emitEvent = { event ->
             when(StartLoginViewModel.EventType.valueOf(event)) {
                 StartLoginViewModel.EventType.OnVkPressed -> {
-                    coordinator.start()
-                    onFinish?.invoke()
+                    VK.login(currentActivity as Activity, setOf(VKScope.EMAIL, VKScope.PHONE))
                 }
                 StartLoginViewModel.EventType.OnRegistrationPhonePressed -> {
                     runModuleRegistration()
@@ -116,6 +121,7 @@ class FlowAuth: BaseFlow() {
         module.viewModel.initialize(models.modelRegistration) { module.reload() }
 
         settingsCurrentFlow.isBottomNavigationVisible = false
+
 
         module.emitEvent = { event ->
             when(RegistrationViewModel.EventType.valueOf(event)) {
@@ -147,7 +153,7 @@ class FlowAuth: BaseFlow() {
         module.emitEvent = { event ->
             when (RegistrationSMSViewModel.EventType.valueOf(event)) {
                 RegistrationSMSViewModel.EventType.OnAcceptPressed -> {
-                    coordinator.start()
+                    module.startMainFlow()
                 }
             }
         }
@@ -191,5 +197,10 @@ class FlowAuth: BaseFlow() {
             }
         }
         push(module)
+    }
+
+    fun BaseModule.startMainFlow() {
+        coordinator.start()
+        onFinish?.invoke()
     }
 }

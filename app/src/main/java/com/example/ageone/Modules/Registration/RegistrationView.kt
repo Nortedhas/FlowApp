@@ -15,13 +15,16 @@ import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.single
 import com.example.ageone.External.Utils.Validation.isValidEmail
 import com.example.ageone.External.Utils.Validation.isValidPhone
-import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.Registration.rows.RegistrationTextHolder
 import com.example.ageone.Modules.Registration.rows.initialize
-import com.example.ageone.UIComponents.ViewHolders.initialize
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
-import timber.log.Timber
-import yummypets.com.stevia.*
+import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
+import com.example.ageone.UIComponents.ViewHolders.initialize
+import yummypets.com.stevia.height
+import yummypets.com.stevia.matchParent
+import yummypets.com.stevia.width
+import yummypets.com.stevia.wrapContent
 
 class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
@@ -93,6 +96,7 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
                             holder.textInputL.editText?.doOnTextChanged { text, start, count, after ->
                                 viewModel.model.inputName = text.toString()
                             }
+                            holder.textInputL.editText?.setText(user.data.fullName)
                         }
                         1 -> {
                             holder.initialize("Введите ваш номер телефона:", InputEditTextType.PHONE)
@@ -105,6 +109,7 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
                             holder.textInputL.editText?.doOnTextChanged { text, start, count, after ->
                                 viewModel.model.inputMail = text.toString()
                             }
+                            holder.textInputL.editText?.setText(user.data.email)
                         }
                     }
                 }

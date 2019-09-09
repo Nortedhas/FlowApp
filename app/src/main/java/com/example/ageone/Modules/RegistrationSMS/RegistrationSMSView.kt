@@ -22,6 +22,7 @@ import com.example.ageone.Modules.RegistrationSMSViewModel
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
@@ -103,8 +104,8 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                             "router" to "codeCheck",
                             "phone" to viewModel.model.inputPhone,
                             "code" to viewModel.model.code
-                        )) {
-
+                        )) { json ->
+                            Timber.i("JSON answer $json")
                         }
                         user.isAuthorized = true
                         rootModule.emitEvent?.invoke(RegistrationSMSViewModel.EventType.OnAcceptPressed.toString())

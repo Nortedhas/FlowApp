@@ -8,6 +8,10 @@ object UserData {
         get() = ShPref.getString("userPhone", "")
         set(value) = ShPref.put("userPhone", value)
 
+    var email: String
+        get() = ShPref.getString("userEmail", "")
+        set(value) = ShPref.put("userEmail", value)
+
     var fullName: String
         get() = ShPref.getString("userFullName", "")
         set(value) = ShPref.put("userFullName", value)
