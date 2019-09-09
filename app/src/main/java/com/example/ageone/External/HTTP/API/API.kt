@@ -2,17 +2,20 @@ package com.example.ageone.External.HTTP.API
 
 import com.example.ageone.Application.api
 import com.example.ageone.Application.utils
-import com.example.ageone.Models.User.user
 import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Parser
 import com.example.ageone.SCAG.userData
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.jsonBody
 import com.swarmnyc.promisekt.Promise
+import kotlinx.coroutines.runBlocking
 import net.alexandroid.shpref.ShPref
+import nl.komponents.kovenant.async
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class API {
     var cashTime: Int
@@ -21,25 +24,20 @@ class API {
 
     val parser = Parser()
 
-    fun handshake(): Promise<Unit> {
-        return Promise{ resolve, _ ->
+    fun handshake(completion: () -> Unit){
+        Fuel.post(Routes.Handshake.path)
+            .jsonBody(createBody(mapOf(
+                "deviceId" to uuid
+            )).toString())
+            .responseString { request, response, result ->
+                Timber.i("Handshake: $request $response")
 
-            Fuel.post(Routes.Handshake.path)
-                .jsonBody(createBody(mapOf(
-                    "deviceId" to uuid
-                )).toString())
-                .responseString { request, response, result ->
-                    val jsonObject = JSONObject(result.get())
-                    utils.variable.token = jsonObject.optString("Token")
-                    cashTime = Date().time.toInt()
-                    parser.userData(jsonObject)
-
-                    Timber.i("${result.get()}")
-                    Timber.i("Token: ${utils.variable.token}")
-                    resolve
-                }
-        }
-
+                val jsonObject = JSONObject(result.get())
+                utils.variable.token = jsonObject.optString("Token")
+                cashTime = Date().time.toInt()
+                parser.userData(jsonObject)
+                completion.invoke()
+            }
     }
 
     fun request(params: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
@@ -78,7 +76,7 @@ class API {
 
 //    fun handleUser()
 
-    fun requestMainLoad(): Promise<Unit> {
+    fun requestMainLoad(completion: () -> Unit): Promise<Unit> {
         return Promise { resolve, _ ->
             //TODO change cashtime
             api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) { jsonObject ->
@@ -88,7 +86,7 @@ class API {
                     parser.parseAnyObject(jsonObject, type)
                 }
                 Timber.i("Parsing end")
-                resolve
+                completion.invoke()
             }
 
         }

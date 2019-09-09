@@ -12,7 +12,6 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.LoadingModel
 import com.example.ageone.Modules.LoadingView
 import com.example.ageone.Modules.LoadingViewModel
-import com.example.ageone.Modules.Start.StartViewModel
 import timber.log.Timber
 
 fun FlowCoordinator.runFlowLoading() {
@@ -84,7 +83,7 @@ class FlowLoading: BaseFlow() {
 
     fun BaseModule.startMainFlow() {
         Timber.i("Start main load")
-        coordinator.start()
+//        coordinator.start()
         onFinish?.invoke()
     }
 }

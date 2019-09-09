@@ -21,7 +21,7 @@ class LoadingViewModel : InterfaceViewModel {
     }
 
     fun startLoading(completion: () -> Unit) {
-        api.requestMainLoad().done {
+        api.requestMainLoad {
             Timber.i("completion invoke")
             completion.invoke()
         }

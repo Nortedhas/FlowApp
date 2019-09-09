@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import com.example.ageone.Application.Coordinator.Flow.FlowAuth
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.External.Base.Activity.BaseActivity
-import com.example.ageone.External.HTTP.API.API
 import com.example.ageone.External.HTTP.update
 import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.single
@@ -26,12 +25,9 @@ import com.vk.api.sdk.VKApiCallback
 import com.vk.api.sdk.auth.VKAccessToken
 import com.vk.api.sdk.auth.VKAuthCallback
 import com.vk.api.sdk.exceptions.VKApiExecutionException
-import timber.log.Timber
 import com.vk.api.sdk.requests.VKRequest
-import kotlinx.coroutines.runBlocking
-import org.intellij.lang.annotations.Flow
 import org.json.JSONObject
-import java.lang.Exception
+import timber.log.Timber
 
 
 class AppActivity: BaseActivity() {
@@ -67,29 +63,25 @@ class AppActivity: BaseActivity() {
             }
 
         }.then {
-            runBlocking {
-                API().handshake()
+            api.handshake {
+                Timber.i("Handshake out")
+                coordinator.start()
+
+                FirebaseInstanceId.getInstance().instanceId
+                    .addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Timber.i("fail")
+                            return@OnCompleteListener
+                        }
+
+                        // Get new Instance ID UserHandshake
+                        val token = task.result?.token ?: ""
+                        DataBase.User.update(user.hashId, mapOf("fcmToken" to token))
+                    })
             }
-
-        }.done {
-            coordinator.start()
-
-            FirebaseInstanceId.getInstance().instanceId
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Timber.i("fail")
-                        return@OnCompleteListener
-                    }
-
-                    // Get new Instance ID UserHandshake
-                    val token = task.result?.token ?: ""
-//                    DataBase.User.update(user.hashId, mapOf("fcmToken" to token))
-//                Timber.i("$UserHandshake")
-                })
         }
 
         setContentView(router.layout)
-
 
     }
 
