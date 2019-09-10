@@ -84,7 +84,7 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
             is MeditationCardViewHolder -> {
                 holder.initialize(
                     utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.")
+                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.", false)
                 holder.constraintLayout.setOnClickListener {
                     rootModule.emitEvent?.invoke(MeditationFilterListViewModel.EventType.OnMeditationPressed.toString())
                 }

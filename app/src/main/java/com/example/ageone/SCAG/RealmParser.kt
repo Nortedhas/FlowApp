@@ -4,6 +4,7 @@ package com.example.ageone.SCAG
 
 import com.example.ageone.External.Extensions.Realm.add
 import org.json.JSONObject
+import timber.log.Timber
 
 class Parser {
 fun parseAnyObject(json: JSONObject, type: DataBase) {
@@ -136,6 +137,7 @@ fun JSONObject.parseOrder(): Order {
 	}
 	some.price = optInt("price", 0)
 	some.avaliableTime = optInt("avaliableTime", 0)
+	Timber.i("Order: $some")
 	return some
 }
 

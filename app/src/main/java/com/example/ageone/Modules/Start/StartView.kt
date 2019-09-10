@@ -21,7 +21,10 @@ import com.example.ageone.External.Base.RecyclerView.CirclePagerIndicatorDecorat
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
+import timber.log.Timber
 import yummypets.com.stevia.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModuleUI) {
 
@@ -80,11 +83,16 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         }
 
         renderUIO()
-        /*Timer().schedule(0, 500){
-            bodyTable.smoothScrollToPosition(indexCurrentItem++ % 3)
-
-            Timber.i("timer")
-        }*/
+        Timer().schedule(5000){
+            if ((bodyTable.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0) {
+                bodyTable.smoothScrollToPosition(1)
+            }
+        }
+        Timer().schedule(10000){
+            if ((bodyTable.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 1) {
+                bodyTable.smoothScrollToPosition(2)
+            }
+        }
     }
 
     companion object {

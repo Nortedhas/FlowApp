@@ -3,6 +3,7 @@ package com.example.ageone.External.HTTP.API
 import com.example.ageone.Application.api
 import com.example.ageone.Application.utils
 import com.example.ageone.SCAG.DataBase
+import com.example.ageone.SCAG.Enums
 import com.example.ageone.SCAG.Parser
 import com.example.ageone.SCAG.userData
 import com.github.kittinunf.fuel.Fuel
@@ -86,9 +87,24 @@ class API {
                     parser.parseAnyObject(jsonObject, type)
                 }
                 Timber.i("Parsing end")
+                Timber.i("Audio: ${utils.realm.audio.getAllObjects()}")
                 completion.invoke()
             }
 
+        }
+    }
+
+    fun createOrder(productSetHashId: String, productHashId: String) {
+        api.request(
+            mapOf(
+                "router" to "createOrder",
+                "orderType" to Enums.OrderType.Created,
+                "productSetHashId" to productSetHashId,
+                "productHashId" to productHashId
+
+            )
+        ) { jsonObject ->
+            Timber.i("Object order: $jsonObject")
         }
     }
 }

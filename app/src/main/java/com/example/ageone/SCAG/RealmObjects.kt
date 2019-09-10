@@ -13,3 +13,8 @@ enum class DataBase {
 			get() = mapOf("x-access-token" to utils.variable.token)
 	}
 }
+
+fun Order.hasMeditation(meditation: Product): Boolean {
+	//TODO
+	return false
+}

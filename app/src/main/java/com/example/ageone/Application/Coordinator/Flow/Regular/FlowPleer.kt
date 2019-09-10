@@ -63,7 +63,6 @@ class FlowPleer(previousFlow: BaseFlow? = null): BaseFlow() {
         ))
         module.viewModel.initialize(models.modelPleer) { module.reload() }
 
-
         settingsCurrentFlow.isBottomNavigationVisible = false
 
         module.emitEvent = { event ->

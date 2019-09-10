@@ -4,12 +4,16 @@ import android.graphics.Color
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ageone.Application.*
 import com.example.ageone.Application.R
+import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.rxData
+import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.External.Libraries.Alert.alertManager
+import com.example.ageone.External.Libraries.Alert.list
 import com.example.ageone.External.RxBus.RxBus
 import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Modules.Meditation.rows.MeditationPopularViewHolder
@@ -128,13 +132,24 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
                     Timber.i("$meditation")
                     holder.initialize(
                         utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                        meditation.name, meditation.txtInfo, position)
+                        meditation.name, meditation.txtInfo, position, meditation.isFree)
 
                     holder.constraintLayout.setOnClickListener {
                         RxBus.publish(RxEvent.EventAddMeditation("meditations are loaded"))
-                        rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
-                    }
+                        if (meditation.isFree || meditation.isIntro || rxData.isVip()) //TODO: meditation in orders
+                        {
+                            rxData.currentMeditation = meditation
+                            rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
 
+                        } else {
+                            alertManager.list(
+                                "Данная медитация является платной, пожалуйста, оплатите доступ",
+                                rxData.payVariants,
+                                rxData.createPayVariantCallback(meditation.hashId, isSet = false)
+                            )
+                        }
+
+                    }
 
                 }
 

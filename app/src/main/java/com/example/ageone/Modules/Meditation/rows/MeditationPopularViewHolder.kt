@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.SCAG.Product
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -28,11 +30,16 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
     }
 
     var onTap: ((Int) -> (Unit))? = null
+    var popularMeditation = listOf<Product>()
 
     init {
         recyclerViewHor.adapter = viewAdapter
         recyclerViewHor.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewHor.overScrollMode = View.OVER_SCROLL_NEVER
+
+        popularMeditation = utils.realm.product.getAllObjects().filter { meditation ->
+            meditation.isPopular
+        }
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(recyclerViewHor)
@@ -42,7 +49,7 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
 
     inner class Factory: RecyclerView.Adapter<MeditationCardViewHolder>() {
 
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = popularMeditation.size
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeditationCardViewHolder {
             val layout = ConstraintLayout(parent.context)
@@ -54,8 +61,9 @@ class MeditationPopularViewHolder(val constraintLayout: ConstraintLayout): BaseV
         }
 
         override fun onBindViewHolder(holder: MeditationCardViewHolder, position: Int) {
-            holder.initialize(223 + 20, 135, R.drawable.kitty,
-                "Дыхание природы", "Задача организации, в особенности же консультация.")
+            val meditation = popularMeditation[position]
+            holder.initialize(223 + 20, 135, meditation.image?.preview ?: "",
+                meditation.name, meditation.txtInfo, meditation.isFree)
             holder.constraintLayout.setOnClickListener {
                 onTap?.invoke(position)
             }

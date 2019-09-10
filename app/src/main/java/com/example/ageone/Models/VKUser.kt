@@ -1,4 +1,4 @@
-package com.example.ageone.Application
+package com.example.ageone.Models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -44,6 +44,6 @@ data class VKUser(
             firstName = json.optString("first_name", ""),
             lastName = json.optString("last_name", ""),
             phone = json.optString("phone", "")
-            )
+        )
     }
 }

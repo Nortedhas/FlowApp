@@ -1,15 +1,16 @@
 package com.example.ageone.Application.Coordinator.Flow
 
+import android.content.Context
 import android.graphics.Color
 import android.view.View
+import android.widget.ProgressBar
 import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.bottomNavigation
-import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar.createBottomNavigation
-import com.example.ageone.Application.Coordinator.Router.createStackFlows
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
 import com.example.ageone.Application.setStatusBarColor
+import com.example.ageone.External.Base.ConstraintLayout.BaseConstraintLayout
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
@@ -41,9 +42,6 @@ class FlowCoordinator {
     }
 
     fun start() {
-        val sdf = SimpleDateFormat("hh:mm:ss")
-        val currentDate = sdf.format(Date())
-        Timber.i("iii: start $currentDate")
         while(viewFlipperFlow.childCount > 0) {
             viewFlipperFlow.removeViewAt(0)
         }
@@ -63,7 +61,8 @@ class FlowCoordinator {
         router.layout.removeAllViews()
         router.layout.subviews(
             viewFlipperFlow,
-            bottomNavigation
+            bottomNavigation,
+            blockConstraint
         )
 
         bottomNavigation.constrainBottomToBottomOf(router.layout)
@@ -72,6 +71,30 @@ class FlowCoordinator {
             .fillVertically()
             .fillHorizontally()
             .constrainBottomToTopOf(bottomNavigation)
+
+        blockConstraint
+            .fillVertically()
+            .fillHorizontally()
+
+        blockConstraint.subviews(
+            circularProgress
+        )
+
+        circularProgress.centerInParent()
+
+        blockConstraint.visibility = View.GONE
+        circularProgress.visibility = View.GONE
+    }
+
+    val blockConstraint by lazy {
+        val constraint = BaseConstraintLayout()
+        constraint.setBackgroundColor(Color.argb(180, 0,0,0))
+        constraint
+    }
+
+    val circularProgress by lazy {
+        val circular = ProgressBar(currentActivity as Context)
+        circular
     }
 
     object ViewFlipperFlowObject{

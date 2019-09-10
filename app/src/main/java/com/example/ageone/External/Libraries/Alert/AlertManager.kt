@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.example.ageone.Application.App
+import com.example.ageone.Application.coordinator
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.TextView.BaseTextView
 import timber.log.Timber
@@ -144,4 +145,37 @@ fun AlertManager.double(
         builder.setNegativeButton(buttonCancel, completionCancel)
     }
     builder.show()
+}
+
+// MARK: With list
+
+fun AlertManager.list(title: String,
+                      variants: Array<String>,
+                      completion: (DialogInterface, Int) -> (Unit)) {
+
+    // setup the alert builder
+    val builder = AlertDialog.Builder(currentActivity)
+    builder.setTitle(title)
+
+    // add a list
+    builder.setItems(variants, completion)
+
+    // create and show the alert dialog
+    val dialog = builder.create()
+    dialog.show()
+
+}
+
+// MARK: block ui
+
+fun AlertManager.blockUI(isVisible: Boolean) {
+
+    if (isVisible) {
+        coordinator.blockConstraint.visibility = View.VISIBLE
+        coordinator.circularProgress.visibility = View.VISIBLE
+    } else {
+        coordinator.blockConstraint.visibility = View.GONE
+        coordinator.circularProgress.visibility = View.GONE
+    }
+
 }

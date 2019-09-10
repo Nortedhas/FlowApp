@@ -8,10 +8,13 @@ import com.example.ageone.External.Base.Activity.BaseActivity
 import com.example.ageone.External.Extensions.Application.FTActivityLifecycleCallbacks
 import com.example.ageone.External.HTTP.API.API
 import com.example.ageone.Internal.Utilities.Utils
+import com.example.ageone.Models.RxData
 import com.example.ageone.Models.User.user
 import com.example.ageone.Network.Socket.WebSocket
 import com.example.ageone.SCAG.DataBase
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -24,7 +27,7 @@ val coordinator = FlowCoordinator()
 val utils = Utils()
 val api = API()
 val database = DataBase
-
+val rxData = RxData()
 val socket = WebSocket()
 
 val currentActivity: BaseActivity?
@@ -84,5 +87,16 @@ class HuaweiTree : Timber.DebugTree() {
         if (priority == Log.VERBOSE || priority == Log.DEBUG)
             priority = Log.INFO
         super.log(priority, tag, message, t)
+    }
+}
+
+class MyFirebaseMessagingService: FirebaseMessagingService() {
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        Timber.i("${remoteMessage?.data}")
+
+    }
+
+    override fun onNewToken(token: String?) {
+        Timber.i("$token")
     }
 }

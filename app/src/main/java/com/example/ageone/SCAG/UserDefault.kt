@@ -25,5 +25,4 @@ object UserData {
 		get() = ShPref.getString("userDataEmail", "")
 		set(value) = ShPref.put("userDataEmail", value)
 
-
 }

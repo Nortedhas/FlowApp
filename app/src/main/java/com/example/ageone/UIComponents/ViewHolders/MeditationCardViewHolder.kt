@@ -3,6 +3,7 @@ package com.example.ageone.UIComponents.ViewHolders
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
 import com.example.ageone.Application.utils
@@ -11,10 +12,16 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.Libraries.Glide.addImageFromGlide
 import yummypets.com.stevia.*
-import java.text.FieldPosition
 
 
 class MeditationCardViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
+
+    val imageLock by lazy {
+        val image = BaseImageView()
+        image.setBackgroundResource(R.drawable.lock_icon)
+        image.elevation = 5F.dp
+        image
+    }
 
     val imageViewPhoto by lazy {
         val imageView = BaseImageView()
@@ -53,6 +60,7 @@ class MeditationCardViewHolder(val constraintLayout: ConstraintLayout): BaseView
 fun MeditationCardViewHolder.renderUI() {
     constraintLayout.subviews(
         imageViewPhoto,
+        imageLock,
         textViewTitle,
         textViewDescribe
     )
@@ -60,6 +68,12 @@ fun MeditationCardViewHolder.renderUI() {
     imageViewPhoto
         .constrainTopToTopOf(constraintLayout, 16)
         .fillHorizontally(8)
+
+    imageLock
+        .constrainRightToRightOf(imageViewPhoto, 8)
+        .constrainTopToTopOf(imageViewPhoto, 8)
+        .width(23)
+        .height(23)
 
     textViewTitle
         .constrainTopToBottomOf(imageViewPhoto, 8)
@@ -70,7 +84,8 @@ fun MeditationCardViewHolder.renderUI() {
         .fillHorizontally(8)
 }
 
-fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, title: String, describe: String) {
+fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: String, title: String, describe: String,
+                                        isFree: Boolean) {
 
     constraintLayout
         .width(width)
@@ -79,15 +94,28 @@ fun MeditationCardViewHolder.initialize(width: Int, height: Int, image: Int, tit
         .width(width - 20)
         .height(height)
 
-    addImageFromGlide(imageViewPhoto, R.drawable.image3)
+    addImageFromGlide(imageViewPhoto, image)
+
+    if (isFree) {
+        imageLock.visibility = View.GONE
+    } else {
+        imageLock.visibility = View.VISIBLE
+    }
 
     textViewTitle.text = title
     textViewDescribe.text = describe
 }
 
-fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String) {
+fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String,
+                                        isFree: Boolean) {
 
     addImageFromGlide(imageViewPhoto, R.drawable.image1)
+
+    if (isFree) {
+        imageLock.visibility = View.GONE
+    } else {
+        imageLock.visibility = View.VISIBLE
+    }
 
     imageViewPhoto
         .width((utils.variable.displayWidth - 48) / 2 )
@@ -97,9 +125,16 @@ fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, d
     textViewDescribe.text = describe
 }
 
-fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String, position: Int) {
+fun MeditationCardViewHolder.initialize(width: Int, image: Int, title: String, describe: String, position: Int,
+                                        isFree: Boolean) {
 
     addImageFromGlide(imageViewPhoto, R.drawable.image1)
+
+    if (isFree) {
+        imageLock.visibility = View.GONE
+    } else {
+        imageLock.visibility = View.VISIBLE
+    }
 
     imageViewPhoto
         .width((utils.variable.displayWidth - 48) / 2 )

@@ -1,10 +1,22 @@
 package com.example.ageone.Modules
 
+import com.example.ageone.Application.utils
 import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
+import com.example.ageone.External.RxBus.RxBus
+import com.example.ageone.External.RxBus.RxEvent
+import com.example.ageone.SCAG.Order
+import com.example.ageone.SCAG.Product
+import com.example.ageone.SCAG.ProductSet
+import timber.log.Timber
 
 class PurchasesViewModel : InterfaceViewModel {
     var model = PurchasesModel()
+
+    enum class EventType {
+        OnSetPressed,
+        OnMeditationPressed;
+    }
 
     fun initialize(recievedModel: InterfaceModel, completion: ()->(Unit)) {
         if (recievedModel is PurchasesModel) {
@@ -13,11 +25,19 @@ class PurchasesViewModel : InterfaceViewModel {
         }
     }
 
-    enum class EventType {
-        OnSetPressed
+    fun loadRealmData() {
+
+        model.meditations = utils.realm.order.getAllObjects().filter { order ->
+            order.product != null
+        }
+
+        model.sets = utils.realm.order.getAllObjects().filter { order ->
+            order.productSet != null
+        }
     }
 }
 
 class PurchasesModel : InterfaceModel {
-
+    var meditations = listOf<Order>()
+    var sets = listOf<Order>()
 }

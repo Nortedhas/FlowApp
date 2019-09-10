@@ -1,5 +1,6 @@
 package com.example.ageone.Application
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import com.example.ageone.External.HTTP.update
 import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.single
 import com.example.ageone.Models.User.user
+import com.example.ageone.Models.VKUser
 import com.example.ageone.SCAG.DataBase
 import com.github.kittinunf.fuel.core.FuelManager
 import com.google.android.gms.tasks.OnCompleteListener
@@ -28,6 +30,11 @@ import com.vk.api.sdk.exceptions.VKApiExecutionException
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
 import timber.log.Timber
+import android.content.pm.PackageManager
+import android.Manifest.permission
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import androidx.core.app.ActivityCompat
 
 
 class AppActivity: BaseActivity() {
@@ -50,6 +57,8 @@ class AppActivity: BaseActivity() {
         setDisplaySize()
 
         FuelManager.instance.basePath = DataBase.url
+
+        verifyStoragePermissions(this)
 
         //TODO just do this
         coordinator.setLaunchScreen()
@@ -167,5 +176,34 @@ class VKUsersRequest: VKRequest<VKUser> {
             Timber.e("Error parsing VK user: $e")
         }
         return result
+    }
+}
+
+// Storage Permissions
+private val REQUEST_EXTERNAL_STORAGE = 1
+private val PERMISSIONS_STORAGE = arrayOf<String>(
+    Manifest.permission.READ_EXTERNAL_STORAGE,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE
+)
+
+/**
+ * Checks if the app has permission to write to device storage
+ *
+ * If the app does not has permission then the user will be prompted to grant permissions
+ *
+ * @param activity
+ */
+fun verifyStoragePermissions(activity: Activity) {
+    // Check if we have write permission
+    val permission =
+        ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+        // We don't have permission so prompt the user
+        ActivityCompat.requestPermissions(
+            activity,
+            PERMISSIONS_STORAGE,
+            REQUEST_EXTERNAL_STORAGE
+        )
     }
 }

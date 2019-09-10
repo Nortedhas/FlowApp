@@ -20,16 +20,13 @@ class MeditationViewModel: InterfaceViewModel {
     }
 
     //TODO: перенести -> model
-    var popularMeditation = listOf<Product>()
     var quickMeditation = listOf<Product>()
 
     private lateinit var personDisposable: Disposable
 
 
     fun loadRealmData() {
-        popularMeditation = utils.realm.product.getAllObjects().filter { meditation ->
-            meditation.isPopular
-        }
+
         quickMeditation = utils.realm.product.getAllObjects().filter { meditation ->
             meditation.isQuickStart
         }

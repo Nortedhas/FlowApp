@@ -1,11 +1,18 @@
 package com.example.ageone.Modules.Pleer
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.transition.Transition
 import android.view.Gravity
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.example.ageone.Application.*
 import com.example.ageone.Application.R
-import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.SeekBar.BaseSeekBar
@@ -175,7 +182,22 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
     }
 
     init {
+
         setBackgroundResource(R.drawable.back_pleer)
+
+        /*Glide.with(this)
+            .load(rxData.currentMeditation?.image?.original ?: R.drawable.back_pleer)
+            .into(object : CustomTarget<Drawable>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: com.bumptech.glide.request.transition.Transition<in Drawable>?
+                ) {
+                    background = resource
+                }
+
+                override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
+
+            })*/
 
         toolbar.title = "Прослушивание"
         renderToolbar()
@@ -196,9 +218,14 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         }
 
         viewButton.setOnClickListener {
-            viewButton.setBackgroundResource(
-                if (isPlay) R.drawable.button_stop else R.drawable.button_play
-            )
+            if (isPlay){
+                viewButton.setBackgroundResource(R.drawable.button_stop)
+                currentActivity?.startService(Intent(currentActivity, MusicService::class.java))
+            } else {
+                viewButton.setBackgroundResource(R.drawable.button_play)
+                currentActivity?.stopService(Intent(currentActivity, MusicService::class.java))
+            }
+
             isPlay = !isPlay
         }
 

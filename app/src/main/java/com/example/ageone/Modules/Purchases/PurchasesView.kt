@@ -19,6 +19,7 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.rows.PurchasesEmptyViewHolder
 import com.example.ageone.Modules.Purchases.rows.initialize
 import com.example.ageone.Modules.PurchasesViewModel
+import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
@@ -33,12 +34,12 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         viewAdapter
     }
 
-    val layoutManager by lazy {
+    val gridManager by lazy {
         val layoutManager = GridLayoutManager(currentActivity, 2)
         layoutManager
     }
 
-    val linaerManager by lazy {
+    val linearManager by lazy {
         val layoutManager = LinearLayoutManager(currentActivity)
         layoutManager
     }
@@ -80,11 +81,12 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
 
     init {
         setBackgroundResource(R.drawable.base_background)
+        viewModel.loadRealmData()
 
         toolbar.title = "Покупки"
         renderToolbar()
 
-        bodyTable.layoutManager = linaerManager
+        bodyTable.layoutManager = linearManager
         bodyTable.adapter = viewAdapter
 //        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
@@ -93,7 +95,6 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         buttonMed.setOnClickListener {
             if (!isMeditationActive) {
                 isMeditationActive = !isMeditationActive
-                bodyTable.layoutManager = linaerManager
                 viewAdapter.notifyDataSetChanged()
 
                 bottomBorderS.visibility = View.GONE
@@ -104,7 +105,6 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         buttonSet.setOnClickListener {
             if (isMeditationActive) {
                 isMeditationActive = !isMeditationActive
-                bodyTable.layoutManager = layoutManager
                 viewAdapter.notifyDataSetChanged()
 
                 bottomBorderS.visibility = View.VISIBLE
@@ -113,6 +113,101 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         }
 
         renderUIO()
+
+    }
+
+    inner class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
+
+        private val MeditationType = 0
+        private val SetType = 1
+        private val EmptyType = 2
+
+        override fun getItemCount(): Int =
+            if (isMeditationActive) {
+                if (viewModel.model.meditations.isNotEmpty()) {
+                    bodyTable.layoutManager = gridManager
+                    viewModel.model.meditations.size
+                } else {
+                    bodyTable.layoutManager = linearManager
+                    1
+                }
+            } else {
+                if (viewModel.model.sets.isNotEmpty()) {
+                    bodyTable.layoutManager = gridManager
+                    viewModel.model.sets.size
+                } else {
+                    bodyTable.layoutManager = linearManager
+                    1
+                }
+            }
+
+        override fun getItemViewType(position: Int): Int = when (isMeditationActive) {
+            true -> if (viewModel.model.meditations.isNotEmpty()) {
+                        MeditationType
+                    } else {
+                        EmptyType
+                    }
+            false -> if (viewModel.model.sets.isNotEmpty()) {
+                        SetType
+                    } else {
+                        EmptyType
+                    }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+            val layout = ConstraintLayout(parent.context)
+
+            layout
+                .width(matchParent)
+                .height(wrapContent)
+
+            val holder = when (viewType) {
+                MeditationType -> {
+                    MeditationCardViewHolder(layout)
+                }
+                SetType -> {
+                    SetViewHolder(layout)
+                }
+                EmptyType -> {
+                    PurchasesEmptyViewHolder(layout)
+                }
+                else ->
+                    BaseViewHolder(layout)
+            }
+
+            return holder
+        }
+
+        override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+            when (holder) {
+                is PurchasesEmptyViewHolder -> {
+                    holder.initialize()
+                }
+                is SetViewHolder -> {
+                    holder.initialize(
+                        utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
+                        "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position, position + 1)
+                    holder.constraintLayout.setOnClickListener {
+                        rootModule.emitEvent?.invoke(PurchasesViewModel.EventType.OnSetPressed.toString())
+                    }
+                }
+
+                is MeditationCardViewHolder -> {
+                    val meditation = viewModel.model.meditations[position]
+                    holder.initialize(
+                        utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
+                        meditation.product?.name ?: "",
+                        meditation.product?.txtInfo ?: "",
+                        position,
+                        meditation.product?.isFree ?: false)
+
+                    holder.constraintLayout.setOnClickListener {
+                        rootModule.emitEvent?.invoke(PurchasesViewModel.EventType.OnMeditationPressed.toString())
+                    }
+
+                }
+            }
+        }
 
     }
 }
@@ -158,58 +253,5 @@ fun PurchasesView.renderUIO() {
         .fillVertically()
         .constrainTopToBottomOf(buttonMed, 1.dp)
 
-
-}
-
-class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
-
-    companion object {
-        private const val MeditationType = 0
-        private const val SetType = 1
-    }
-
-    override fun getItemCount(): Int = if (isMeditationActive) 1 else 6
-
-    override fun getItemViewType(position: Int): Int = when (isMeditationActive) {
-        true -> MeditationType
-        false -> SetType
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val layout = ConstraintLayout(parent.context)
-
-        layout
-            .width(matchParent)
-            .height(wrapContent)
-
-        val holder = when (viewType) {
-            MeditationType -> {
-                PurchasesEmptyViewHolder(layout)
-            }
-            SetType -> {
-                SetViewHolder(layout)
-            }
-            else ->
-                BaseViewHolder(layout)
-        }
-
-        return holder
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when (holder) {
-            is PurchasesEmptyViewHolder -> {
-                holder.initialize()
-            }
-            is SetViewHolder -> {
-                holder.initialize(
-                    utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.", position, position + 1)
-                holder.constraintLayout.setOnClickListener {
-                    rootModule.emitEvent?.invoke(PurchasesViewModel.EventType.OnSetPressed.toString())
-                }
-            }
-        }
-    }
 
 }
