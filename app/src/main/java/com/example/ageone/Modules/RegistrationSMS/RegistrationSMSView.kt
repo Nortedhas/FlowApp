@@ -21,7 +21,9 @@ import com.example.ageone.Modules.RegistrationSMS.rows.initialize
 import com.example.ageone.Modules.RegistrationSMSModel
 import com.example.ageone.Modules.RegistrationSMSViewModel
 import com.example.ageone.SCAG.DataBase
+import com.example.ageone.SCAG.Parser
 import com.example.ageone.SCAG.User
+import com.example.ageone.SCAG.userData
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -98,7 +100,7 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                     }
                 }
                 is RegistrationSMSTextViewHolder -> {
-                    holder.initialize("Если Вы не получили смс, запросить код повторно можно через ")
+                    holder.initialize("Если Вы не получили смс, запросить код повторно можно через ")//TODO
                 }
                 is ButtonViewHolder -> {
                     holder.initialize("Подтверждаю")
@@ -111,14 +113,20 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                             Timber.i("JSON answer $json")
                             DataBase.User.update(user.hashId,
                                 mapOf(
-                                    "phone" to user.data.phone,
-                                    "name" to user.data.name,
-                                    "email" to user.data.email
+//                                    "phone" to viewModel.model.inputPhone,
+                                    "name" to viewModel.model.inputName,
+                                    "email" to viewModel.model.inputMail
                                 ))
+                            //TODO: where?
+                            Parser().userData(json)
+                            user.data.name = viewModel.model.inputName
+                            user.data.phone = viewModel.model.inputPhone
+                            user.data.email = viewModel.model.inputMail
                             user.isAuthorized = true
+
+                            rootModule.emitEvent?.invoke(RegistrationSMSViewModel.EventType.OnAcceptPressed.toString())
                         }
 
-                        rootModule.emitEvent?.invoke(RegistrationSMSViewModel.EventType.OnAcceptPressed.toString())
                     }
                 }
             }

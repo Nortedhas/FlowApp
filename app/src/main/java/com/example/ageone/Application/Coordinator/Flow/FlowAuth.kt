@@ -170,6 +170,7 @@ class FlowAuth: BaseFlow() {
         module.emitEvent = { event ->
             when (EntryViewModel.EventType.valueOf(event)) {
                 EntryViewModel.EventType.OnEnterPressed -> {
+                    models.modelEntrySMS.inputPhone = models.modelEntry.inputPhone
                     runModuleEntrySMS()
                 }
             }
@@ -191,7 +192,9 @@ class FlowAuth: BaseFlow() {
 
         module.emitEvent = { event ->
             when (EntrySMSViewModel.EventType.valueOf(event)) {
-
+                EntrySMSViewModel.EventType.OnAcceptPressed -> {
+                    module.startLoadingFlow()
+                }
 
             }
         }

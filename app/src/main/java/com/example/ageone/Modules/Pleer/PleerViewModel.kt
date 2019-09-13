@@ -9,6 +9,7 @@ import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.blockUI
 import com.example.ageone.SCAG.Audio
 import com.example.ageone.SCAG.Product
+import timber.log.Timber
 
 
 class PleerViewModel : InterfaceViewModel {
@@ -22,6 +23,9 @@ class PleerViewModel : InterfaceViewModel {
                 if(!audio.isAudioDownload()) {
                     startDownload(audio)
                 }
+                rxData.duration = audio.getDuration()
+                Timber.i("Audio duration: ${rxData.duration}")
+
             }
             completion.invoke()
         }
@@ -43,4 +47,6 @@ class PleerViewModel : InterfaceViewModel {
 
 class PleerModel : InterfaceModel {
     lateinit var meditation: Product
+    var duration = 0L
+
 }

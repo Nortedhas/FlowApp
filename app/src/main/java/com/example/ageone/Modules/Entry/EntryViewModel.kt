@@ -4,10 +4,10 @@ import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
 
 class EntryViewModel : InterfaceViewModel {
-    var model = EntrySMSModel()
+    var model = EntryModel()
 
     fun initialize(recievedModel: InterfaceModel, completion: ()->(Unit)) {
-        if (recievedModel is EntrySMSModel) {
+        if (recievedModel is EntryModel) {
             model = recievedModel
             completion.invoke()
         }
@@ -20,5 +20,5 @@ class EntryViewModel : InterfaceViewModel {
 }
 
 class EntryModel : InterfaceModel {
-
+    var inputPhone = ""
 }

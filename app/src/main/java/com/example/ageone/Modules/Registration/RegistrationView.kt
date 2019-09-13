@@ -129,8 +129,10 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
                         } else {
                             api.request(mapOf(
                                 "router" to "phoneAuth",
-                                "phone" to viewModel.model.inputPhone)){}
-                            rootModule.emitEvent?.invoke(RegistrationViewModel.EventType.OnRegistrationPressed.toString())
+                                "phone" to viewModel.model.inputPhone)){
+                                rootModule.emitEvent?.invoke(RegistrationViewModel.EventType.OnRegistrationPressed.toString())
+                            }
+
                         }
 
                     }

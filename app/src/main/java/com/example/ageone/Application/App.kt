@@ -48,8 +48,6 @@ class App: Application()  {
 
         ShPref.init(this, ShPref.APPLY)
 
-        user.isAuthorized = false
-
         // MARK: Timber
         if (BuildConfig.DEBUG) {
             val deviceManufacturer = android.os.Build.MANUFACTURER

@@ -2,6 +2,4 @@
     <string name="app_name">Template</string>
     <string name="msg_token_fmt"></string>
     <integer name="com_vk_sdk_AppId">7125762</integer>
-    <string name="facebook_app_id">363720411181716</string>
-    <string name="fb_login_protocol_scheme">fb363720411181716</string>
 </resources>

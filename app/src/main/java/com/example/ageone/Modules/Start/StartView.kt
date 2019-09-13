@@ -78,7 +78,6 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         snapHelper.attachToRecyclerView(bodyTable)
 
         buttonEnter.setOnClickListener {
-            user.isAuthorized = true
             emitEvent?.invoke(StartViewModel.EventType.OnLoaded.toString())
         }
 

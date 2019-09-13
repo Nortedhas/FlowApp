@@ -8,6 +8,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.Profile.rows.*
 import com.example.ageone.Modules.ProfileViewModel
 import yummypets.com.stevia.height
@@ -99,7 +100,7 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is ProfileInfoViewHolder -> {
-                holder.initialize("Владимир Горбунов", "VIP доступ до 31.10.2019")
+                holder.initialize(user.data.name, "VIP доступ до 31.10.2019")
             }
             is GetVIPViewHolder -> {
                 holder.initialize("Получить VIP доступ ко всему платному контенту")

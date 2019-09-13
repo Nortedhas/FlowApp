@@ -3,14 +3,11 @@ package com.example.ageone.Modules.Pleer
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.transition.Transition
+import android.os.Handler
 import android.view.Gravity
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.ageone.Application.*
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.ImageView.BaseImageView
@@ -18,8 +15,15 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.SeekBar.BaseSeekBar
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.External.RxBus.RxBus
+import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Modules.PleerViewModel
+import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import yummypets.com.stevia.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
@@ -168,6 +172,28 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         view
     }
 
+    val time = SimpleDateFormat("mm:ss")
+
+    val textViewCurrentTimeMeditation by lazy {
+        val textView = BaseTextView()
+        textView.textColor = Color.WHITE
+        textView.textSize = 11F
+        textView.gravity = Gravity.CENTER
+        textView.typeface = Typeface.DEFAULT
+        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView
+    }
+
+    val textViewLeftTimeMeditation by lazy {
+        val textView = BaseTextView()
+        textView.textColor = Color.WHITE
+        textView.textSize = 11F
+        textView.gravity = Gravity.CENTER
+        textView.typeface = Typeface.DEFAULT
+        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView
+    }
+
     var isPlay = true
     val viewButton by lazy {
         val view = BaseImageView()
@@ -175,11 +201,13 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         view
     }
 
-    val viewExit by lazy {
-        val view = BaseImageView()
-        view.setBackgroundResource(R.drawable.ic_close)
-        view
-    }
+    private var durationDisposable: Disposable
+    private var currentTimeDisposable: Disposable
+    private var meditationPlayingEndDisposable: Disposable
+    var currentTime: Long = 0
+    var isSeekMoving = false
+    private lateinit var timer: Timer
+
 
     init {
 
@@ -202,31 +230,51 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
         toolbar.title = "Прослушивание"
         renderToolbar()
 
-        var isSelected = true
+        durationDisposable = RxBus.listen(RxEvent.EventChangeDuration::class.java).subscribe { event ->
+            Timber.i("event change duration ${event.duration}")
+            setDuration(event.duration)
+            viewModel.model.duration = event.duration
+        }
+
+        meditationPlayingEndDisposable = RxBus.listen(RxEvent.EventMediaPlayerEnd::class.java).subscribe {
+            timer.cancel()
+            viewButton.setBackgroundResource(R.drawable.button_play)
+            isPlay = true
+
+            Timber.i("event player stop")
+            currentTime = 0L
+            setCurrentTime(0L)
+            setDuration(viewModel.model.duration)
+        }
+
+        seekBarMeditation.setOnSeekBarChangeListener(onSeekBarChangeListener())
+
+        currentTimeDisposable = RxBus.listen(RxEvent.EventChangeCurrentTime::class.java).subscribe { event ->
+            Timber.i("event change current time ${event.currentTime}")
+            currentTime = event.currentTime
+            setCurrentTime(event.currentTime)
+
+            val intent = Intent(ACTION_SEEK_TO)
+            intent.setPackage(currentActivity?.packageName)
+            intent.putExtra(receiver, MusicReceiver(Handler()))
+            currentActivity?.startService(intent)
+        }
 
         imageView1.setOnClickListener {
-            OnClickImage(0)
+            onClickImage(0)
         }
         imageView2.setOnClickListener {
-            OnClickImage(1)
+            onClickImage(1)
         }
         imageView3.setOnClickListener {
-            OnClickImage(2)
+            onClickImage(2)
         }
         imageView4.setOnClickListener {
-            OnClickImage(3)
+            onClickImage(3)
         }
 
         viewButton.setOnClickListener {
-            if (isPlay){
-                viewButton.setBackgroundResource(R.drawable.button_stop)
-                currentActivity?.startService(Intent(currentActivity, MusicService::class.java))
-            } else {
-                viewButton.setBackgroundResource(R.drawable.button_play)
-                currentActivity?.stopService(Intent(currentActivity, MusicService::class.java))
-            }
-
-            isPlay = !isPlay
+            onClickButtonPLay()
         }
 
 
@@ -234,8 +282,62 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     }
 
+    private fun onSeekBarChangeListener(): OnSeekBarChangeListener {
+        return object : OnSeekBarChangeListener {
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                Timber.i("Stop Seek")
+                rxData.currentTime = (seekBar.progress / 100.0 * viewModel.model.duration).toLong()
+                isSeekMoving = false
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                isSeekMoving = true
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+                Timber.i("Change Seek $progress")
+
+            }
+        }
+    }
+
+    //on click play\stop button
+    private fun onClickButtonPLay() {
+        if (isPlay){
+            viewButton.setBackgroundResource(R.drawable.button_stop)
+
+            val intent = Intent(ACTION_PLAY)
+            intent.setPackage(currentActivity?.packageName)
+            intent.putExtra(receiver, MusicReceiver(Handler()))
+            currentActivity?.startService(intent)
+
+            timer = Timer()
+            timer.schedule(0, 1000){
+                currentTime += 1000
+                currentActivity?.runOnUiThread {
+                    setCurrentTime(currentTime)
+                    setDuration()
+                }
+            }
+        } else {
+            timer.cancel()
+            viewButton.setBackgroundResource(R.drawable.button_play)
+
+            val intent = Intent(ACTION_STOP)
+            intent.setPackage(currentActivity?.packageName)
+            intent.putExtra(receiver, MusicReceiver(Handler()))
+            currentActivity?.startService(intent)
+//            currentActivity?.stopService(Intent(currentActivity, MusicService::class.java))
+        }
+
+        isPlay = !isPlay
+    }
+
     //add stroke to selected image (background sound)
-    fun OnClickImage(selected: Int) {
+    private fun onClickImage(selected: Int) {
         val imageViews = arrayOf(imageView1, imageView2, imageView3, imageView4)
 
         val selectedColor = Color.parseColor("#8863E6")
@@ -271,6 +373,8 @@ fun PleerView.renderUIO() {
         textViewName,
         textViewDescribe,
         seekBarMeditation,
+        textViewCurrentTimeMeditation,
+        textViewLeftTimeMeditation,
         viewButton
     )
 
@@ -336,6 +440,14 @@ fun PleerView.renderUIO() {
         .fillHorizontally(utils.variable.displayWidth * 55 / 375)
         .constrainTopToBottomOf(textViewSound, utils.variable.displayWidth * 15 / 375)
 
+    textViewLeftTimeMeditation
+        .constrainTopToBottomOf(seekBarMeditation, 8)
+        .constrainRightToRightOf(seekBarMeditation, 8)
+
+    textViewCurrentTimeMeditation
+        .constrainTopToBottomOf(seekBarMeditation, 8)
+        .constrainLeftToLeftOf(seekBarMeditation, 8)
+
     textViewName
         .fillHorizontally(8)
         .constrainBottomToTopOf(textViewDescribe, utils.variable.displayWidth * 8 / 375)
@@ -348,6 +460,10 @@ fun PleerView.renderUIO() {
         .fillHorizontally(8)
         .constrainBottomToTopOf(viewButton, utils.variable.displayWidth * 45 / 375)
 
+    textViewCurrentTimeMeditation.text = time.format(Date(0))
+    textViewLeftTimeMeditation.text = time.format(Date(0))
+
+
     val sizeButton = utils.variable.displayWidth * 85 / 375
     viewButton
         .width(sizeButton)
@@ -356,3 +472,27 @@ fun PleerView.renderUIO() {
         .constrainLeftToLeftOf(innerContent)
         .constrainBottomToBottomOf(innerContent, utils.variable.displayWidth * 45 / 375)
 }
+
+fun PleerView.setDuration() {
+    val left = viewModel.model.duration - currentTime
+    Timber.i("Duration Seek: ${viewModel.model.duration} current time: $currentTime")
+    textViewLeftTimeMeditation.text =
+        if (viewModel.model.duration <= currentTime) time.format(Date(0))
+        else "-${time.format(Date(left))}"
+}
+fun PleerView.setDuration(millisec: Long) {
+    Timber.i("Duration Seek: ${viewModel.model.duration} millisec: $millisec")
+    textViewLeftTimeMeditation.text = time.format(Date(millisec))
+}
+
+fun PleerView.setCurrentTime(millisec: Long) {
+
+    textViewCurrentTimeMeditation.text = time.format(Date(millisec))
+
+    if(!isSeekMoving) {
+        val progress: Int = if (viewModel.model.duration == 0L) 0
+            else ((millisec / 1000).toDouble() / (viewModel.model.duration / 1000).toDouble() * 100).toInt()
+        seekBarMeditation.progress = progress
+    }
+}
+

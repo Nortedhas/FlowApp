@@ -2,7 +2,6 @@ package com.example.ageone.Modules
 
 import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
-import com.example.ageone.Modules.Meditation.MeditationModel
 
 class RegistrationSMSViewModel : InterfaceViewModel {
     var model = RegistrationSMSModel()
