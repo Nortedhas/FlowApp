@@ -10,14 +10,11 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
-import com.example.ageone.External.HTTP.update
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.EntrySMS.rows.EntrySMSTextViewHolder
 import com.example.ageone.Modules.EntrySMS.rows.initialize
 import com.example.ageone.Modules.EntrySMSViewModel
-import com.example.ageone.Modules.RegistrationSMSViewModel
-import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Parser
 import com.example.ageone.SCAG.userData
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder

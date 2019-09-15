@@ -1,16 +1,11 @@
 package com.example.ageone.SCAG
+
 class Enums {
-
-	// MARK: Enum ProductType
-
-	enum class ProductType {
-		From25To45, From7To25, LessThen7
-	}
 
 	// MARK: Enum OrderType
 
 	enum class OrderType {
-		Accepted, Cancelled, Created
+		vipAccess12M, product48H, vipAccess6M, product12M, vipAccess3M, product1M, productSet12M, productSet1M
 	}
 
 	// MARK: Enum UserType
@@ -22,13 +17,13 @@ class Enums {
 	// MARK: Enum AnnounceType
 
 	enum class AnnounceType {
-		Event, Video
+		Video, Event
 	}
 
-	// MARK: Enum PaymentType
+	// MARK: Enum ProductType
 
-	enum class PaymentType {
-		Cash, Card, ApplePay, CardToCourier
+	enum class ProductType {
+		From7To25, From25To45, LessThen7
 	}
 
 	// MARK: Enum DocumentType
@@ -41,6 +36,12 @@ class Enums {
 
 	enum class CategoryType {
 		Flowers, Food
+	}
+
+	// MARK: Enum PaymentType
+
+	enum class PaymentType {
+		Card, ApplePay, Cash, CardToCourier
 	}
 
 }

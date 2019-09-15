@@ -1,6 +1,5 @@
 package com.example.ageone.Modules.Purchases.rows
 
-import android.graphics.Color
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
 import com.example.ageone.Application.utils

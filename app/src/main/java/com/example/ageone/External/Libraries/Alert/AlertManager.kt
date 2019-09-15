@@ -4,17 +4,12 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
-import android.media.Image
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import com.example.ageone.Application.App
 import com.example.ageone.Application.coordinator
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.TextView.BaseTextView
-import timber.log.Timber
 import yummypets.com.stevia.*
 
 val alertManager

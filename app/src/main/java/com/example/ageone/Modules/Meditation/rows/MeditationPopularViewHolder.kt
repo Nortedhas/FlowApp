@@ -6,14 +6,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.SCAG.Product
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
-import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*
 

@@ -2,7 +2,6 @@ package com.example.ageone.Application.Coordinator.Flow.Regular
 
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
-import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
@@ -12,8 +11,6 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Pleer.PleerView
 import com.example.ageone.Modules.PleerModel
 import com.example.ageone.Modules.PleerViewModel
-import com.example.ageone.Modules.PurchasesModel
-import com.example.ageone.Modules.SetsInModel
 
 fun FlowCoordinator.runFlowPleer(previousFlow: BaseFlow) {
 

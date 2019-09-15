@@ -14,6 +14,7 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.list
+import com.example.ageone.External.Libraries.WebView.openUrl
 import com.example.ageone.External.RxBus.RxBus
 import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Modules.Meditation.rows.MeditationPopularViewHolder
@@ -46,6 +47,8 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         }
         layoutManager
     }
+
+//    fun bindUI() after renderUI() обновление
 
     init {
         setBackgroundResource(R.drawable.base_background)
@@ -144,8 +147,15 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
                         } else {
                             alertManager.list(
                                 "Данная медитация является платной, пожалуйста, оплатите доступ",
-                                rxData.payVariants,
-                                rxData.createPayVariantCallback(meditation.hashId, isSet = false)
+                                rxData.payVariants(isSet = false),
+                                rxData.createPayVariantCallback(meditation.hashId, isSet = false) {json ->
+                                    val url = json.optString("formUrl", "")
+                                    if (url.isNotBlank()) {
+                                        viewModel.model.url = url
+                                        rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnPayed.toString())
+                                    }
+
+                                }
                             )
                         }
 

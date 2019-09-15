@@ -4,15 +4,12 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.updatePadding
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.StartLogin.rows.*
-import timber.log.Timber
 import yummypets.com.stevia.*
 
 

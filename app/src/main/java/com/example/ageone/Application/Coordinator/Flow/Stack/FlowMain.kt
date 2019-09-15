@@ -7,17 +7,17 @@ import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
 import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.Stack.flows
 import com.example.ageone.Application.coordinator
+import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.webSocket
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.External.Libraries.WebView.openUrl
+import com.example.ageone.Modules.*
 import com.example.ageone.Modules.Meditation.MeditationModel
 import com.example.ageone.Modules.Meditation.MeditationView
 import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.MeditationFilter.MeditationFilterView
 import com.example.ageone.Modules.MeditationFilterList.MeditationFilterListView
-import com.example.ageone.Modules.MeditationFilterListModel
-import com.example.ageone.Modules.MeditationFilterListViewModel
-import com.example.ageone.Modules.MeditationFilterModel
-import com.example.ageone.Modules.MeditationFilterViewModel
 import timber.log.Timber
 
 fun FlowCoordinator.runFlowMain() {
@@ -52,6 +52,7 @@ class FlowMain: BaseFlow() {
     }
 
     inner class FlowMainModels {
+        var modelWebView = WebViewModel()
         var modelMeditation = MeditationModel()
         var modelMeditationFilter = MeditationFilterModel()
         var modelMeditationFilterList = MeditationFilterListModel()
@@ -75,6 +76,9 @@ class FlowMain: BaseFlow() {
                 }
                 MeditationViewModel.EventType.OnMeditationPressed -> {
                     coordinator.runFlowPleer(this)
+                }
+                MeditationViewModel.EventType.OnPayed -> {
+                    runModuleWebView(models.modelMeditation.url)
                 }
             }
         }
@@ -100,6 +104,28 @@ class FlowMain: BaseFlow() {
                 }
             }
         }
+        push(module)
+    }
+
+
+    fun runModuleWebView(url: String) {
+        val module = WebView(InitModuleUI(
+            isBottomNavigationVisible = false,
+            isBackPressed = true,
+            backListener = {
+                pop()
+            }
+        ), url)
+
+        settingsCurrentFlow.isBottomNavigationVisible = false
+
+        webSocket.socket.on("orderCheck") {message ->
+            Timber.i("Pay succes!")
+            currentActivity?.runOnUiThread {
+                pop()
+            }
+        }
+
         push(module)
     }
 

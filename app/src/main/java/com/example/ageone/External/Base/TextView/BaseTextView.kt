@@ -3,9 +3,7 @@ package com.example.ageone.External.Base.TextView
 import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.text.InputFilter
-import android.widget.EditText
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet
 import com.example.ageone.Application.currentActivity
 
 class BaseTextView(): TextView(currentActivity) {

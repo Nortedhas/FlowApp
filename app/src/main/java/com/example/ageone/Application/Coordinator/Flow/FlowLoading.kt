@@ -5,7 +5,6 @@ import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipp
 import com.example.ageone.Application.Coordinator.Router.DataFlow
 import com.example.ageone.Application.Coordinator.Router.TabBar.TabBar
 import com.example.ageone.Application.Coordinator.Router.createStackFlows
-import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.InitModuleUI
@@ -16,8 +15,7 @@ import timber.log.Timber
 
 fun FlowCoordinator.runFlowLoading() {
 
-    var flow: FlowLoading? =
-        FlowLoading()
+    var flow: FlowLoading? = FlowLoading()
 
     flow?.let{ flow ->
 

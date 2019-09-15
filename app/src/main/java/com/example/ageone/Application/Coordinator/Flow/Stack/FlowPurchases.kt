@@ -12,7 +12,6 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.PurchasesView
 import com.example.ageone.Modules.PurchasesModel
 import com.example.ageone.Modules.PurchasesViewModel
-import com.example.ageone.Modules.Sets.SetsModel
 import com.example.ageone.Modules.SetsIn.SetsInView
 import com.example.ageone.Modules.SetsInModel
 import com.example.ageone.Modules.SetsInViewModel

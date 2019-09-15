@@ -9,24 +9,26 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-            android:name=".App"
+            android:name="com.example.ageone.Application.App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-        <service android:name=".DownloadService"/>
-        <service android:name=".MusicService">
+        <service android:name="com.example.ageone.Application.DownloadService"/>
+        <service android:name="com.example.ageone.Application.MusicService">
             <intent-filter>
                 <action android:name="com.example.ageone.intent.action.PLAY" />
                 <action android:name="com.example.ageone.intent.action.STOP" />
                 <action android:name="com.example.ageone.intent.action.SEEK_TO" />
+                <action android:name="com.example.ageone.intent.action.VOLUME" />
+                <action android:name="com.example.ageone.intent.action.CHANGE_SOUND" />
             </intent-filter>
         </service>
 
         <activity
-                android:name=".AppActivity"
+                android:name="com.example.ageone.Application.AppActivity"
                 android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +37,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.example.ageone.Application.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

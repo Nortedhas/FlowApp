@@ -1,5 +1,6 @@
-package com.example.ageone.SCAG
 // MARK: DataBase
+
+package com.example.ageone.SCAG
 
 import com.example.ageone.Application.utils
 
@@ -10,11 +11,6 @@ enum class DataBase {
 	companion object DataObjects {
 		var url: String = "http://45.141.102.83"
 		val headers
-			get() = mapOf("x-access-token" to utils.variable.token)
+				get() = mutableMapOf("x-access-token" to utils.variable.token)
 	}
-}
-
-fun Order.hasMeditation(meditation: Product): Boolean {
-	//TODO
-	return false
 }

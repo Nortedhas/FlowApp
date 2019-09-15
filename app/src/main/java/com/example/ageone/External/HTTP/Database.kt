@@ -3,7 +3,6 @@ package com.example.ageone.External.HTTP
 import com.example.ageone.Application.api
 import com.example.ageone.External.HTTP.API.Routes
 import com.example.ageone.SCAG.DataBase
-import com.example.ageone.SCAG.Parser
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.jsonBody
 import org.json.JSONObject
@@ -17,7 +16,7 @@ fun DataBase.request(params: Map<String, Any>, completion: (JSONObject) -> (Unit
         .responseString { request, response, result ->
             result.fold({ result ->
                 val jsonObject = JSONObject(result)
-                Timber.i("Update\nRequest:\n $request Response:\n $response Result:\n $result")
+                Timber.i("API Update:\n $request \n $response")
 
                 val error = jsonObject.optString("error", "")
                 if (error != "") {

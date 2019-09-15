@@ -13,7 +13,6 @@ import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.SetsFilterList.rows.SetsFilterListTitleViewHolder
 import com.example.ageone.Modules.SetsFilterList.rows.initialize
 import com.example.ageone.Modules.SetsFilterListViewModel
-import com.example.ageone.Modules.SetsFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
 import yummypets.com.stevia.*

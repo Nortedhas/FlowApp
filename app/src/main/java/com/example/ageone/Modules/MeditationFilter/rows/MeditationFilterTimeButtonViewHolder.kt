@@ -1,15 +1,10 @@
 package com.example.ageone.Modules.MeditationFilter.rows
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.RadioGroup
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.RadioButton.BaseRadioButton

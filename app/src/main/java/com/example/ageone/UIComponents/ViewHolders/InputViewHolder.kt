@@ -1,12 +1,9 @@
 package com.example.ageone.UIComponents.ViewHolders
 
 import android.graphics.Color
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateMargins
-import androidx.core.view.updatePadding
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextInputLayout.BaseTextInputLayout
 import com.example.ageone.External.Base.TextInputLayout.InputEditTextType

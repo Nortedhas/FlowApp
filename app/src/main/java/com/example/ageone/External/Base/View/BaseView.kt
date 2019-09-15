@@ -1,8 +1,6 @@
 package com.example.ageone.External.Base.View
 
 import android.graphics.drawable.GradientDrawable
-import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.currentActivity
 

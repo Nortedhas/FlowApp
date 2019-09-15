@@ -1,18 +1,13 @@
 package com.example.ageone.External.Base.Toolbar
 
 import android.graphics.Color
-import android.graphics.Typeface
-import android.view.Gravity
 import android.view.View
 import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setPadding
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.router
-import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
-import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
 import yummypets.com.stevia.*
 

@@ -27,7 +27,7 @@ fun FlowCoordinator.runFlowProfile() {
     }
 
     flow?.onFinish = {
-        FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow.removeView(flow?.viewFlipperModule)
+        viewFlipperFlow.removeView(flow?.viewFlipperModule)
         flow?.viewFlipperModule?.removeAllViews()
         flow = null
     }

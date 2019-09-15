@@ -20,8 +20,6 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.RecyclerView.CirclePagerIndicatorDecoration
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.InitModuleUI
-import com.example.ageone.Models.User.user
-import timber.log.Timber
 import yummypets.com.stevia.*
 import java.util.*
 import kotlin.concurrent.schedule
@@ -66,6 +64,9 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         button
     }
 
+    val timerFirst = Timer()
+    val timerSecond = Timer()
+
     init {
         setBackgroundColor(Color.TRANSPARENT)
 
@@ -78,16 +79,18 @@ class StartView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initMod
         snapHelper.attachToRecyclerView(bodyTable)
 
         buttonEnter.setOnClickListener {
+            timerFirst.cancel()
+            timerSecond.cancel()
             emitEvent?.invoke(StartViewModel.EventType.OnLoaded.toString())
         }
 
         renderUIO()
-        Timer().schedule(5000){
+        timerFirst.schedule(5000){
             if ((bodyTable.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0) {
                 bodyTable.smoothScrollToPosition(1)
             }
         }
-        Timer().schedule(10000){
+        timerSecond.schedule(10000){
             if ((bodyTable.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 1) {
                 bodyTable.smoothScrollToPosition(2)
             }

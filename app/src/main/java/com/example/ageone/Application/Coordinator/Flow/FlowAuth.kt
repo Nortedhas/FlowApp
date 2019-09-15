@@ -27,8 +27,7 @@ import com.vk.api.sdk.auth.VKScope
 
 fun FlowCoordinator.runFlowAuth() {
 
-    var flow: FlowAuth? =
-        FlowAuth()
+    var flow: FlowAuth? = FlowAuth()
 
     flow?.let{ flow ->
 

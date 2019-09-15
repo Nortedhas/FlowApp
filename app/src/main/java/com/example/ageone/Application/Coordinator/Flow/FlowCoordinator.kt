@@ -16,10 +16,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.ViewFlipper.BaseViewFlipper
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
-import timber.log.Timber
 import yummypets.com.stevia.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 var isBottomNavigationExist = true
 
@@ -28,6 +25,16 @@ class FlowCoordinator {
 
         router.initialize()
         renderUI()
+        /*viewFlipperFlow = BaseViewFlipper()
+
+        router.layout.removeAllViews()
+        router.layout.subviews(
+            viewFlipperFlow
+        )
+
+        viewFlipperFlow
+            .fillVertically()
+            .fillHorizontally()*/
 
         val launch = BaseModule(InitModuleUI(colorToolbar = Color.TRANSPARENT))
         launch.setBackgroundColor(Color.TRANSPARENT)
@@ -42,10 +49,9 @@ class FlowCoordinator {
     }
 
     fun start() {
-        while(viewFlipperFlow.childCount > 0) {
-            viewFlipperFlow.removeViewAt(0)
-        }
-
+//        viewFlipperFlow = BaseViewFlipper()
+//        renderUI()
+        viewFlipperFlow.removeAllViews()
         when (LaunchInstructor.configure()) {
             LaunchInstructor.Main -> {
                 runFlowLoading()
@@ -57,6 +63,7 @@ class FlowCoordinator {
     }
 
     private fun renderUI() {
+//        viewFlipperFlow = BaseViewFlipper()
 
         router.layout.removeAllViews()
         router.layout.subviews(
@@ -76,6 +83,7 @@ class FlowCoordinator {
             .fillVertically()
             .fillHorizontally()
 
+        blockConstraint.removeAllViews()
         blockConstraint.subviews(
             circularProgress
         )
@@ -100,7 +108,7 @@ class FlowCoordinator {
     object ViewFlipperFlowObject{
         var currentFlow: BaseFlow? = null
 
-        val viewFlipperFlow by lazy {
+        val viewFlipperFlow: BaseViewFlipper by lazy {
             val flipper = BaseViewFlipper()
             flipper
         }

@@ -1,7 +1,6 @@
 package com.example.ageone.Modules.SetsFilter.rows
 
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.utils

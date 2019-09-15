@@ -247,7 +247,8 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
             setDuration(viewModel.model.duration)
         }
 
-        seekBarMeditation.setOnSeekBarChangeListener(onSeekBarChangeListener())
+        seekBarMeditation.setOnSeekBarChangeListener(onSeekBarMeditationChangeListener())
+        seekBarSound.setOnSeekBarChangeListener(onSeekBarBackgroundSoundChangeListener())
 
         currentTimeDisposable = RxBus.listen(RxEvent.EventChangeCurrentTime::class.java).subscribe { event ->
             Timber.i("event change current time ${event.currentTime}")
@@ -273,6 +274,8 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
             onClickImage(3)
         }
 
+        onClickImage(rxData.currentBackground)
+
         viewButton.setOnClickListener {
             onClickButtonPLay()
         }
@@ -282,7 +285,7 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     }
 
-    private fun onSeekBarChangeListener(): OnSeekBarChangeListener {
+    private fun onSeekBarMeditationChangeListener(): OnSeekBarChangeListener {
         return object : OnSeekBarChangeListener {
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -300,6 +303,23 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
                 Timber.i("Change Seek $progress")
 
+            }
+        }
+    }
+
+    private fun onSeekBarBackgroundSoundChangeListener(): OnSeekBarChangeListener {
+        return object : OnSeekBarChangeListener {
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                Timber.i("Stop Seek")
+                rxData.volumeBackground = seekBar.progress / 100F
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             }
         }
     }
@@ -338,6 +358,7 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     //add stroke to selected image (background sound)
     private fun onClickImage(selected: Int) {
+        rxData.currentBackground = selected
         val imageViews = arrayOf(imageView1, imageView2, imageView3, imageView4)
 
         val selectedColor = Color.parseColor("#8863E6")

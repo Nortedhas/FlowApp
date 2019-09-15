@@ -1,6 +1,5 @@
 package com.example.ageone.External.Libraries.Glide
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -14,9 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.ViewTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
-import com.example.ageone.External.Base.ImageView.BaseImageView
 import io.github.armcha.coloredshadow.ShadowImageView
 import yummypets.com.stevia.dp
 

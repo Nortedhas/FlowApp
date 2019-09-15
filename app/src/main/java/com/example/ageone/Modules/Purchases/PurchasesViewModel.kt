@@ -3,12 +3,7 @@ package com.example.ageone.Modules
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
-import com.example.ageone.External.RxBus.RxBus
-import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.SCAG.Order
-import com.example.ageone.SCAG.Product
-import com.example.ageone.SCAG.ProductSet
-import timber.log.Timber
 
 class PurchasesViewModel : InterfaceViewModel {
     var model = PurchasesModel()

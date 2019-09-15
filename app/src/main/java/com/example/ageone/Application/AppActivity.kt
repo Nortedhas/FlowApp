@@ -31,10 +31,8 @@ import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
 import timber.log.Timber
 import android.content.pm.PackageManager
-import android.Manifest.permission
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import androidx.core.app.ActivityCompat
+import com.vk.api.sdk.utils.VKUtils
 
 
 class AppActivity: BaseActivity() {
@@ -59,6 +57,8 @@ class AppActivity: BaseActivity() {
         FuelManager.instance.basePath = DataBase.url
 
         verifyStoragePermissions(this)
+        val fingerprints = VKUtils.getCertificateFingerprint(this, this.packageName)
+        Timber.i("PACKAGE: ${fingerprints?.toList()}")
 
         //TODO just do this
         coordinator.setLaunchScreen()

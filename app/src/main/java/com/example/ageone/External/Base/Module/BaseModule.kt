@@ -4,7 +4,6 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.hideKeyboard
 import com.example.ageone.Application.utils

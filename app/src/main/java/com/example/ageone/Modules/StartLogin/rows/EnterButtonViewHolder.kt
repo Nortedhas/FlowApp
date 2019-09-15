@@ -2,7 +2,6 @@ package com.example.ageone.Modules.StartLogin.rows
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R

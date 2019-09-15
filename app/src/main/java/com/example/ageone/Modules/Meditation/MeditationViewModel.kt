@@ -15,7 +15,8 @@ class MeditationViewModel: InterfaceViewModel {
     enum class EventType{
         OnEnterPressed,
         OnSearchPressed,
-        OnMeditationPressed
+        OnMeditationPressed,
+        OnPayed
 
     }
 
@@ -46,5 +47,5 @@ class MeditationViewModel: InterfaceViewModel {
 }
 
 class MeditationModel: InterfaceModel {
-
+    var url = ""
 }

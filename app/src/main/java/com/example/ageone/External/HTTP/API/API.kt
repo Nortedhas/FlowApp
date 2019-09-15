@@ -9,14 +9,10 @@ import com.example.ageone.SCAG.userData
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.jsonBody
 import com.swarmnyc.promisekt.Promise
-import kotlinx.coroutines.runBlocking
 import net.alexandroid.shpref.ShPref
-import nl.komponents.kovenant.async
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class API {
     var cashTime: Int
@@ -31,10 +27,11 @@ class API {
                 "deviceId" to uuid
             )).toString())
             .responseString { request, response, result ->
-                Timber.i("Handshake: $request $response")
+                Timber.i("API Handshake: $request $response")
 
                 val jsonObject = JSONObject(result.get())
                 utils.variable.token = jsonObject.optString("Token")
+                Timber.i("API new token: ${utils.variable.token}")
                 cashTime = Date().time.toInt()
                 parser.userData(jsonObject)
                 completion.invoke()
@@ -49,7 +46,7 @@ class API {
             .responseString { request, response, result ->
                 result.fold({ result ->
                     val jsonObject = JSONObject(result)
-                    Timber.i("Request:\n $request Response:\n $response Result:\n $result")
+                    Timber.i("API request:\n $request \n $response")
 
                     val error = jsonObject.optString("error", "")
                     if (error != "") {
@@ -81,30 +78,28 @@ class API {
         return Promise { resolve, _ ->
             //TODO change cashtime
             api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) { jsonObject ->
-                Timber.i("Object: $jsonObject")
-
                 for (type in DataBase.values()) {
                     parser.parseAnyObject(jsonObject, type)
                 }
-                Timber.i("Parsing end")
-                Timber.i("Audio: ${utils.realm.audio.getAllObjects()}")
                 completion.invoke()
             }
 
         }
     }
 
-    fun createOrder(productSetHashId: String, productHashId: String) {
+    fun createOrder(productSetHashId: String, productHashId: String, orderType: Enums.OrderType,
+                    completion: (JSONObject) -> Unit) {
         api.request(
             mapOf(
                 "router" to "createOrder",
-                "orderType" to Enums.OrderType.Created,
+                "orderType" to orderType,
                 "productSetHashId" to productSetHashId,
                 "productHashId" to productHashId
 
             )
         ) { jsonObject ->
-            Timber.i("Object order: $jsonObject")
+//            Timber.i("Object order: $jsonObject")
+            completion.invoke(jsonObject)
         }
     }
 }

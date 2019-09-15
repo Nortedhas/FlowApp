@@ -2,11 +2,9 @@ package com.example.ageone.External.Base.TextInputLayout
 
 import android.content.res.ColorStateList
 import android.text.Editable
-import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
-import android.widget.EditText
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.EditText.limitLength

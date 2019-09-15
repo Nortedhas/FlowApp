@@ -1,17 +1,34 @@
 package com.example.ageone.Network.Socket
 
 import com.example.ageone.Application.utils
+import com.example.ageone.Models.User.user
 import com.example.ageone.SCAG.DataBase
 import io.socket.client.IO
 import io.socket.client.Manager
 import io.socket.client.Socket
 import io.socket.engineio.client.Transport
+import org.json.JSONObject
 import timber.log.Timber
+import java.net.URISyntaxException
 
 class WebSocket {
+
+    lateinit var socket: Socket
+
+    fun initialize() {
+        try {
+            socket = IO.socket("${DataBase.url}:80")
+            socket.connect()
+            val body = JSONObject()
+            body.put("token", utils.variable.token)
+            socket.emit("registration", body)
+        } catch (e: Exception) {
+            Timber.e("Socket connect error: ${e.message}")
+        }
+    }
+
     fun connect() {
-        val socket = IO.socket("${DataBase.url}:80"
-        )
+
 
         socket.io().on(Manager.EVENT_TRANSPORT) { args ->
             val transport = args[0] as Transport
@@ -28,15 +45,20 @@ class WebSocket {
                 // access response headers
                 val cookie = headers["Set-Cookie"]?.get(0)
             }
+
         }
+
+        socket.connect()
+            .on("orderCheck") {
+                Timber.i("Socket Order check")
+            }
 
         socket.connect()
             .on(Socket.EVENT_CONNECT) {
                 Timber.i("connected")
-                Timber.i("set message")
-                socket.emit("registration", "hi")
             }
             .on(Socket.EVENT_DISCONNECT) { println("disconnected") }
+
 
     }
 }

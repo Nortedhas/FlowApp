@@ -10,5 +10,5 @@ class Utils {
     val variable = Variable
     var isNetworkReachable = false
     var realm = RealmUtilities
-    val config = ConfigDefault()
+    val config = ConfigDefault
 }

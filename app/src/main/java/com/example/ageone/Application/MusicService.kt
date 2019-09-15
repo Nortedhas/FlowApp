@@ -22,38 +22,59 @@ const val receiver = "receiver"
 val ACTION_PLAY = "com.example.ageone.intent.action.PLAY"
 val ACTION_STOP = "com.example.ageone.intent.action.STOP"
 val ACTION_SEEK_TO = "com.example.ageone.intent.action.SEEK_TO"
+val ACTION_VOLUME = "com.example.ageone.intent.action.VOLUME"
+val ACTION_CHANGE_SOUND = "com.example.ageone.intent.action.CHANGE_SOUND"
 
 class MusicService : Service() {
 
-    private var myPlayer: MediaPlayer? = null
+    private var mainPlayer: MediaPlayer? = null
+    private var backgroundPlayer: MediaPlayer? = null
+
+    private var backgroundSounds = arrayOf(
+        R.raw.background_sound1,
+        R.raw.background_sound2,
+        R.raw.background_sound3,
+        R.raw.background_sound4
+    )
 
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
 
-
     override fun onCreate() {
         Timber.i("service on create")
-        myPlayer = MediaPlayer.create(this, rxData.currentMeditation?.audio?.path()?.toUri())
-        myPlayer?.setOnCompletionListener { player ->
+        mainPlayer = MediaPlayer.create(this, rxData.currentMeditation?.audio?.path()?.toUri())
+        mainPlayer?.setOnCompletionListener { player ->
             player.seekTo(0)
             rxData.isMeditationEnd = true
         }
 
+        //todo: relocated uri rxData.currentBackground
+        backgroundPlayer = MediaPlayer.create(currentActivity, backgroundSounds[rxData.currentBackground])
+        backgroundPlayer?.isLooping = true
+        backgroundPlayer?.setVolume(rxData.volumeBackground, rxData.volumeBackground)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        myPlayer?.let { player ->
-            when (intent.action) {
-                ACTION_PLAY -> {
-                    player.start()
-                }
-                ACTION_STOP -> {
-                    player.pause()
-                }
-                ACTION_SEEK_TO -> {
-                    player.seekTo(rxData.currentTime.toInt())
-                }
+        when (intent.action) {
+            ACTION_PLAY -> {
+                mainPlayer?.start()
+                backgroundPlayer?.start()
+            }
+            ACTION_STOP -> {
+                mainPlayer?.pause()
+//                backgroundPlayer?.pause()
+            }
+            ACTION_SEEK_TO -> {
+                mainPlayer?.seekTo(rxData.currentTime.toInt())
+            }
+            ACTION_VOLUME -> {
+                backgroundPlayer?.setVolume(rxData.volumeBackground, rxData.volumeBackground)
+            }
+            ACTION_CHANGE_SOUND -> {
+                //todo: relocated uri rxData.currentBackground
+                backgroundPlayer?.setDataSource(currentActivity,
+                    Uri.parse("android.resource://com.example.ageone/${backgroundSounds[rxData.currentBackground]}"))
             }
         }
 
@@ -61,7 +82,8 @@ class MusicService : Service() {
     }
 
     override fun onDestroy() {
-        myPlayer?.stop()
+        mainPlayer?.stop()
+        backgroundPlayer?.stop()
     }
 }
 

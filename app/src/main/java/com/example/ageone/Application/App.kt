@@ -9,12 +9,12 @@ import com.example.ageone.External.Extensions.Application.FTActivityLifecycleCal
 import com.example.ageone.External.HTTP.API.API
 import com.example.ageone.Internal.Utilities.Utils
 import com.example.ageone.Models.RxData
-import com.example.ageone.Models.User.user
 import com.example.ageone.Network.Socket.WebSocket
 import com.example.ageone.SCAG.DataBase
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.vk.api.sdk.VK
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -28,7 +28,7 @@ val utils = Utils()
 val api = API()
 val database = DataBase
 val rxData = RxData()
-val socket = WebSocket()
+var webSocket = WebSocket()
 
 val currentActivity: BaseActivity?
     get() = App.instance?.mFTActivityLifecycleCallbacks?.currentActivity as BaseActivity
@@ -68,6 +68,8 @@ class App: Application()  {
             }
 
         Realm.init(this)
+
+        VK.initialize(this)
 
         registerActivityLifecycleCallbacks(mFTActivityLifecycleCallbacks)
     }

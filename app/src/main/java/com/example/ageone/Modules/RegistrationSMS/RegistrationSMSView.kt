@@ -4,10 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
-import com.example.ageone.Application.AppActivity
 import com.example.ageone.Application.R
 import com.example.ageone.Application.api
-import com.example.ageone.Application.currentActivity
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
@@ -15,14 +13,11 @@ import com.example.ageone.External.Base.TextInputLayout.InputEditTextType
 import com.example.ageone.External.HTTP.update
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Models.User.user
-import com.example.ageone.Modules.Meditation.MeditationViewModel
 import com.example.ageone.Modules.RegistrationSMS.rows.RegistrationSMSTextViewHolder
 import com.example.ageone.Modules.RegistrationSMS.rows.initialize
-import com.example.ageone.Modules.RegistrationSMSModel
 import com.example.ageone.Modules.RegistrationSMSViewModel
 import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Parser
-import com.example.ageone.SCAG.User
 import com.example.ageone.SCAG.userData
 import com.example.ageone.UIComponents.ViewHolders.ButtonViewHolder
 import com.example.ageone.UIComponents.ViewHolders.InputViewHolder
