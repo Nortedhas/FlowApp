@@ -45,7 +45,6 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
         bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
-
     }
 
     inner class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
@@ -129,7 +128,8 @@ class RegistrationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(
                         } else {
                             api.request(mapOf(
                                 "router" to "phoneAuth",
-                                "phone" to viewModel.model.inputPhone)){
+                                "phone" to viewModel.model.inputPhone),
+                                isErrorShown = true){
                                 rootModule.emitEvent?.invoke(RegistrationViewModel.EventType.OnRegistrationPressed.toString())
                             }
 

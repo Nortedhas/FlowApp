@@ -1,7 +1,12 @@
 package com.example.ageone.External.HTTP.API
 
+import android.provider.Settings
 import com.example.ageone.Application.api
+import com.example.ageone.Application.currentActivity
 import com.example.ageone.Application.utils
+import com.example.ageone.External.Libraries.Alert.alertManager
+import com.example.ageone.External.Libraries.Alert.blockUI
+import com.example.ageone.External.Libraries.Alert.single
 import com.example.ageone.SCAG.DataBase
 import com.example.ageone.SCAG.Enums
 import com.example.ageone.SCAG.Parser
@@ -24,7 +29,7 @@ class API {
     fun handshake(completion: () -> Unit){
         Fuel.post(Routes.Handshake.path)
             .jsonBody(createBody(mapOf(
-                "deviceId" to uuid
+                "deviceId" to Settings.Secure.getString(currentActivity?.contentResolver, Settings.Secure.ANDROID_ID)
             )).toString())
             .responseString { request, response, result ->
                 Timber.i("API Handshake: $request $response")
@@ -38,7 +43,7 @@ class API {
             }
     }
 
-    fun request(params: Map<String, Any>, completion: (JSONObject) -> (Unit)) {
+    fun request(params: Map<String, Any>, isErrorShown: Boolean = false, completion: (JSONObject) -> (Unit)) {
 
         Fuel.post(Routes.Api.path)
             .jsonBody(createBody(params).toString())
@@ -49,8 +54,11 @@ class API {
                     Timber.i("API request:\n $request \n $response")
 
                     val error = jsonObject.optString("error", "")
-                    if (error != "") {
+                    if (error.isNotEmpty()) {
                         Timber.e("$error")
+                        if (isErrorShown) {
+                            alertManager.single("Ошибка", "$error")
+                        }
                     } else {
                         completion.invoke(jsonObject)
                     }
@@ -76,11 +84,12 @@ class API {
 
     fun requestMainLoad(completion: () -> Unit): Promise<Unit> {
         return Promise { resolve, _ ->
-            //TODO change cashtime
-            api.request(mapOf("router" to "mainLoad", "cashTime" to 0)) { jsonObject ->
+            //TODO change cashtime как отловить первый заход?
+            api.request(mapOf("router" to "mainLoad", "cashTime" to api.cashTime)) { jsonObject ->
                 for (type in DataBase.values()) {
                     parser.parseAnyObject(jsonObject, type)
                 }
+                api.cashTime = (System.currentTimeMillis() / 1000).toInt()
                 completion.invoke()
             }
 
@@ -89,6 +98,7 @@ class API {
 
     fun createOrder(productSetHashId: String, productHashId: String, orderType: Enums.OrderType,
                     completion: (JSONObject) -> Unit) {
+        alertManager.blockUI(true)
         api.request(
             mapOf(
                 "router" to "createOrder",
@@ -100,6 +110,7 @@ class API {
         ) { jsonObject ->
 //            Timber.i("Object order: $jsonObject")
             completion.invoke(jsonObject)
+            alertManager.blockUI(false)
         }
     }
 }
@@ -110,5 +121,3 @@ enum class Routes(val path: String) {
     Database("/database"),
     Api("/api");
 }
-
-val uuid = UUID.randomUUID().toString()

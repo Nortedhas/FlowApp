@@ -24,19 +24,7 @@ class MeditationFilterGoalViewHolder(val constraintLayout: ConstraintLayout): Ba
     }
 
     init {
-        buttonGoal.setOnClickListener {
-            if (buttonGoal.borderWidth != null) {
-                buttonGoal.borderWidth = null
-                buttonGoal.backgroundColor = Color.WHITE
-                buttonGoal.textColor = Color.rgb(0x70, 0x7A, 0xBA)
-                buttonGoal.initialize()
-            } else {
-                buttonGoal.borderWidth = 2.dp
-                buttonGoal.backgroundColor = Color.TRANSPARENT
-                buttonGoal.textColor = Color.WHITE
-                buttonGoal.initialize()
-            }
-        }
+
         renderUI()
     }
 }
@@ -53,6 +41,17 @@ fun MeditationFilterGoalViewHolder.renderUI() {
         .width((utils.variable.displayWidth - 48) / 2)
 }
 
-fun MeditationFilterGoalViewHolder.initialize(text: String) {
+fun MeditationFilterGoalViewHolder.initialize(text: String, isSet: Boolean) {
     buttonGoal.text = text
+    if (isSet) {
+        buttonGoal.borderWidth = null
+        buttonGoal.backgroundColor = Color.WHITE
+        buttonGoal.textColor = Color.rgb(0x70, 0x7A, 0xBA)
+        buttonGoal.initialize()
+    } else {
+        buttonGoal.borderWidth = 2.dp
+        buttonGoal.backgroundColor = Color.TRANSPARENT
+        buttonGoal.textColor = Color.WHITE
+        buttonGoal.initialize()
+    }
 }

@@ -15,6 +15,8 @@ class RxData {
     fun isVip() : Boolean =
         vipAccessTo > (System.currentTimeMillis() / 1000)
 
+
+    //TODO parse user ?.let
     fun payVariants(isSet: Boolean) =
         if (isSet)
             arrayOf(//TODO get prices
@@ -90,5 +92,9 @@ class RxData {
 
     var volumeBackground: Float = 0F
     var currentBackground: Int = 0
+
+    // MARK: meditation filter
+
+    var durationSearch = Enums.ProductType.lessThen7.name
 }
 

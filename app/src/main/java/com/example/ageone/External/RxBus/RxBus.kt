@@ -21,5 +21,17 @@ class RxEvent {
     data class EventAddMeditation(val meditationName: String)
     data class EventChangeDuration(val duration: Long)
     data class EventChangeCurrentTime(val currentTime: Long)
-    class EventMediaPlayerEnd()
+    class EventMediaPlayerEnd
+
+    class EventReloadAnnounce
+    class EventReloadAudio
+    class EventReloadChackra
+    class EventReloadDocument
+    class EventReloadImage
+    class EventReloadOrder
+    class EventReloadProduct
+    class EventReloadProductSet
+    class EventReloadPurpose
+    class EventReloadRune
+    class EventReloadUser
 }

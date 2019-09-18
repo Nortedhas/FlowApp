@@ -3,11 +3,16 @@ package com.example.ageone.Modules.Pleer
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Handler
 import android.view.Gravity
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.annotation.Nullable
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.example.ageone.Application.*
 import com.example.ageone.Application.R
 import com.example.ageone.External.Base.ImageView.BaseImageView
@@ -211,21 +216,33 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
     init {
 
-        setBackgroundResource(R.drawable.back_pleer)
+        val placeholderImage = GradientDrawable()
+        placeholderImage.setColor(Color.GRAY)
 
-        /*Glide.with(this)
+        background = placeholderImage
+
+        Glide.with(this)
             .load(rxData.currentMeditation?.image?.original ?: R.drawable.back_pleer)
+            .fitCenter()
+            .placeholder(placeholderImage)
             .into(object : CustomTarget<Drawable>() {
                 override fun onResourceReady(
                     resource: Drawable,
                     transition: com.bumptech.glide.request.transition.Transition<in Drawable>?
                 ) {
-                    background = resource
+                    val drawable = GradientDrawable()
+                    drawable.setColor(Color.argb(180, 0,0,0))
+                    background = LayerDrawable(
+                        arrayOf(
+                            resource,
+                            drawable
+                        )
+                    )
                 }
 
                 override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
 
-            })*/
+            })
 
         toolbar.title = "Прослушивание"
         renderToolbar()
@@ -280,7 +297,6 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
             onClickButtonPLay()
         }
 
-
         renderUIO()
 
     }
@@ -313,6 +329,10 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Timber.i("Stop Seek")
                 rxData.volumeBackground = seekBar.progress / 100F
+                val intent = Intent(ACTION_VOLUME)
+                intent.setPackage(currentActivity?.packageName)
+                intent.putExtra(receiver, MusicReceiver(Handler()))
+                currentActivity?.startService(intent)
 
             }
 
@@ -359,6 +379,11 @@ class PleerView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
     //add stroke to selected image (background sound)
     private fun onClickImage(selected: Int) {
         rxData.currentBackground = selected
+        val intent = Intent(ACTION_CHANGE_SOUND)
+        intent.setPackage(currentActivity?.packageName)
+        intent.putExtra(receiver, MusicReceiver(Handler()))
+        currentActivity?.startService(intent)
+
         val imageViews = arrayOf(imageView1, imageView2, imageView3, imageView4)
 
         val selectedColor = Color.parseColor("#8863E6")

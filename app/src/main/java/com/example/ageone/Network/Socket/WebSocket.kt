@@ -1,8 +1,13 @@
 package com.example.ageone.Network.Socket
 
-import com.example.ageone.Application.utils
+import androidx.core.view.children
+import com.example.ageone.Application.*
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
+import com.example.ageone.External.Libraries.Alert.alertManager
+import com.example.ageone.External.Libraries.Alert.single
 import com.example.ageone.Models.User.user
 import com.example.ageone.SCAG.DataBase
+import io.realm.internal.sync.BaseModule
 import io.socket.client.IO
 import io.socket.client.Manager
 import io.socket.client.Socket
@@ -22,10 +27,27 @@ class WebSocket {
             val body = JSONObject()
             body.put("token", utils.variable.token)
             socket.emit("registration", body)
+
+            subscribeOrderCheck()
         } catch (e: Exception) {
             Timber.e("Socket connect error: ${e.message}")
         }
     }
+
+    private fun subscribeOrderCheck() {
+        webSocket.socket.on("orderCheck") { message ->
+            Timber.i("Pay succes!")
+            currentActivity?.runOnUiThread {
+                router.onBackPressed()
+                alertManager.single("Поздравляем!", "Оплата прошла успешно, для доступа к покупке перейдите на соотвествующий экран")
+
+                api.handshake {  }
+                api.requestMainLoad {  }
+            }
+
+        }
+    }
+
 
     fun connect() {
 

@@ -11,11 +11,9 @@ import yummypets.com.stevia.*
 class TitleViewHolder(val constraintLayout: ConstraintLayout): BaseViewHolder(constraintLayout) {
     val textViewTitle by lazy {
         val textView = BaseTextView()
-
         textView.gravity = Gravity.START
         textView.typeface = Typeface.DEFAULT_BOLD
         textView.setBackgroundColor(Color.TRANSPARENT)
-
         textView
     }
 

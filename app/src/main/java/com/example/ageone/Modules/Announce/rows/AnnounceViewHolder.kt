@@ -3,6 +3,7 @@ package com.example.ageone.Modules.Announce.rows
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.R
 import com.example.ageone.Application.utils
@@ -10,7 +11,13 @@ import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.Base.TextView.BaseTextView
 import com.example.ageone.External.Libraries.Glide.addImageFromGlide
+import com.example.ageone.SCAG.Announce
+import com.example.ageone.SCAG.Enums
 import yummypets.com.stevia.*
+import android.content.Intent
+import android.net.Uri
+import com.example.ageone.Application.currentActivity
+
 
 class AnnounceViewHolder(val constraintLayout: ConstraintLayout) : BaseViewHolder(constraintLayout) {
 
@@ -116,16 +123,20 @@ fun AnnounceViewHolder.renderUI() {
         .constrainTopToBottomOf(textViewTitle,4)
 }
 
-fun AnnounceViewHolder.initialize() {
-    addImageFromGlide(imageViewPhoto, R.drawable.image2)
-    textViewTitle.text = "Тема: Высвобождение внутренней энергии"
-    textViewDescribe.text = "Лектор: Горбунова Ольга Владимировна"
+fun AnnounceViewHolder.initialize(announce: Announce) {
+    addImageFromGlide(imageViewPhoto, announce.image?.original ?: "")
+    textViewTitle.text = announce.name
+    textViewDescribe.text = announce.txtInfo
 
-    val type = true
+    imageViewPhoto.setOnClickListener {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(announce.link))
+        currentActivity?.startActivity(browserIntent)
+    }
 
-    if (type) {
-
+    if (announce.__type == Enums.AnnounceType.video.name) {
+        imageViewSign.visibility = View.GONE
+        textViewSign.visibility = View.GONE
     } else {
-
+        imageViewPlay.visibility = View.GONE
     }
 }

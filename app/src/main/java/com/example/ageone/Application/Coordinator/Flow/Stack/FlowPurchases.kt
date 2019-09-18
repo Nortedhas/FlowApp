@@ -10,8 +10,8 @@ import com.example.ageone.Application.coordinator
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.PurchasesView
-import com.example.ageone.Modules.PurchasesModel
-import com.example.ageone.Modules.PurchasesViewModel
+import com.example.ageone.Modules.Purchases.PurchasesModel
+import com.example.ageone.Modules.Purchases.PurchasesViewModel
 import com.example.ageone.Modules.SetsIn.SetsInView
 import com.example.ageone.Modules.SetsInModel
 import com.example.ageone.Modules.SetsInViewModel

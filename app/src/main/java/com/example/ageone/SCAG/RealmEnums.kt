@@ -11,37 +11,37 @@ class Enums {
 	// MARK: Enum UserType
 
 	enum class UserType {
-		Clint, Admin
+		clint, admin
 	}
 
 	// MARK: Enum AnnounceType
 
 	enum class AnnounceType {
-		Video, Event
+		video, event
 	}
 
 	// MARK: Enum ProductType
 
 	enum class ProductType {
-		From7To25, From25To45, LessThen7
+		from7To25, from25To45, lessThen7
 	}
 
 	// MARK: Enum DocumentType
 
 	enum class DocumentType {
-		Regular, FAQ
+		regular, FAQ
 	}
 
 	// MARK: Enum CategoryType
 
 	enum class CategoryType {
-		Flowers, Food
+		flowers, food
 	}
 
 	// MARK: Enum PaymentType
 
 	enum class PaymentType {
-		Card, ApplePay, Cash, CardToCourier
+		card, applePay, cash, cardToCourier
 	}
 
 }

@@ -2,6 +2,7 @@ package com.example.ageone.Modules
 
 import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
+import com.example.ageone.SCAG.Enums
 
 class MeditationFilterViewModel : InterfaceViewModel {
     var model = MeditationFilterModel()
@@ -19,5 +20,5 @@ class MeditationFilterViewModel : InterfaceViewModel {
 }
 
 class MeditationFilterModel : InterfaceModel {
-
+    var purpose = 0
 }

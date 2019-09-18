@@ -89,6 +89,7 @@ class SetsFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(i
         renderUIO()
 
     }
+
 }
 
 fun SetsFilterView.renderUIO() {

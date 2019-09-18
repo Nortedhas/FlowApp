@@ -104,7 +104,7 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                             "router" to "codeCheck",
                             "phone" to viewModel.model.inputPhone,
                             "code" to viewModel.model.code
-                        )) { json ->
+                        ), isErrorShown = true) { json ->
                             Timber.i("JSON answer $json")
                             DataBase.User.update(user.hashId,
                                 mapOf(
@@ -112,7 +112,6 @@ class RegistrationSMSView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModu
                                     "name" to viewModel.model.inputName,
                                     "email" to viewModel.model.inputMail
                                 ))
-                            //TODO: where?
                             Parser().userData(json)
                             user.data.name = viewModel.model.inputName
                             user.data.phone = viewModel.model.inputPhone

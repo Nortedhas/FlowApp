@@ -9,6 +9,7 @@ import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
+import com.example.ageone.Models.User.user
 import com.example.ageone.Modules.StartLogin.rows.*
 import yummypets.com.stevia.*
 
@@ -103,6 +104,9 @@ class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
             is EnterButtonViewHolder -> {
                 holder.initialize("Вход в приложение", "По номеру телефона")
                 holder.buttonEnterPhone.setOnClickListener {
+                    user.data.name = ""
+                    user.data.email = ""
+                    user.data.phone = ""
                     rootModule.emitEvent?.invoke(StartLoginViewModel.EventType.OnRegistrationPhonePressed.toString())
                 }
             }

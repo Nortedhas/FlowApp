@@ -15,6 +15,7 @@ class ProfileInfoViewHolder(val constraintLayout: ConstraintLayout) : BaseViewHo
     val imageView by lazy {
         val imageView = BaseImageView()
         imageView.setBackgroundResource(R.drawable.ic_profile)
+//        imageView.setBackgroundResource(R.drawable.ic_add)
         imageView
     }
 

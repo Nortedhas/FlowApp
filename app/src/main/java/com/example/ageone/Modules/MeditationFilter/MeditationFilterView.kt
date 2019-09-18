@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
@@ -19,6 +20,7 @@ import com.example.ageone.Modules.MeditationFilter.rows.*
 import com.example.ageone.Modules.MeditationFilterViewModel
 import com.example.ageone.UIComponents.ViewHolders.TitleViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
+import timber.log.Timber
 import yummypets.com.stevia.*
 
 class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initModuleUI) {
@@ -84,7 +86,90 @@ class MeditationFilterView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseMo
             emitEvent?.invoke(MeditationFilterViewModel.EventType.OnSearchPressed.toString())
         }
 
+        Timber.i("Purposes: ${utils.realm.purpose.getAllObjects().sort("serialNum")}")
+
         renderUIO()
+
+    }
+    inner class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
+
+        private val MeditationFilterTitleType = 0
+        private val MeditationFilterTimeButtonType = 1
+        private val MeditationFilterGoalType = 2
+        private val MeditationFilterEmptyType = 3
+
+        override fun getItemCount(): Int = 14
+
+        override fun getItemViewType(position: Int): Int = when (position) {
+            0, 2 -> MeditationFilterTitleType
+            1 -> MeditationFilterTimeButtonType
+            in 3..12 -> MeditationFilterGoalType
+            13 -> MeditationFilterEmptyType
+            else -> -1
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+            val layout = ConstraintLayout(parent.context)
+
+            layout
+                .width(matchParent)
+                .height(wrapContent)
+
+            val holder = when (viewType) {
+                MeditationFilterTitleType -> {
+                    TitleViewHolder(layout)
+                }
+                MeditationFilterTimeButtonType -> {
+                    MeditationFilterTimeButtonViewHolder(layout)
+                }
+                MeditationFilterGoalType -> {
+                    MeditationFilterGoalViewHolder(layout)
+                }
+                MeditationFilterEmptyType -> {
+                    MeditationFilterEmptyViewHolder(layout)
+                }
+                else ->
+                    BaseViewHolder(layout)
+            }
+
+            return holder
+        }
+
+        override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+            when (holder) {
+                is TitleViewHolder -> {
+                    val title = if (position == 0) "Выберите длительность медитации:" else "Выберите цель медитации:"
+                    holder.initialize(title, Color.WHITE)
+                }
+                is MeditationFilterTimeButtonViewHolder -> {
+                    holder.initialize()
+                }
+                is MeditationFilterGoalViewHolder -> {
+                    val text = if (position - 3 < goals.size) goals[position - 3] else ""
+                    holder.initialize(text, position - 3 == viewModel.model.purpose)
+                    holder.buttonGoal.setOnClickListener {
+                        viewModel.model.purpose = position - 3
+                        notifyDataSetChanged()
+                    }
+                }
+                is MeditationFilterEmptyViewHolder -> {
+                    holder.initialize()
+                }
+            }
+        }
+
+        private val goals = arrayListOf(
+            "Я в безопасности",
+            "Принять себя",
+            "Денежный поток",
+            "Женские Энергии",
+            "Мужские Энергии",
+            "От боли",
+            "На природе",
+            "Интуиция",
+            "Я прощаю",
+            "Лишний вес"
+        )
 
     }
 }
@@ -116,82 +201,4 @@ fun MeditationFilterView.renderUIO() {
 
 }
 
-class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
 
-    companion object {
-        private const val MeditationFilterTitleType = 0
-        private const val MeditationFilterTimeButtonType = 1
-        private const val MeditationFilterGoalType = 2
-        private const val MeditationFilterEmptyType = 3
-    }
-
-    override fun getItemCount(): Int = 14
-
-    override fun getItemViewType(position: Int): Int = when (position) {
-        0, 2 -> MeditationFilterTitleType
-        1 -> MeditationFilterTimeButtonType
-        in 3..12 -> MeditationFilterGoalType
-        13 -> MeditationFilterEmptyType
-        else -> -1
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val layout = ConstraintLayout(parent.context)
-
-        layout
-            .width(matchParent)
-            .height(wrapContent)
-
-        val holder = when (viewType) {
-            MeditationFilterTitleType -> {
-                TitleViewHolder(layout)
-            }
-            MeditationFilterTimeButtonType -> {
-                MeditationFilterTimeButtonViewHolder(layout)
-            }
-            MeditationFilterGoalType -> {
-                MeditationFilterGoalViewHolder(layout)
-            }
-            MeditationFilterEmptyType -> {
-                MeditationFilterEmptyViewHolder(layout)
-            }
-            else ->
-                BaseViewHolder(layout)
-        }
-
-        return holder
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when (holder) {
-            is TitleViewHolder -> {
-                val title = if (position == 0) "Выберите длительность медитации:" else "Выберите цель медитации:"
-                holder.initialize(title, Color.WHITE)
-            }
-            is MeditationFilterTimeButtonViewHolder -> {
-                holder.initialize()
-            }
-            is MeditationFilterGoalViewHolder -> {
-                val text = if (position - 3 < goals.size) goals[position - 3] else ""
-                holder.initialize(text)
-            }
-            is MeditationFilterEmptyViewHolder -> {
-                holder.initialize()
-            }
-        }
-    }
-
-    private val goals = arrayListOf(
-        "Я в безопасности",
-        "Принять себя",
-        "Денежный поток",
-        "Женские Энергии",
-        "Мужские Энергии",
-        "От боли",
-        "На природе",
-        "Интуиция",
-        "Я прощаю",
-        "Лишний вес"
-        )
-
-}

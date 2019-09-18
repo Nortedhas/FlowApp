@@ -19,4 +19,5 @@ class LoadingView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(init
             emitEvent?.invoke(LoadingViewModel.EventType.onFinish.toString())
         }
     }
+
 }

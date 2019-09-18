@@ -34,6 +34,7 @@ class WebView(initModuleUI: InitModuleUI = InitModuleUI(), url: String) : BaseMo
         webView.loadUrl(url)
         webView.webViewClient = MyWebViewClient()
     }
+
 }
 
 class MyWebViewClient : WebViewClient() {

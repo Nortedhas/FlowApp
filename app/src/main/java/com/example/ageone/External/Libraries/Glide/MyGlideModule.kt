@@ -26,7 +26,7 @@ fun addImageFromGlide(image: ImageView, uri: String) {
     GlideApp
         .with(image)
         .load(uri)
-        .transform(CenterCrop(), RoundedCorners(8.dp))
+//        .transform(CenterCrop()/*, RoundedCorners(8.dp)*/)
         .placeholder(placeholder)
         .into(image)
 
@@ -38,7 +38,7 @@ fun addImageFromGlide(image: ImageView, uri: Int) {
     GlideApp
         .with(image)
         .load(uri)
-        .transform(CenterCrop(), RoundedCorners(8.dp))
+//        .transform(CenterCrop(), RoundedCorners(8.dp))
         .placeholder(placeholder)
         .into(image)
 

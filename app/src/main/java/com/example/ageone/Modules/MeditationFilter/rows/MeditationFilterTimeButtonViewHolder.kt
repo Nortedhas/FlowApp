@@ -6,9 +6,11 @@ import android.widget.LinearLayout
 import android.widget.RadioGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.rxData
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.RadioButton.BaseRadioButton
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.SCAG.Enums
 import yummypets.com.stevia.*
 
 
@@ -69,16 +71,19 @@ class MeditationFilterTimeButtonViewHolder(val constraintLayout: ConstraintLayou
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 radioButton1.id -> {
+                    rxData.durationSearch = Enums.ProductType.lessThen7.name
                     radioButton1.background = checkBack
                     radioButton2.background = uncheckBack
                     radioButton3.background = uncheckBack
                 }
                 radioButton2.id -> {
+                    rxData.durationSearch = Enums.ProductType.from7To25.name
                     radioButton2.background = checkBack
                     radioButton1.background = uncheckBack
                     radioButton3.background = uncheckBack
                 }
                 radioButton3.id -> {
+                    rxData.durationSearch = Enums.ProductType.from25To45.name
                     radioButton3.background = checkBack
                     radioButton2.background = uncheckBack
                     radioButton1.background = uncheckBack

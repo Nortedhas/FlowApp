@@ -1,6 +1,8 @@
-package com.example.ageone.Modules
+package com.example.ageone.Modules.Purchases
 
 import com.example.ageone.Application.utils
+import com.example.ageone.External.Extensions.Realm.getAllMeditations
+import com.example.ageone.External.Extensions.Realm.getAllSets
 import com.example.ageone.External.Interfaces.InterfaceModel
 import com.example.ageone.External.Interfaces.InterfaceViewModel
 import com.example.ageone.SCAG.Order
@@ -21,14 +23,8 @@ class PurchasesViewModel : InterfaceViewModel {
     }
 
     fun loadRealmData() {
-
-        model.meditations = utils.realm.order.getAllObjects().filter { order ->
-            order.product != null
-        }
-
-        model.sets = utils.realm.order.getAllObjects().filter { order ->
-            order.productSet != null
-        }
+        model.meditations = utils.realm.order.getAllMeditations()
+        model.sets = utils.realm.order.getAllSets()
     }
 }
 

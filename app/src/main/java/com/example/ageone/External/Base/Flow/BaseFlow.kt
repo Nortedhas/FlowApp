@@ -72,6 +72,7 @@ abstract class BaseFlow: View(currentActivity){
 
     fun deInitModule(module: BaseModule?) {
         module?.let{ module ->
+            module.unBind()
             
             if (stack.contains(module.id)) {
                 stack.remove(module.id)

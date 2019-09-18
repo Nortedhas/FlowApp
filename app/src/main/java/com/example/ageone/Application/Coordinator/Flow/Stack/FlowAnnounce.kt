@@ -9,8 +9,8 @@ import com.example.ageone.Application.Coordinator.Router.TabBar.Stack
 import com.example.ageone.External.Base.Flow.BaseFlow
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Announce.AnnounceView
-import com.example.ageone.Modules.AnnounceModel
-import com.example.ageone.Modules.AnnounceViewModel
+import com.example.ageone.Modules.Announce.AnnounceModel
+import com.example.ageone.Modules.Announce.AnnounceViewModel
 
 fun FlowCoordinator.runFlowAnnounce() {
 

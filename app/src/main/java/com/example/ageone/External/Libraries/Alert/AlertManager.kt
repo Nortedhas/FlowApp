@@ -75,7 +75,7 @@ class AlertManager {
     val textViewMessage: BaseTextView by lazy {
         val textViewMessage = BaseTextView()
         textViewMessage.gravity = View.TEXT_ALIGNMENT_VIEW_END
-        textViewMessage.typeface = Typeface.DEFAULT_BOLD
+        textViewMessage.typeface = Typeface.DEFAULT
         textViewMessage.textSize = 5F.dp
         textViewMessage.textColor = Color.DKGRAY
         textViewMessage.setBackgroundColor(Color.TRANSPARENT)
@@ -87,7 +87,7 @@ class AlertManager {
 // MARK: Single
 
 fun AlertManager.single(title: String, message: String, image: Int? = null,
-                        button: String = "OK", completion: ((DialogInterface, Int) -> (Unit))? = null) {
+                        button: String = "OK", completion: ((DialogInterface, Int) -> (Unit))? = {_,_->}) {
     renderUI()
 
     if (image == null) {
@@ -104,9 +104,8 @@ fun AlertManager.single(title: String, message: String, image: Int? = null,
 
     val builder = AlertDialog.Builder(currentActivity)
     builder.setView(constraintLayout)
-    completion?.let{
-        builder.setPositiveButton(button, completion)
-    }
+    builder.setPositiveButton(button, completion)
+
     builder.show()
 
 }
@@ -164,6 +163,8 @@ fun AlertManager.list(title: String,
 // MARK: block ui
 
 fun AlertManager.blockUI(isVisible: Boolean) {
+
+    coordinator.blockConstraint.setOnClickListener {  }
 
     if (isVisible) {
         coordinator.blockConstraint.visibility = View.VISIBLE

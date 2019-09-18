@@ -14,7 +14,9 @@ class ProfileViewModel : InterfaceViewModel {
     }
 
     enum class EventType {
-        OnGetVipPressed;
+        OnGetVipPressed,
+        OnCodePressed,
+        onInvitePressed;
     }
 }
 

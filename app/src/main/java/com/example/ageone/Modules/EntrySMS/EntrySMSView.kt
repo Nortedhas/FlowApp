@@ -104,7 +104,7 @@ class EntrySMSView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(ini
                             "code" to viewModel.model.code
                         )) { json ->
                             Timber.i("JSON answer $json")
-                            Parser().userData(json)//TODO: where?
+                            Parser().userData(json)
                             user.isAuthorized = true
                             rootModule.emitEvent?.invoke(EntrySMSViewModel.EventType.OnAcceptPressed.toString())
                         }

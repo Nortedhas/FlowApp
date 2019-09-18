@@ -14,10 +14,15 @@ import yummypets.com.stevia.*
 class BaseToolbar(val initModuleUI: InitModuleUI, val content: ConstraintLayout): Toolbar(currentActivity) {
     var title: String? = null
     var textColor: Int = Color.WHITE
-//    var titleTextSize: Float = 18F
 
-    var viewIconRes: Int? = null
-    var viewIconSize: Int = 30
+
+
+    private val viewOther by lazy {
+        val view = BaseImageView()
+        view.setImageResource(R.drawable.ic_invite)
+        view.visibility = View.GONE
+        view
+    }
 
     private val viewExit by lazy {
         val view = BaseImageView()
@@ -25,30 +30,6 @@ class BaseToolbar(val initModuleUI: InitModuleUI, val content: ConstraintLayout)
         view.visibility = View.GONE
         view
     }
-
-    /*private val textViewTitle by lazy {
-        val textView = BaseTextView()
-        textView.gravity = Gravity.CENTER
-        textView.typeface = Typeface.DEFAULT_BOLD
-        textView.setBackgroundColor(Color.TRANSPARENT)
-        textView
-    }
-
-    private val viewIcon by lazy {
-        val view = BaseImageView()
-        view.visibility = View.GONE
-        view
-    }
-
-    private val viewArrow by lazy {
-        val view = BaseButton()
-        view.imageIcon = R.drawable.ic_arrow_back
-        view.sizeIcon = Pair(35F, 35F)
-        //setImageResource(R.drawable.ic_arrow_back)
-        view.visibility = View.GONE
-        view.initialize()
-        view
-    }*/
 
     fun initialize() {
         setTitle(title)
@@ -60,34 +41,18 @@ class BaseToolbar(val initModuleUI: InitModuleUI, val content: ConstraintLayout)
             }
         }
 
+        initModuleUI.exitIcon?.let { icon ->
+            viewExit.setImageResource(icon)
+        }
         initModuleUI.exitListener?.let { exitListener ->
             viewExit.visibility = View.VISIBLE
             viewExit.setOnClickListener(exitListener)
         }
-//        textViewTitle.textColor = textColor
 
-        /*initModuleUI.backListener?.let { backListener ->
-            viewArrow.visibility = View.VISIBLE
-            viewArrow.setOnClickListener(backListener)
+        initModuleUI.iconListener?.let { listener ->
+            viewOther.visibility = View.VISIBLE
+            viewOther.setOnClickListener(listener)
         }
-
-
-
-        viewIconRes?.let{ iconRes ->
-            viewIcon
-                .setImageResource(iconRes)
-
-            viewIcon
-                .width(viewIconSize)
-                .height(viewIconSize)
-                .visibility = View.VISIBLE
-
-            initModuleUI.iconListener?.let { iconListener ->
-                viewIcon.setOnClickListener(iconListener)
-            }
-        }
-
-        viewArrow.setPadding(16)*/
 
         renderUI()
 
@@ -95,7 +60,8 @@ class BaseToolbar(val initModuleUI: InitModuleUI, val content: ConstraintLayout)
 
     private fun renderUI() {
         content.subviews(
-            viewExit
+            viewExit,
+            viewOther
         )
 
         viewExit
@@ -104,31 +70,10 @@ class BaseToolbar(val initModuleUI: InitModuleUI, val content: ConstraintLayout)
             .constrainRightToRightOf(this, 16)
             .constrainCenterYToCenterYOf(this)
 
-        /*subviews(
-            viewArrow,
-            textViewTitle,
-            viewIcon,
-            viewExit
-        )
-
-        viewArrow
-            .fillVertically()
-            .width(35)
-            .height(35)
-            .constrainLeftToLeftOf(this, 8)
-
-        textViewTitle
-            .fillHorizontally()
-            .fillVertically()
-
-        viewIcon
-            .fillVertically()
-            .constrainRightToLeftOf(viewExit,16)
-
-        viewExit
-            .fillVertically()
-            .width(20)
-            .height(20)
-            .constrainRightToRightOf(this, 16)*/
+        viewOther
+            .width(25)
+            .height(25)
+            .constrainRightToLeftOf(viewExit, 16)
+            .constrainCenterYToCenterYOf(this)
     }
 }

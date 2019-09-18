@@ -16,7 +16,6 @@ import com.example.ageone.SCAG.Audio
 import timber.log.Timber
 
 
-const val playingMeditationNameService = "PLayingMeditationService"
 const val receiver = "receiver"
 
 val ACTION_PLAY = "com.example.ageone.intent.action.PLAY"
@@ -43,27 +42,31 @@ class MusicService : Service() {
 
     override fun onCreate() {
         Timber.i("service on create")
-        mainPlayer = MediaPlayer.create(this, rxData.currentMeditation?.audio?.path()?.toUri())
+        rxData.currentMeditation?.audio?.let { audio ->
+            mainPlayer = MediaPlayer.create(this, audio.path().toUri())
+        }
         mainPlayer?.setOnCompletionListener { player ->
             player.seekTo(0)
             rxData.isMeditationEnd = true
         }
 
-        //todo: relocated uri rxData.currentBackground
         backgroundPlayer = MediaPlayer.create(currentActivity, backgroundSounds[rxData.currentBackground])
         backgroundPlayer?.isLooping = true
         backgroundPlayer?.setVolume(rxData.volumeBackground, rxData.volumeBackground)
     }
 
+    var isPlaying = false
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         when (intent.action) {
             ACTION_PLAY -> {
                 mainPlayer?.start()
                 backgroundPlayer?.start()
+                isPlaying = true
             }
             ACTION_STOP -> {
                 mainPlayer?.pause()
-//                backgroundPlayer?.pause()
+                backgroundPlayer?.pause()
+                isPlaying = false
             }
             ACTION_SEEK_TO -> {
                 mainPlayer?.seekTo(rxData.currentTime.toInt())
@@ -72,9 +75,12 @@ class MusicService : Service() {
                 backgroundPlayer?.setVolume(rxData.volumeBackground, rxData.volumeBackground)
             }
             ACTION_CHANGE_SOUND -> {
-                //todo: relocated uri rxData.currentBackground
-                backgroundPlayer?.setDataSource(currentActivity,
-                    Uri.parse("android.resource://com.example.ageone/${backgroundSounds[rxData.currentBackground]}"))
+                backgroundPlayer?.stop()
+                backgroundPlayer = MediaPlayer.create(currentActivity, backgroundSounds[rxData.currentBackground])
+                backgroundPlayer?.setVolume(rxData.volumeBackground, rxData.volumeBackground)
+                if (isPlaying) {
+                    backgroundPlayer?.start()
+                }
             }
         }
 

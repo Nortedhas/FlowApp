@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ageone.Application.R
 import com.example.ageone.Application.currentActivity
+import com.example.ageone.Application.rxData
 import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Button.BaseButton
 import com.example.ageone.External.Base.ImageView.BaseImageView
@@ -18,7 +19,6 @@ import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.Modules.Purchases.rows.PurchasesEmptyViewHolder
 import com.example.ageone.Modules.Purchases.rows.initialize
-import com.example.ageone.Modules.PurchasesViewModel
 import com.example.ageone.UIComponents.ViewHolders.MeditationCardViewHolder
 import com.example.ageone.UIComponents.ViewHolders.SetViewHolder
 import com.example.ageone.UIComponents.ViewHolders.initialize
@@ -69,7 +69,7 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
 
     val buttonSet by lazy {
         val button = BaseButton()
-        button.text = "Сеты"
+        button.text = "Программы"
         button.textSize = 17F
         button.typeface = Typeface.DEFAULT
         button.textColor = Color.rgb(0x70,0x7A,0xBA)
@@ -115,6 +115,7 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         renderUIO()
 
     }
+
 
     inner class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
 
@@ -181,7 +182,8 @@ class PurchasesView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(in
         override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
             when (holder) {
                 is PurchasesEmptyViewHolder -> {
-                    holder.initialize()
+                    val text = if(rxData.isVip()) "Вам доступны все медитации и сеты" else "У вас еще нет покупок"
+                    holder.initialize(text)
                 }
                 is SetViewHolder -> {
                     holder.initialize(

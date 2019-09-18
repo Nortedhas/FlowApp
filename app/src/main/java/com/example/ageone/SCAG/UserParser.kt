@@ -1,10 +1,12 @@
 package com.example.ageone.SCAG
 
+import com.example.ageone.External.RxBus.RxBus
+import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Models.User.user
 import org.json.JSONObject
 
 fun Parser.userData(json: JSONObject) {
-	json.optJSONObject("User").let { userJson ->
+	json.optJSONObject("User")?.let { userJson ->
 		user.hashId = userJson.optString("hashId", "")
 		user.data.vipAccessTo = userJson.optInt("vipAccessTo", 0)
 		user.data.role = userJson.optString("role", "")
@@ -12,4 +14,6 @@ fun Parser.userData(json: JSONObject) {
 		user.data.phone = userJson.optString("phone", "")
 		user.data.email = userJson.optString("email", "")
 	}
+
+	RxBus.publish(RxEvent.EventReloadUser())
 }

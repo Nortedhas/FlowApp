@@ -42,6 +42,7 @@ class SetsInView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initM
         renderUIO()
 
     }
+
 }
 
 fun SetsInView.renderUIO() {

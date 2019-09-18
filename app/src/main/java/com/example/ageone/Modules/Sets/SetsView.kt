@@ -41,7 +41,7 @@ class SetsView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(initModu
     init {
         setBackgroundResource(R.drawable.base_background)
 
-        toolbar.title = "Сеты медитаций"
+        toolbar.title = "Программы"
         renderToolbar()
 
         bodyTable.layoutManager = layoutManager

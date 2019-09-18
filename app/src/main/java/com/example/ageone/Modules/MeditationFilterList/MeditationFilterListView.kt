@@ -43,6 +43,47 @@ class MeditationFilterListView(initModuleUI: InitModuleUI = InitModuleUI()) : Ba
         renderUIO()
 
     }
+
+    inner class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
+
+        private val MeditationCardType = 0
+
+        override fun getItemCount(): Int = 10
+
+        override fun getItemViewType(position: Int): Int = 0
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+            val layout = ConstraintLayout(parent.context)
+
+            layout
+                .width(matchParent)
+                .height(wrapContent)
+
+            val holder = when (viewType) {
+                MeditationCardType -> {
+                    MeditationCardViewHolder(layout)
+                }
+                else ->
+                    BaseViewHolder(layout)
+            }
+
+            return holder
+        }
+
+        override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+            when (holder) {
+                is MeditationCardViewHolder -> {
+                    holder.initialize(
+                        utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
+                        "Спокойствие", "Медитация для тех кто проснулся и уже встал.", false)
+                    holder.constraintLayout.setOnClickListener {
+                        rootModule.emitEvent?.invoke(MeditationFilterListViewModel.EventType.OnMeditationPressed.toString())
+                    }
+                }
+            }
+        }
+
+    }
 }
 
 fun MeditationFilterListView.renderUIO() {
@@ -51,45 +92,3 @@ fun MeditationFilterListView.renderUIO() {
 
 }
 
-class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
-
-    companion object {
-        private const val MeditationCardType = 0
-    }
-
-    override fun getItemCount(): Int = 10
-
-    override fun getItemViewType(position: Int): Int = 0
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val layout = ConstraintLayout(parent.context)
-
-        layout
-            .width(matchParent)
-            .height(wrapContent)
-
-        val holder = when (viewType) {
-            MeditationCardType -> {
-                MeditationCardViewHolder(layout)
-            }
-            else ->
-                BaseViewHolder(layout)
-        }
-
-        return holder
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when (holder) {
-            is MeditationCardViewHolder -> {
-                holder.initialize(
-                    utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
-                    "Спокойствие", "Медитация для тех кто проснулся и уже встал.", false)
-                holder.constraintLayout.setOnClickListener {
-                    rootModule.emitEvent?.invoke(MeditationFilterListViewModel.EventType.OnMeditationPressed.toString())
-                }
-            }
-        }
-    }
-
-}

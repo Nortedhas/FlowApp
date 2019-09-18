@@ -52,6 +52,7 @@ class ProfileVipView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(i
         renderUIO()
 
     }
+
 }
 
 fun ProfileVipView.renderUIO() {

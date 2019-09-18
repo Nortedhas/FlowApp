@@ -39,7 +39,6 @@ class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
         renderUIO()
     }
-
     inner class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
 
         private val EntryInputType = 0
@@ -90,7 +89,7 @@ class EntryView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(initMo
 
                 is ButtonViewHolder -> {
                     holder.initialize("Войти в приложение")
-                    holder.button.setOnClickListener {//TODO: где определять все user.*?
+                    holder.button.setOnClickListener {
                         api.request(mapOf(
                             "router" to "phoneAuth",
                             "phone" to viewModel.model.inputPhone,

@@ -1,6 +1,7 @@
 package com.example.ageone.Modules.Meditation
 
 import android.graphics.Color
+import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,10 +12,10 @@ import com.example.ageone.Application.utils
 import com.example.ageone.External.Base.Module.BaseModule
 import com.example.ageone.External.Base.RecyclerView.BaseAdapter
 import com.example.ageone.External.Base.RecyclerView.BaseViewHolder
+import com.example.ageone.External.Extensions.Realm.isAccess
 import com.example.ageone.External.InitModuleUI
 import com.example.ageone.External.Libraries.Alert.alertManager
 import com.example.ageone.External.Libraries.Alert.list
-import com.example.ageone.External.Libraries.WebView.openUrl
 import com.example.ageone.External.RxBus.RxBus
 import com.example.ageone.External.RxBus.RxEvent
 import com.example.ageone.Modules.Meditation.rows.MeditationPopularViewHolder
@@ -40,7 +41,7 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (position) {
-                    in (0..3) -> 2
+                    in 0..3 -> 2
                     else -> 1
                 }
             }
@@ -48,9 +49,9 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         layoutManager
     }
 
-//    fun bindUI() after renderUI() обновление
-
     init {
+        viewModel.loadRealmData()
+
         setBackgroundResource(R.drawable.base_background)
 
         toolbar.title = "Здравствуйте!"
@@ -62,9 +63,15 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 //        bodyTable.overScrollMode = View.OVER_SCROLL_NEVER
 
         renderUIO()
+        bindUI()
+    }
 
-        viewModel.loadRealmData()
-
+    fun bindUI() {
+        compositeDisposable.add(
+            RxBus.listen(RxEvent.EventReloadProduct::class.java).subscribe {
+                bodyTable.adapter?.notifyDataSetChanged()
+            }
+        )
     }
 
     inner class Factory(val rootModule: BaseModule): BaseAdapter<BaseViewHolder>() {
@@ -75,7 +82,7 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
         private val MeditationCardType = 3
 
 
-        override fun getItemCount() = viewModel.quickMeditation.size + 4
+        override fun getItemCount() = viewModel.realmData.size + 4
 
         override fun getItemViewType(position: Int):Int = when(position) {
             0 -> MeditationSearchType
@@ -131,7 +138,7 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
                 }
 
                 is MeditationCardViewHolder -> {
-                    val meditation = viewModel.quickMeditation[position - 4]
+                    val meditation = viewModel.realmData[position - 4]
                     Timber.i("$meditation")
                     holder.initialize(
                         utils.variable.displayWidth / 2 - 8, R.drawable.kitty,
@@ -139,16 +146,18 @@ class MeditationView(initModuleUI: InitModuleUI = InitModuleUI()): BaseModule(in
 
                     holder.constraintLayout.setOnClickListener {
                         RxBus.publish(RxEvent.EventAddMeditation("meditations are loaded"))
-                        if (meditation.isFree || meditation.isIntro || rxData.isVip()) //TODO: meditation in orders
+                        if (meditation.isAccess())
                         {
                             rxData.currentMeditation = meditation
                             rootModule.emitEvent?.invoke(MeditationViewModel.EventType.OnMeditationPressed.toString())
 
                         } else {
+
                             alertManager.list(
                                 "Данная медитация является платной, пожалуйста, оплатите доступ",
                                 rxData.payVariants(isSet = false),
                                 rxData.createPayVariantCallback(meditation.hashId, isSet = false) {json ->
+                                    Timber.i("$json")
                                     val url = json.optString("formUrl", "")
                                     if (url.isNotBlank()) {
                                         viewModel.model.url = url

@@ -3,6 +3,8 @@
 package com.example.ageone.SCAG
 
 import com.example.ageone.External.Extensions.Realm.add
+import com.example.ageone.External.RxBus.RxBus
+import com.example.ageone.External.RxBus.RxEvent
 import org.json.JSONObject
 
 class Parser {
@@ -46,6 +48,42 @@ fun parseAnyObject(json: JSONObject, type: DataBase) {
 				}
 				}
 			add(obj)
+		}
+
+		when (type) {
+			DataBase.Announce -> {
+				RxBus.publish(RxEvent.EventReloadAnnounce())
+			}
+			DataBase.Audio -> {
+				RxBus.publish(RxEvent.EventReloadAudio())
+			}
+			DataBase.Chackra -> {
+				RxBus.publish(RxEvent.EventReloadChackra())
+			}
+			DataBase.Document -> {
+				RxBus.publish(RxEvent.EventReloadDocument())
+			}
+			DataBase.Image -> {
+				RxBus.publish(RxEvent.EventReloadImage())
+			}
+			DataBase.Order -> {
+				RxBus.publish(RxEvent.EventReloadOrder())
+			}
+			DataBase.Product -> {
+				RxBus.publish(RxEvent.EventReloadProduct())
+			}
+			DataBase.ProductSet -> {
+				RxBus.publish(RxEvent.EventReloadProductSet())
+			}
+			DataBase.Purpose -> {
+				RxBus.publish(RxEvent.EventReloadPurpose())
+			}
+			DataBase.Rune -> {
+				RxBus.publish(RxEvent.EventReloadRune())
+			}
+			DataBase.User -> {
+				RxBus.publish(RxEvent.EventReloadUser())
+			}
 		}
 	}
 }

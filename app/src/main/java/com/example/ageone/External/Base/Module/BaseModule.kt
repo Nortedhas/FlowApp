@@ -12,11 +12,12 @@ import com.example.ageone.External.Base.ImageView.BaseImageView
 import com.example.ageone.External.Base.RecyclerView.BaseRecyclerView
 import com.example.ageone.External.Base.Toolbar.BaseToolbar
 import com.example.ageone.External.InitModuleUI
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import yummypets.com.stevia.*
 
 
-open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
+abstract class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : ConstraintLayout(currentActivity) {
 
     val backgroundImage by lazy {
         val image = BaseImageView()
@@ -69,6 +70,12 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
         Timber.i("${this.className()} Init ")
     }
 
+    var compositeDisposable = CompositeDisposable()
+
+    fun unBind() {
+        compositeDisposable.dispose()
+    }
+
     fun renderUI() {
         subviews(
             backgroundImage,
@@ -115,11 +122,6 @@ open class BaseModule(val initModuleUI: InitModuleUI = InitModuleUI()) : Constra
 
         bodyTable
             .clipToPadding = false
-
-//        val marginLayoutParams = bodyTable.layoutParams as ViewGroup.MarginLayoutParams
-//        marginLayoutParams.setMargins(8.dp, 0, 8.dp, 0)
-//        bodyTable.layoutParams = marginLayoutParams
-//        bodyTable.requestLayout()
 
     }
 

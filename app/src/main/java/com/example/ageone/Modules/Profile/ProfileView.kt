@@ -37,6 +37,7 @@ class ProfileView(initModuleUI: InitModuleUI = InitModuleUI()) : BaseModule(init
         renderUIO()
 
     }
+
 }
 
 fun ProfileView.renderUIO() {
@@ -55,14 +56,14 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
         private const val ProfileLegendType = 4
     }
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = 6
 
     override fun getItemViewType(position: Int): Int = when (position) {
         0 -> ProfileInfoType
-        1 -> ProfileVIPType
-        2 -> ProfileTitleType
-        3 -> ProfileChakrasType
-        4 -> ProfileLegendType
+        1,2 -> ProfileVIPType
+        3 -> ProfileTitleType
+        4 -> ProfileChakrasType
+        5 -> ProfileLegendType
         else -> -1
     }
 
@@ -103,9 +104,15 @@ class Factory(val rootModule: BaseModule) : BaseAdapter<BaseViewHolder>() {
                 holder.initialize(user.data.name, "VIP доступ до 31.10.2019")
             }
             is GetVIPViewHolder -> {
-                holder.initialize("Получить VIP доступ ко всему платному контенту")
+                val text = if (position == 1) "Получить VIP доступ ко всему платному контенту"
+                    else "Ввести код-приглашение друга для получения подарка"
+                holder.initialize(text)
                 holder.constraintLayout.setOnClickListener {
-                    rootModule.emitEvent?.invoke(ProfileViewModel.EventType.OnGetVipPressed.toString())
+                    if (position == 1) {
+                        rootModule.emitEvent?.invoke(ProfileViewModel.EventType.OnGetVipPressed.toString())
+                    } else {
+                        rootModule.emitEvent?.invoke(ProfileViewModel.EventType.OnCodePressed.toString())
+                    }
                 }
             }
             is ProfileTitleViewHolder -> {

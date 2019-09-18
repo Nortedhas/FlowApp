@@ -2,6 +2,7 @@ package com.example.ageone.Application.Coordinator.Flow.Stack
 
 import androidx.core.view.size
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator
+import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.currentFlow
 import com.example.ageone.Application.Coordinator.Flow.FlowCoordinator.ViewFlipperFlowObject.viewFlipperFlow
 import com.example.ageone.Application.Coordinator.Flow.Regular.runFlowPleer
 import com.example.ageone.Application.Coordinator.Router.DataFlow
@@ -119,12 +120,7 @@ class FlowMain: BaseFlow() {
 
         settingsCurrentFlow.isBottomNavigationVisible = false
 
-        webSocket.socket.on("orderCheck") {message ->
-            Timber.i("Pay succes!")
-            currentActivity?.runOnUiThread {
-                pop()
-            }
-        }
+
 
         push(module)
     }
